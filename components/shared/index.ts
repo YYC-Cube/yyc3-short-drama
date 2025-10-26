@@ -1,0 +1,12 @@
+// 共享组件统一导出
+export { default as CulturalFooter } from "./cultural-footer"
+export { default as BrowserCompatibilityChecker } from "./browser-compatibility-checker"
+export { default as OptimizedRenderer } from "./optimized-renderer"
+export { default as DeviceSimulator } from "./device-simulator"
+export { default as SystemStatus } from "./system-status"
+export { default as UserOnboardingGuide } from "./user-onboarding-guide"
+export { default as CulturalImageGallery } from "./cultural-image-gallery"
+export { default as LazyImage } from "./lazy-image"
+export { default as RouteBoundary } from "./route-boundary"
+export { default as ErrorBoundary } from "./error-boundary"
+export { default as VerticalSealText } from "./vertical-seal-text"

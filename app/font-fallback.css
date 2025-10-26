@@ -1,0 +1,72 @@
+/* 字体备用方案 */
+@font-face {
+  font-family: "SanjiXiaozhuan";
+  src: url("/fonts/SanjiXiaozhuan.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "YinpinZhuan";
+  src: url("/fonts/YinpinZhuan.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HanyiZhuanyi";
+  src: url("/fonts/HanyiZhuanyi.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DotBraille";
+  src: url("/fonts/DotBraille.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SoulDragon";
+  src: url("/fonts/SoulDragon.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HuakanSeal";
+  src: url("/fonts/HuakanSealW5.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NotoSerifSC";
+  src: url("/fonts/NotoSerifSC-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NotoSerifSC";
+  src: url("/fonts/NotoSerifSC-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "KaiTi";
+  src: url("/fonts/KaiTi.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

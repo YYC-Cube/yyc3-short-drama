@@ -1,0 +1,334 @@
+/* 河洛文化自适应布局样式 */
+@layer components {
+  /* 侧边栏动画优化 */
+  .sidebar-transition {
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* 面包屑样式增强 */
+  .breadcrumb-container {
+    backdrop-filter: blur(16px);
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  /* 导航项悬停效果增强 */
+  .nav-item {
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.2), transparent);
+    transition: left 0.6s ease-in-out;
+  }
+
+  .nav-item:hover::before {
+    left: 100%;
+  }
+
+  /* 河洛文化装饰元素 */
+  .cultural-decoration {
+    position: relative;
+  }
+
+  .cultural-decoration::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.3), transparent);
+    border-radius: 50%;
+    animation: culturalPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes culturalPulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+  }
+
+  /* 移动端优化 */
+  @media (max-width: 768px) {
+    .mobile-menu-overlay {
+      backdrop-filter: blur(12px);
+    }
+
+    .mobile-menu {
+      box-shadow: 0 0 60px rgba(251, 191, 36, 0.3);
+    }
+  }
+
+  /* 自定义滚动条 - 河洛风格 */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(251, 191, 36, 0.1);
+    border-radius: 3px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(251, 191, 36, 0.6), rgba(251, 191, 36, 0.3));
+    border-radius: 3px;
+    border: 1px solid rgba(251, 191, 36, 0.2);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(251, 191, 36, 0.8), rgba(251, 191, 36, 0.5));
+  }
+
+  /* 页面过渡动画增强 */
+  .page-transition {
+    animation: fadeInUpCultural 0.4s ease-out;
+  }
+
+  @keyframes fadeInUpCultural {
+    from {
+      opacity: 0;
+      transform: translateY(30px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* 响应式网格 - 河洛布局 */
+  .cultural-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+
+  @media (max-width: 640px) {
+    .cultural-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  /* 卡片悬停效果 - 河洛风格 */
+  .cultural-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+  }
+
+  .cultural-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(251, 191, 36, 0.2);
+    border-color: rgba(251, 191, 36, 0.4);
+  }
+
+  /* 河洛文字渐变效果 */
+  .cultural-gradient-text {
+    background: linear-gradient(135deg, #fbbf24, #a855f7, #06b6d4, #fbbf24);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: culturalGradientShift 4s ease-in-out infinite;
+  }
+
+  @keyframes culturalGradientShift {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    25% {
+      background-position: 100% 50%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    75% {
+      background-position: 0% 100%;
+    }
+  }
+
+  /* 河洛加载动画 */
+  .cultural-loading {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(251, 191, 36, 0.3);
+    border-top: 3px solid #fbbf24;
+    border-radius: 50%;
+    animation: culturalSpin 1.2s linear infinite;
+  }
+
+  @keyframes culturalSpin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* 河洛毛玻璃效果 */
+  .cultural-glass {
+    backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(17, 25, 40, 0.8);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  /* 河洛脉冲动画 */
+  .cultural-pulse {
+    animation: culturalPulseAnimation 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes culturalPulseAnimation {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+
+  /* 河洛装饰边框 */
+  .cultural-border {
+    position: relative;
+  }
+
+  .cultural-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(45deg, rgba(251, 191, 36, 0.5), transparent, rgba(168, 85, 247, 0.5));
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+  }
+
+  /* 河洛文化符号动画 */
+  .cultural-symbol {
+    display: inline-block;
+    animation: culturalSymbolFloat 3s ease-in-out infinite;
+  }
+
+  @keyframes culturalSymbolFloat {
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    33% {
+      transform: translateY(-2px) rotate(1deg);
+    }
+    66% {
+      transform: translateY(1px) rotate(-1deg);
+    }
+  }
+
+  /* 状态指示器样式 */
+  .status-indicator {
+    position: relative;
+  }
+
+  .status-indicator::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    border-radius: inherit;
+    transform: translate(-50%, -50%);
+    animation: statusRipple 2s ease-out infinite;
+  }
+
+  @keyframes statusRipple {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(2);
+      opacity: 0;
+    }
+  }
+}
+
+/* 全局样式优化 */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* 河洛文化字体优化 */
+.cultural-font {
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* 禁用文本选择 */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 焦点样式 - 河洛风格 */
+.focus-visible:focus-visible {
+  outline: 2px solid #fbbf24;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 河洛文化主题色彩变量 */
+:root {
+  --cultural-primary: #fbbf24;
+  --cultural-secondary: #a855f7;
+  --cultural-accent: #06b6d4;
+  --cultural-background: rgba(17, 25, 40, 0.95);
+  --cultural-surface: rgba(0, 0, 0, 0.3);
+  --cultural-border: rgba(251, 191, 36, 0.2);
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cultural-background: rgba(17, 25, 40, 0.98);
+    --cultural-surface: rgba(0, 0, 0, 0.4);
+  }
+}
