@@ -1,92 +1,111 @@
 "use client"
 
-import type React from "react"
-import { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import { useRouter } from "next/navigation"
 
 interface User {
-  id: string
+  id: number
   username: string
-  phoneNumber: string
+  phone: string
   email?: string
-  isLocalUser: boolean
-  userType: "normal" | "creator" | "vip"
+  avatar?: string
+  level: string
+  star_coins: number
+  is_local_user: boolean
+  user_type: "normal" | "creator" | "vip"
 }
 
 interface AuthContextType {
   user: User | null
-  isAuthenticated: boolean
-  isLoading: boolean
-  login: (phoneNumber: string, verificationCode: string) => Promise<boolean>
-  logout: () => void
+  loading: boolean
+  login: (phone: string, code: string) => Promise<void>
+  register: (username: string, phone: string, code: string) => Promise<void>
+  logout: () => Promise<void>
+  refreshUser: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
+  // 初始化时获取用户信息
   useEffect(() => {
-    // 检查本地存储的用户信息
-    const savedUser = localStorage.getItem("user")
-    const savedToken = localStorage.getItem("token")
-
-    if (savedUser && savedToken) {
-      try {
-        setUser(JSON.parse(savedUser))
-      } catch (error) {
-        console.error("解析用户信息失败:", error)
-        localStorage.removeItem("user")
-        localStorage.removeItem("token")
-      }
-    }
-
-    setIsLoading(false)
+    fetchUser()
   }, [])
 
-  const login = async (phoneNumber: string, verificationCode: string): Promise<boolean> => {
+  async function fetchUser() {
     try {
-      // 这里应该调用实际的登录API
-      const isLocalUser =
-        phoneNumber.startsWith("137") || phoneNumber.startsWith("138") || phoneNumber.startsWith("139")
-
-      const userData: User = {
-        id: `user_${Date.now()}`,
-        username: `用户${phoneNumber.slice(-4)}`,
-        phoneNumber,
-        isLocalUser,
-        userType: isLocalUser ? "vip" : "normal",
+      const response = await fetch("/api/auth/me")
+      if (response.ok) {
+        const data = await response.json()
+        setUser(data.user)
       }
-
-      const token = `token_${Date.now()}`
-
-      // 保存到本地存储
-      localStorage.setItem("user", JSON.stringify(userData))
-      localStorage.setItem("token", token)
-
-      setUser(userData)
-      return true
     } catch (error) {
-      console.error("登录失败:", error)
-      return false
+      console.error("获取用户信息失败:", error)
+    } finally {
+      setLoading(false)
     }
   }
 
-  const logout = () => {
-    localStorage.removeItem("user")
-    localStorage.removeItem("token")
+  async function login(phone: string, code: string) {
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ phone, code }),
+    })
+
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(error.error || "登录失败")
+    }
+
+    const data = await response.json()
+    setUser(data.user)
+
+    // 延迟跳转，显示成功提示
+    setTimeout(() => {
+      router.push("/main")
+    }, 1500)
+  }
+
+  async function register(username: string, phone: string, code: string) {
+    const response = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, phone, code }),
+    })
+
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(error.error || "注册失败")
+    }
+
+    const data = await response.json()
+    setUser(data.user)
+
+    setTimeout(() => {
+      router.push("/main")
+    }, 1500)
+  }
+
+  async function logout() {
+    await fetch("/api/auth/logout", { method: "POST" })
     setUser(null)
+    router.push("/auth")
   }
 
-  const value: AuthContextType = {
-    user,
-    isAuthenticated: !!user,
-    isLoading,
-    login,
-    logout,
+  async function refreshUser() {
+    await fetchUser()
   }
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider value={{ user, loading, login, register, logout, refreshUser }}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export function useAuth() {

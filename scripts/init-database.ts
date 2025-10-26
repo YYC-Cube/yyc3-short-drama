@@ -7,17 +7,18 @@ async function initDatabase() {
 
   try {
     // 测试数据库连接
-    const isConnected = await testConnection()
-    if (!isConnected) {
+    const connected = await testConnection()
+    if (!connected) {
       throw new Error("数据库连接失败")
     }
-    console.log("✅ 数据库连接成功")
 
     // 创建用户表
+    console.log("📝 创建用户表...")
     await createUserTable()
     console.log("✅ 用户表创建成功")
 
     // 创建验证码表
+    console.log("📝 创建验证码表...")
     await createVerificationCodeTable()
     console.log("✅ 验证码表创建成功")
 

@@ -1,105 +1,57 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { findUserByPhone, verifyPassword, updateLastLogin } from "@/lib/models/user.model"
+import { sign } from "jsonwebtoken"
+import { findUserByPhone, updateLastLogin } from "@/lib/models/user.model"
 import { verifyCode } from "@/lib/models/verification-code.model"
-import jwt from "jsonwebtoken"
+
+const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-in-production"
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { phone, password, verificationCode, loginType } = body
+    const { phone, code } = body
 
-    if (!phone || !/^1[3-9]\d{9}$/.test(phone)) {
-      return NextResponse.json({ success: false, message: "手机号格式不正确" }, { status: 400 })
+    // 验证输入
+    if (!phone || !code) {
+      return NextResponse.json({ error: "请填写手机号和验证码" }, { status: 400 })
     }
 
+    // 验证验证码
+    const isCodeValid = await verifyCode(phone, code, "login")
+    if (!isCodeValid) {
+      return NextResponse.json({ error: "验证码错误或已过期" }, { status: 400 })
+    }
+
+    // 查找用户
     const user = await findUserByPhone(phone)
-
-    // 验证码登录
-    if (loginType === "code") {
-      if (!verificationCode || verificationCode.length !== 6) {
-        return NextResponse.json({ success: false, message: "验证码格式不正确" }, { status: 400 })
-      }
-
-      const isCodeValid = await verifyCode(phone, verificationCode, "login")
-      if (!isCodeValid) {
-        return NextResponse.json({ success: false, message: "验证码错误或已过期" }, { status: 400 })
-      }
-
-      // 如果用户不存在，自动注册
-      if (!user) {
-        return NextResponse.json({ success: false, message: "用户不存在，请先注册" }, { status: 404 })
-      }
-    }
-
-    // 密码登录
-    if (loginType === "password") {
-      if (!password) {
-        return NextResponse.json({ success: false, message: "请输入密码" }, { status: 400 })
-      }
-
-      if (!user) {
-        return NextResponse.json({ success: false, message: "用户不存在" }, { status: 404 })
-      }
-
-      if (!user.password) {
-        return NextResponse.json({ success: false, message: "该账号未设置密码，请使用验证码登录" }, { status: 400 })
-      }
-
-      const isPasswordValid = await verifyPassword(password, user.password)
-      if (!isPasswordValid) {
-        return NextResponse.json({ success: false, message: "密码错误" }, { status: 400 })
-      }
-    }
-
     if (!user) {
-      return NextResponse.json({ success: false, message: "登录失败" }, { status: 400 })
+      return NextResponse.json({ error: "用户不存在，请先注册" }, { status: 404 })
     }
 
     // 更新最后登录时间
     await updateLastLogin(user.id)
 
     // 生成JWT token
-    const token = jwt.sign(
-      {
-        userId: user.id,
-        phone: user.phone,
-        username: user.username,
-      },
-      process.env.JWT_SECRET || "fallback-secret",
-      { expiresIn: "7d" },
-    )
+    const token = sign({ userId: user.id }, JWT_SECRET, { expiresIn: "7d" })
+
+    // 移除敏感信息
+    const { password, ...userWithoutPassword } = user
 
     const response = NextResponse.json({
-      success: true,
       message: "登录成功",
-      data: {
-        user: {
-          id: user.id,
-          username: user.username,
-          phone: user.phone,
-          email: user.email,
-          avatar: user.avatar,
-          level: user.level,
-          starCoins: user.star_coins,
-          isLocalUser: user.is_local_user,
-          userType: user.user_type,
-        },
-        token,
-      },
+      user: userWithoutPassword,
     })
 
-    // 设置HTTP-only cookie
-    response.cookies.set("auth-token", token, {
+    // 设置cookie
+    response.cookies.set("auth_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 7 * 24 * 60 * 60,
-      path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 7天
     })
 
     return response
-  } catch (error: any) {
-    console.error("登录错误:", error)
-    return NextResponse.json({ success: false, message: error.message || "服务器内部错误" }, { status: 500 })
+  } catch (error) {
+    console.error("登录失败:", error)
+    return NextResponse.json({ error: "登录失败，请稍后重试" }, { status: 500 })
   }
 }

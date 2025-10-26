@@ -6,8 +6,18 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
-import { Phone, LogIn, QrCode, Shield, MapPin, BadgeCheck, AppWindow, AlertCircle, CheckCircle } from "lucide-react"
-import { sendVerificationCode, loginUser, type LoginRequest } from "@/services/auth-service"
+import {
+  Phone,
+  LogIn,
+  QrCode,
+  Shield,
+  MapPin,
+  BadgeCheck,
+  AppWindow,
+  AlertCircle,
+  CheckCircle,
+  Loader2,
+} from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
@@ -98,29 +108,37 @@ export default function AuthForm() {
     setIsLoading(true)
 
     try {
-      const response = await sendVerificationCode({
-        phoneNumber,
-        purpose: "login",
+      const response = await fetch("/api/auth/send-code", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          phone: phoneNumber,
+          purpose: "login",
+        }),
       })
 
-      if (response.success) {
+      const data = await response.json()
+
+      if (response.ok && data.success) {
         setIsCodeSent(true)
         setCountdown(60)
 
-        // 检查是否为洛阳本地号码（从响应消息中判断）
-        const isLocal = response.message.includes("洛阳本地用户")
+        // 检查是否为洛阳本地号码
+        const isLocal = phoneNumber.startsWith("137") || phoneNumber.startsWith("138") || phoneNumber.startsWith("139")
         setIsLocalNumber(isLocal)
 
         toast({
           title: "验证码发送成功",
-          description: response.message,
+          description: data.message || "验证码已发送至您的手机",
         })
 
         setLoginStatus("idle")
       } else {
         toast({
           title: "验证码发送失败",
-          description: response.message,
+          description: data.message || "请稍后重试",
           variant: "destructive",
         })
         setLoginStatus("error")
@@ -149,53 +167,50 @@ export default function AuthForm() {
       return
     }
 
+    if (verificationCode.length !== 6) {
+      toast({
+        title: "验证码格式错误",
+        description: "验证码应为6位数字",
+        variant: "destructive",
+      })
+      return
+    }
+
     setLoginStatus("logging")
     setIsLoading(true)
 
     try {
-      const loginRequest: LoginRequest = {
-        phoneNumber,
-        verificationCode,
-        deviceInfo: {
-          userAgent: navigator.userAgent,
-          platform: navigator.platform,
-        },
-      }
+      console.log("🔐 开始登录流程...", { phoneNumber, verificationCode })
 
-      const response = await loginUser(loginRequest)
+      const authSuccess = await login(phoneNumber, verificationCode)
 
-      if (response.success && response.user && response.token) {
-        // 使用认证上下文的登录方法
-        const authSuccess = await login(phoneNumber, verificationCode)
+      console.log("📊 登录结果:", authSuccess)
 
-        if (authSuccess) {
-          setLoginStatus("success")
+      if (authSuccess) {
+        setLoginStatus("success")
 
-          toast({
-            title: "登录成功！",
-            description: response.isLocalUser ? "欢迎洛阳本地用户，您将享受专属权益" : "欢迎使用言语平台",
-          })
+        const isLocal = phoneNumber.startsWith("137") || phoneNumber.startsWith("138") || phoneNumber.startsWith("139")
 
-          // 延迟跳转，让用户看到成功状态
-          setTimeout(() => {
-            router.push("/profile")
-          }, 1500)
-        } else {
-          throw new Error("认证上下文登录失败")
-        }
-      } else {
         toast({
-          title: "登录失败",
-          description: response.error || "请检查验证码是否正确",
-          variant: "destructive",
+          title: "登录成功！",
+          description: isLocal ? "欢迎洛阳本地用户，您将享受专属权益" : "欢迎使用言语平台",
         })
-        setLoginStatus("error")
+
+        // 延迟跳转，让用户看到成功提示
+        console.log("🚀 准备跳转到主页...")
+        setTimeout(() => {
+          router.push("/main")
+          // 强制刷新以确保状态更新
+          router.refresh()
+        }, 1500)
+      } else {
+        throw new Error("登录验证失败")
       }
-    } catch (error) {
-      console.error("登录失败:", error)
+    } catch (error: any) {
+      console.error("❌ 登录失败:", error)
       toast({
         title: "登录失败",
-        description: "请稍后重试",
+        description: error.message || "请检查验证码是否正确",
         variant: "destructive",
       })
       setLoginStatus("error")
@@ -255,7 +270,7 @@ export default function AuthForm() {
                     ) : loginStatus === "error" ? (
                       <AlertCircle className="h-5 w-5 mr-2" />
                     ) : (
-                      <div className="h-5 w-5 mr-2 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                      <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                     )}
                     <span>
                       {loginStatus === "sending" && "正在发送验证码..."}
@@ -277,7 +292,6 @@ export default function AuthForm() {
                       value={phoneNumber}
                       onChange={(e) => {
                         setPhoneNumber(e.target.value)
-                        // 重置状态
                         if (isCodeSent) {
                           setIsCodeSent(false)
                           setVerificationCode("")
@@ -341,11 +355,20 @@ export default function AuthForm() {
 
                 <Button
                   onClick={handleLogin}
-                  disabled={!isCodeSent || !verificationCode || isLoading}
+                  disabled={!isCodeSent || !verificationCode || isLoading || loginStatus === "logging"}
                   className="w-full bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
                 >
-                  <LogIn className="h-4 w-4 mr-2" />
-                  {isLoading ? "登录中..." : "登录"}
+                  {isLoading && loginStatus === "logging" ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      登录中...
+                    </>
+                  ) : (
+                    <>
+                      <LogIn className="h-4 w-4 mr-2" />
+                      立即登录
+                    </>
+                  )}
                 </Button>
 
                 {/* 重置按钮 */}
@@ -479,7 +502,7 @@ export default function AuthForm() {
                 </li>
                 <li className="flex items-start">
                   <span className="text-blue-400 mr-2">•</span>
-                  <span>一次认证，多平台互通，无需重复注册登录关联应用</span>
+                  <span>一次认证,多平台互通，无需重复注册登录关联应用</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-blue-400 mr-2">•</span>

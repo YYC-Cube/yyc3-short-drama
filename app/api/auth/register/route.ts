@@ -1,52 +1,31 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createUser, findUserByPhone, findUserByEmail } from "@/lib/models/user.model"
+import { sign } from "jsonwebtoken"
+import { createUser, findUserByPhone } from "@/lib/models/user.model"
 import { verifyCode } from "@/lib/models/verification-code.model"
 import { sendWelcomeEmail } from "@/lib/services/email.service"
-import jwt from "jsonwebtoken"
+
+const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-in-production"
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { username, phone, email, password, verificationCode } = body
+    const { username, phone, code, email } = body
 
-    // 输入验证
-    if (!username || username.length < 2) {
-      return NextResponse.json({ success: false, message: "用户名长度至少2个字符" }, { status: 400 })
-    }
-
-    if (!phone || !/^1[3-9]\d{9}$/.test(phone)) {
-      return NextResponse.json({ success: false, message: "手机号格式不正确" }, { status: 400 })
-    }
-
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ success: false, message: "邮箱格式不正确" }, { status: 400 })
-    }
-
-    if (password && password.length < 6) {
-      return NextResponse.json({ success: false, message: "密码长度至少6个字符" }, { status: 400 })
-    }
-
-    if (!verificationCode || verificationCode.length !== 6) {
-      return NextResponse.json({ success: false, message: "验证码格式不正确" }, { status: 400 })
+    // 验证输入
+    if (!username || !phone || !code) {
+      return NextResponse.json({ error: "请填写完整信息" }, { status: 400 })
     }
 
     // 验证验证码
-    const isCodeValid = await verifyCode(phone, verificationCode, "register")
+    const isCodeValid = await verifyCode(phone, code, "register")
     if (!isCodeValid) {
-      return NextResponse.json({ success: false, message: "验证码错误或已过期" }, { status: 400 })
+      return NextResponse.json({ error: "验证码错误或已过期" }, { status: 400 })
     }
 
     // 检查用户是否已存在
-    const existingUserByPhone = await findUserByPhone(phone)
-    if (existingUserByPhone) {
-      return NextResponse.json({ success: false, message: "该手机号已注册" }, { status: 409 })
-    }
-
-    if (email) {
-      const existingUserByEmail = await findUserByEmail(email)
-      if (existingUserByEmail) {
-        return NextResponse.json({ success: false, message: "该邮箱已注册" }, { status: 409 })
-      }
+    const existingUser = await findUserByPhone(phone)
+    if (existingUser) {
+      return NextResponse.json({ error: "该手机号已注册" }, { status: 400 })
     }
 
     // 创建用户
@@ -54,56 +33,35 @@ export async function POST(request: NextRequest) {
       username,
       phone,
       email,
-      password,
     })
-
-    // 发送欢迎邮件
-    if (email) {
-      await sendWelcomeEmail(email, username)
-    }
 
     // 生成JWT token
-    const token = jwt.sign(
-      {
-        userId: user.id,
-        phone: user.phone,
-        username: user.username,
-      },
-      process.env.JWT_SECRET || "fallback-secret",
-      { expiresIn: "7d" },
-    )
+    const token = sign({ userId: user.id }, JWT_SECRET, { expiresIn: "7d" })
+
+    // 发送欢迎邮件（如果有邮箱）
+    if (email) {
+      sendWelcomeEmail(email, username).catch(console.error)
+    }
+
+    // 移除敏感信息
+    const { password, ...userWithoutPassword } = user
 
     const response = NextResponse.json({
-      success: true,
       message: "注册成功",
-      data: {
-        user: {
-          id: user.id,
-          username: user.username,
-          phone: user.phone,
-          email: user.email,
-          avatar: user.avatar,
-          level: user.level,
-          starCoins: user.star_coins,
-          isLocalUser: user.is_local_user,
-          userType: user.user_type,
-        },
-        token,
-      },
+      user: userWithoutPassword,
     })
 
-    // 设置HTTP-only cookie
-    response.cookies.set("auth-token", token, {
+    // 设置cookie
+    response.cookies.set("auth_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 7 * 24 * 60 * 60,
-      path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 7天
     })
 
     return response
-  } catch (error: any) {
-    console.error("注册错误:", error)
-    return NextResponse.json({ success: false, message: error.message || "服务器内部错误" }, { status: 500 })
+  } catch (error) {
+    console.error("注册失败:", error)
+    return NextResponse.json({ error: "注册失败，请稍后重试" }, { status: 500 })
   }
 }
