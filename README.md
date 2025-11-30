@@ -541,11 +541,9 @@ analytics.performance('page_load_time', {
 
 ## 📞 联系我们
 
-- **官方网站**：[https://yanyu-yipin.com](https://yanyu-yipin.com)
-- **邮箱**：contact@yanyu-yipin.com
-- **微信公众号**：言语逸品
-- **GitHub**：[https://github.com/yanyu-yipin](https://github.com/yanyu-yipin)
-- **技术交流群**：加微信 yanyu-tech 邀请入群
+- **官方网站**：[https://yp.mymgmt.top]
+- **邮箱**：admin@0379.email
+- **GitHub**：[https://github.com/YYC-Cube/yyc3-short-drama.git]
 
 ---
 
