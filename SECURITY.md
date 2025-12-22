@@ -33,8 +33,11 @@ Create a `.env.local` file in the project root with:
 JWT_SECRET=your_generated_secure_random_string_here_minimum_32_chars
 ```
 
-**Example** (DO NOT use this in production):
+**Example** (DO NOT USE IN PRODUCTION - FOR ILLUSTRATION ONLY):
 ```env
+# ⚠️ WARNING: This is just an example format!
+# ⚠️ NEVER use this example value in any environment!
+# ⚠️ Generate your own unique secret using the commands above!
 JWT_SECRET=8a7d9c6b5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b
 ```
 
