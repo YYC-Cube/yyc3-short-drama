@@ -177,6 +177,11 @@ cp .env.example .env.local
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXT_PUBLIC_APP_NAME=言语逸品
 
+# JWT密钥配置（必需，至少32字符）
+# 使用以下命令生成安全的密钥：
+# openssl rand -base64 48
+JWT_SECRET=your_secure_random_jwt_secret_at_least_32_characters_long
+
 # AI服务配置
 OPENAI_API_KEY=your_openai_api_key
 OPENAI_API_BASE=https://api.openai.com/v1
@@ -192,6 +197,12 @@ NEXTAUTH_URL=http://localhost:3000
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 \`\`\`
+
+**重要安全提示**: 
+- \`JWT_SECRET\` 是必需的，应用启动前必须设置
+- 使用至少32个字符的强随机字符串
+- 切勿将密钥提交到版本控制系统
+- 生产环境务必使用高强度的随机密钥
 
 4. **启动开发服务器**
 \`\`\`bash

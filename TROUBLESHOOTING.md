@@ -42,12 +42,18 @@
 #### 5. 检查环境变量
 确保 `.env.local` 文件包含：
 \`\`\`env
-JWT_SECRET=your-secret-key-min-32-characters
+# JWT密钥（必需，至少32字符）
+JWT_SECRET=your-secure-jwt-secret-at-least-32-characters-long
 DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=yyc3_my
 DB_USER=yyc3_dj
 DB_PASS=yyc3_dj
+\`\`\`
+
+**重要**: `JWT_SECRET` 必须设置且至少32个字符，否则应用无法启动。使用以下命令生成安全密钥：
+\`\`\`bash
+openssl rand -base64 48
 \`\`\`
 
 #### 6. 重启开发服务器

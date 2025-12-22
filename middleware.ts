@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { verify } from "jsonwebtoken"
-
-const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-in-production"
+import { getJWTSecretCached } from "@/lib/jwt-config"
 
 // 公开路由（不需要登录）
 const publicRoutes = ["/", "/auth", "/auth/single-page"]
@@ -33,7 +32,7 @@ export function middleware(request: NextRequest) {
 
   try {
     // 验证token
-    verify(token, JWT_SECRET)
+    verify(token, getJWTSecretCached())
     return NextResponse.next()
   } catch (error) {
     // token无效，重定向到登录页

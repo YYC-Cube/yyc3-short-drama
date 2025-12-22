@@ -3,8 +3,7 @@ import { sign } from "jsonwebtoken"
 import { createUser, findUserByPhone } from "@/lib/models/user.model"
 import { verifyCode } from "@/lib/models/verification-code.model"
 import { sendWelcomeEmail } from "@/lib/services/email.service"
-
-const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-in-production"
+import { getJWTSecretCached } from "@/lib/jwt-config"
 
 export async function POST(request: NextRequest) {
   try {
@@ -36,7 +35,7 @@ export async function POST(request: NextRequest) {
     })
 
     // 生成JWT token
-    const token = sign({ userId: user.id }, JWT_SECRET, { expiresIn: "7d" })
+    const token = sign({ userId: user.id }, getJWTSecretCached(), { expiresIn: "7d" })
 
     // 发送欢迎邮件（如果有邮箱）
     if (email) {
