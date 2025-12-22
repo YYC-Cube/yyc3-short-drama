@@ -54,7 +54,7 @@
     "jsonwebtoken": "latest",
     "lucide-react": "^0.454.0",
     "mysql2": "latest",
-    "next": "^15.1.5",
+    "next": "^15.4.10",
     "next-themes": "latest",
     "nodemailer": "latest",
     "react": "^19.0.0",
