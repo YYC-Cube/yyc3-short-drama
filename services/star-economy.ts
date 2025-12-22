@@ -1,3 +1,5 @@
+import { generateSecureId } from "@/lib/crypto-utils"
+
 // 星币经济系统类型定义
 export interface StarCoin {
   balance: number
@@ -240,7 +242,7 @@ export async function earnStarCoins(
 
     // 记录交易
     const transaction: Transaction = {
-      id: `txn_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      id: generateSecureId("txn"),
       userId,
       type: "earn",
       amount: finalAmount,
@@ -302,7 +304,7 @@ export async function spendStarCoins(
 
     // 记录交易
     const transaction: Transaction = {
-      id: `txn_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      id: generateSecureId("txn"),
       userId,
       type: "spend",
       amount,
@@ -384,7 +386,7 @@ export async function joinCreatorProgram(userId: string): Promise<{
     }
 
     const newProgram: CreatorProgram = {
-      id: `creator_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      id: generateSecureId("creator"),
       userId,
       level: "bronze",
       totalWorks: 0,
