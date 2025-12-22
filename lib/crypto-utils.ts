@@ -42,10 +42,10 @@ export function generateSecureToken(bytes: number = 32): string {
 export function generateSecureAlphanumeric(length: number): string {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
   let result = ""
-  const randomValues = randomBytes(length)
 
   for (let i = 0; i < length; i++) {
-    result += chars[randomValues[i] % chars.length]
+    // Use randomInt to avoid modulo bias
+    result += chars[randomInt(0, chars.length)]
   }
 
   return result
