@@ -1,8 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { verify } from "jsonwebtoken"
 import { findUserById } from "@/lib/models/user.model"
-
-const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-in-production"
+import { getJWTSecretCached } from "@/lib/jwt-config"
 
 export async function GET(request: NextRequest) {
   try {
@@ -12,7 +11,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "未登录" }, { status: 401 })
     }
 
-    const decoded = verify(token, JWT_SECRET) as { userId: number }
+    const decoded = verify(token, getJWTSecretCached()) as { userId: number }
     const user = await findUserById(decoded.userId)
 
     // 移除敏感信息
