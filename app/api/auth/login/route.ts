@@ -2,8 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import { sign } from "jsonwebtoken"
 import { findUserByPhone, updateLastLogin } from "@/lib/models/user.model"
 import { verifyCode } from "@/lib/models/verification-code.model"
-
-const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-in-production"
+import { getJWTSecretCached } from "@/lib/jwt-config"
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,7 +30,7 @@ export async function POST(request: NextRequest) {
     await updateLastLogin(user.id)
 
     // 生成JWT token
-    const token = sign({ userId: user.id }, JWT_SECRET, { expiresIn: "7d" })
+    const token = sign({ userId: user.id }, getJWTSecretCached(), { expiresIn: "7d" })
 
     // 移除敏感信息
     const { password, ...userWithoutPassword } = user
