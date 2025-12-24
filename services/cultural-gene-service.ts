@@ -1,3 +1,5 @@
+import { generateSecureId } from "@/lib/crypto-utils"
+
 // 类型定义
 export interface CulturalGene {
   id: string
@@ -578,7 +580,7 @@ export async function addCulturalGene(gene: Omit<CulturalGene, "id">): Promise<{
 
   const newGene: CulturalGene = {
     ...gene,
-    id: `gene_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    id: generateSecureId("gene"),
     metadata: {
       ...gene.metadata,
       lastUpdated: new Date().toISOString(),

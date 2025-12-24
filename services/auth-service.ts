@@ -1,3 +1,5 @@
+import { generateSecureToken } from "@/lib/crypto-utils"
+
 // 验证码发送请求类型
 export interface SendCodeRequest {
   phoneNumber: string
@@ -126,7 +128,7 @@ export async function loginUser(request: LoginRequest): Promise<LoginResponse> {
       createdAt: new Date().toISOString(),
     }
 
-    const token = `token_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    const token = generateSecureToken(32)
 
     return {
       success: true,

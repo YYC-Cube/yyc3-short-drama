@@ -1,3 +1,5 @@
+import { generateSecureId } from "@/lib/crypto-utils"
+
 // 用户偏好类型定义
 export interface UserPreferences {
   id: string
@@ -99,7 +101,7 @@ export async function getUserPreferences(userId: string): Promise<UserPreference
   if (!preferences) {
     // 创建默认偏好
     preferences = {
-      id: `pref_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      id: generateSecureId("pref"),
       userId,
       ...defaultPreferences,
     }
@@ -152,7 +154,7 @@ export async function resetUserPreferences(userId: string): Promise<{
     await new Promise((resolve) => setTimeout(resolve, 200))
 
     const resetPreferences: UserPreferences = {
-      id: `pref_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      id: generateSecureId("pref"),
       userId,
       ...defaultPreferences,
       lastUpdated: new Date().toISOString(),
