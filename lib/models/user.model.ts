@@ -1,3 +1,15 @@
+/**
+ * @file 用户模型
+ * @description 处理用户相关的数据库操作和业务逻辑
+ * @module lib/models/user.model
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 import { query } from "@/lib/db"
 import bcrypt from "bcryptjs"
 import type { RowDataPacket, ResultSetHeader } from "mysql2"
@@ -83,27 +95,27 @@ export async function createUser(data: CreateUserData): Promise<User> {
   return findUserById(result.insertId)
 }
 
-// 根据ID查找用户
+// 根据ID查找用户（带缓存）
 export async function findUserById(id: number): Promise<User> {
   const sql = 'SELECT * FROM users WHERE id = ? AND status = "active"'
-  const [users] = await query<RowDataPacket[]>(sql, [id])
+  const [users] = await query<RowDataPacket[]>(sql, [id], true) // 使用缓存
   if (!users) {
     throw new Error("用户不存在")
   }
   return users as User
 }
 
-// 根据手机号查找用户
+// 根据手机号查找用户（带缓存）
 export async function findUserByPhone(phone: string): Promise<User | null> {
   const sql = 'SELECT * FROM users WHERE phone = ? AND status = "active"'
-  const [users] = await query<RowDataPacket[]>(sql, [phone])
+  const [users] = await query<RowDataPacket[]>(sql, [phone], true) // 使用缓存
   return (users as User) || null
 }
 
-// 根据邮箱查找用户
+// 根据邮箱查找用户（带缓存）
 export async function findUserByEmail(email: string): Promise<User | null> {
   const sql = 'SELECT * FROM users WHERE email = ? AND status = "active"'
-  const [users] = await query<RowDataPacket[]>(sql, [email])
+  const [users] = await query<RowDataPacket[]>(sql, [email], true) // 使用缓存
   return (users as User) || null
 }
 

@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: ['jsonwebtoken', 'bcryptjs']
-  },
+  serverExternalPackages: ['jsonwebtoken', 'bcryptjs'],
+
   images: {
     remotePatterns: [
       {
@@ -20,12 +19,7 @@ const nextConfig = {
     ],
     unoptimized: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
@@ -37,7 +31,7 @@ const nextConfig = {
           {
             key: 'Access-Control-Allow-Origin',
             value: process.env.NODE_ENV === 'production' 
-              ? process.env.NEXT_PUBLIC_APP_URL || 'https://yourapp.com'
+              ? process.env.NEXT_PUBLIC_APP_URL || 'https://yp.mymgmt.top'
               : 'http://localhost:3000'
           },
           {
@@ -47,6 +41,14 @@ const nextConfig = {
           {
             key: 'Access-Control-Allow-Headers',
             value: 'Content-Type, Authorization',
+          },
+          {
+            key: 'Access-Control-Allow-Credentials',
+            value: 'true',
+          },
+          {
+            key: 'Access-Control-Max-Age',
+            value: '86400',
           },
         ],
       },

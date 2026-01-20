@@ -36,9 +36,9 @@ const culturalGenesDetail = {
   },
 }
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, context: any) {
   try {
-    const id = params.id
+    const id = context.params.id
     const gene = culturalGenesDetail[id as keyof typeof culturalGenesDetail]
 
     if (!gene) {

@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     const { text } = await generateText({
       model: openai("gpt-4o"),
       prompt: fullPrompt,
-      maxTokens: 500,
+      maxOutputTokens: 500,
       temperature: 0.9,
     })
 

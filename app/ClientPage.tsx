@@ -202,8 +202,9 @@ const quickActions = [
 ]
 
 export default function ClientPage() {
-  const { isAuthenticated, user } = useAuth()
+  const { user } = useAuth()
   const [mounted, setMounted] = useState(false)
+  const isAuthenticated = user !== null
 
   useEffect(() => {
     setMounted(true)

@@ -1,8 +1,13 @@
 /**
- * JWT Configuration and Validation
- * 
- * This module provides centralized JWT secret management with security validations.
- * The JWT_SECRET environment variable MUST be set for the application to function.
+ * @file JWT配置管理
+ * @description 处理JWT令牌的生成和验证配置，包含安全验证和性能优化
+ * @module lib/jwt-config
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
  */
 
 /**
@@ -38,10 +43,19 @@ export function getJWTSecret(): string {
 }
 
 /**
+ * Gets the JWT expiration time from environment variables.
+ * @returns {string} The JWT expiration time
+ */
+export function getJWTExpiration(): string {
+  return process.env.JWT_EXPIRATION || "7d"
+}
+
+/**
  * JWT secret instance - initialized once and cached.
  * Using a function with closure for thread-safe lazy initialization.
  */
 let jwtSecretInstance: string | null = null
+let jwtExpirationInstance: string | null = null
 let isInitializing = false
 
 /**
@@ -71,5 +85,42 @@ export function getJWTSecretCached(): string {
     return jwtSecretInstance
   } finally {
     isInitializing = false
+  }
+}
+
+/**
+ * Gets the JWT expiration time with caching for performance.
+ * @returns {string} The JWT expiration time
+ */
+export function getJWTExpirationCached(): string {
+  if (jwtExpirationInstance !== null) {
+    return jwtExpirationInstance
+  }
+  jwtExpirationInstance = getJWTExpiration()
+  return jwtExpirationInstance
+}
+
+/**
+ * Clears the JWT configuration cache.
+ * Useful for testing or when environment variables change.
+ */
+export function clearJWTConfigCache(): void {
+  jwtSecretInstance = null
+  jwtExpirationInstance = null
+  console.log("🔄 JWT配置缓存已清除")
+}
+
+/**
+ * Validates the JWT configuration.
+ * @returns {boolean} True if configuration is valid, false otherwise
+ */
+export function validateJWTConfig(): boolean {
+  try {
+    getJWTSecret()
+    getJWTExpiration()
+    return true
+  } catch (error) {
+    console.error("JWT配置验证失败:", error)
+    return false
   }
 }

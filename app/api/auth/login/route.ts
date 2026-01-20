@@ -1,8 +1,25 @@
+/**
+ * @file 用户登录API
+ * @description 处理用户登录请求，验证验证码并生成JWT认证令牌
+ * @module api/auth/login
+ * @author YYC³
+ * @version 1.0.0
+ * @created 2025-01-30
+ * @updated 2025-01-30
+ * @copyright Copyright (c) 2025 YYC³
+ * @license MIT
+ */
+
 import { type NextRequest, NextResponse } from "next/server"
-import { sign } from "jsonwebtoken"
 import { findUserByPhone, updateLastLogin } from "@/lib/models/user.model"
 import { verifyCode } from "@/lib/models/verification-code.model"
-import { getJWTSecretCached } from "@/lib/jwt-config"
+import {
+  validateRequestParams,
+  generateAuthToken,
+  setAuthCookie,
+  createErrorResponse,
+  handleAuthError
+} from "@/lib/auth/auth-utils"
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,27 +27,28 @@ export async function POST(request: NextRequest) {
     const { phone, code } = body
 
     // 验证输入
-    if (!phone || !code) {
-      return NextResponse.json({ error: "请填写手机号和验证码" }, { status: 400 })
+    const validation = validateRequestParams(body, ["phone", "code"])
+    if (!validation.isValid) {
+      return createErrorResponse(validation.error || "请填写手机号和验证码")
     }
 
     // 验证验证码
     const isCodeValid = await verifyCode(phone, code, "login")
     if (!isCodeValid) {
-      return NextResponse.json({ error: "验证码错误或已过期" }, { status: 400 })
+      return createErrorResponse("验证码错误或已过期")
     }
 
     // 查找用户
     const user = await findUserByPhone(phone)
     if (!user) {
-      return NextResponse.json({ error: "用户不存在，请先注册" }, { status: 404 })
+      return createErrorResponse("用户不存在，请先注册", 404)
     }
 
     // 更新最后登录时间
     await updateLastLogin(user.id)
 
     // 生成JWT token
-    const token = sign({ userId: user.id }, getJWTSecretCached(), { expiresIn: "7d" })
+    const token = generateAuthToken(user.id)
 
     // 移除敏感信息
     const { password, ...userWithoutPassword } = user
@@ -41,16 +59,10 @@ export async function POST(request: NextRequest) {
     })
 
     // 设置cookie
-    response.cookies.set("auth_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7, // 7天
-    })
+    setAuthCookie(response, token)
 
     return response
   } catch (error) {
-    console.error("登录失败:", error)
-    return NextResponse.json({ error: "登录失败，请稍后重试" }, { status: 500 })
+    return handleAuthError(error, "登录失败")
   }
 }
