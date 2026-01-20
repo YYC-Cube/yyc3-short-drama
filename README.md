@@ -1,14 +1,29 @@
+<div align="center">
+  <img src="https://raw.githubusercontent.com/YYC-Cube/yyc3-short-drama/main/public/yyc3-article-cover-05.png" alt="言语逸品 - 河洛文化数字传承平台" width="100%" style="border-radius: 8px; margin-bottom: 20px;" />
+</div>
+
 # 言语逸品 - 河洛文化数字传承平台
 
 > 🏛️ 运用现代科技手段传承和弘扬河洛文化，让千年文明在数字时代重新绽放光彩
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.0-black?style=flat-square&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
-[![Framer Motion](https://img.shields.io/badge/Framer_Motion-11.0-0055FF?style=flat-square&logo=framer)](https://www.framer.com/motion/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0;">
+  <a href="https://nextjs.org/" target="_blank"><img src="https://img.shields.io/badge/Next.js-15.0-black?style=flat-square&logo=next.js" alt="Next.js" /></a>
+  <a href="https://www.typescriptlang.org/" target="_blank"><img src="https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript" alt="TypeScript" /></a>
+  <a href="https://tailwindcss.com/" target="_blank"><img src="https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=flat-square&logo=tailwind-css" alt="Tailwind CSS" /></a>
+  <a href="https://www.framer.com/motion/" target="_blank"><img src="https://img.shields.io/badge/Framer_Motion-11.0-0055FF?style=flat-square&logo=framer" alt="Framer Motion" /></a>
+  <a href="LICENSE" target="_blank"><img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License" /></a>
+  <a href="https://github.com/YYC-Cube/yyc3-short-drama" target="_blank"><img src="https://img.shields.io/github/stars/YYC-Cube/yyc3-short-drama?style=flat-square&color=yellow" alt="GitHub Stars" /></a>
+  <a href="https://github.com/YYC-Cube/yyc3-short-drama" target="_blank"><img src="https://img.shields.io/github/forks/YYC-Cube/yyc3-short-drama?style=flat-square&color=blue" alt="GitHub Forks" /></a>
+  <a href="https://github.com/YYC-Cube/yyc3-short-drama/actions" target="_blank"><img src="https://img.shields.io/github/actions/workflow/status/YYC-Cube/yyc3-short-drama/ci.yml?style=flat-square" alt="CI Status" /></a>
+  <a href="https://github.com/YYC-Cube/yyc3-short-drama" target="_blank"><img src="https://img.shields.io/github/commit-activity/m/YYC-Cube/yyc3-short-drama?style=flat-square" alt="Commit Activity" /></a>
+  <a href="https://github.com/YYC-Cube/yyc3-short-drama" target="_blank"><img src="https://img.shields.io/github/last-commit/YYC-Cube/yyc3-short-drama?style=flat-square" alt="Last Commit" /></a>
+</div>
 
 ## 📖 项目简介
+
+<div align="center" style="margin: 20px 0;">
+  <img src="https://raw.githubusercontent.com/YYC-Cube/yyc3-short-drama/main/public/images/luoshen-11.png" alt="洛神赋" width="60%" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(255, 140, 0, 0.15);" />
+</div>
 
 言语逸品是一个致力于河洛文化数字传承的创新平台，融合了人工智能、虚拟现实、区块链等前沿技术，为用户提供沉浸式的文化体验。平台以洛阳为核心，深度挖掘河洛文化的历史底蕴，通过现代科技手段实现文化的数字化保护、传承和创新。
 
@@ -153,10 +168,10 @@ const baguaScript = await generateScript({
 ### 安装步骤
 
 1. **克隆项目**
-\`\`\`bash
-git clone https://github.com/your-org/yanyu-yipin.git
-cd yanyu-yipin
-\`\`\`
+```bash
+git clone https://github.com/YYC-Cube/yyc3-short-drama.git
+cd yyc3-short-drama
+```\`\`\`
 
 2. **安装依赖**
 \`\`\`bash
