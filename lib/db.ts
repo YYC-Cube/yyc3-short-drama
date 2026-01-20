@@ -14,12 +14,12 @@ import mysql from "mysql2/promise"
 
 // 创建数据库连接池
 const pool = mysql.createPool({
-  host: process.env.DB_HOST || "localhost",
-  port: Number.parseInt(process.env.DB_PORT || "3306"),
-  user: process.env.DB_USER || "yyc3_dj",
-  password: process.env.DB_PASS || "yyc3_dj",
-  database: process.env.DB_NAME || "yyc3_my",
-  charset: process.env.DB_CHARSET || "utf8mb4",
+  host: process.env.DB_MASTER_HOST || "localhost",
+  port: Number.parseInt(process.env.DB_MASTER_PORT || "3306"),
+  user: process.env.DB_MASTER_USER || "yyc3_dj",
+  password: process.env.DB_MASTER_PASS || "yyc3_dj",
+  database: process.env.DB_MASTER_NAME || "yyc3_my",
+  charset: process.env.DB_MASTER_CHARSET || "utf8mb4",
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,

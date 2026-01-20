@@ -98,25 +98,25 @@ export async function createUser(data: CreateUserData): Promise<User> {
 // 根据ID查找用户（带缓存）
 export async function findUserById(id: number): Promise<User> {
   const sql = 'SELECT * FROM users WHERE id = ? AND status = "active"'
-  const [users] = await query<RowDataPacket[]>(sql, [id], true) // 使用缓存
-  if (!users) {
+  const users = await query<RowDataPacket[]>(sql, [id], true) // 使用缓存
+  if (!users || users.length === 0) {
     throw new Error("用户不存在")
   }
-  return users as User
+  return users[0] as User
 }
 
 // 根据手机号查找用户（带缓存）
 export async function findUserByPhone(phone: string): Promise<User | null> {
   const sql = 'SELECT * FROM users WHERE phone = ? AND status = "active"'
-  const [users] = await query<RowDataPacket[]>(sql, [phone], true) // 使用缓存
-  return (users as User) || null
+  const users = await query<RowDataPacket[]>(sql, [phone], true) // 使用缓存
+  return users && users.length > 0 ? (users[0] as User) : null
 }
 
 // 根据邮箱查找用户（带缓存）
 export async function findUserByEmail(email: string): Promise<User | null> {
   const sql = 'SELECT * FROM users WHERE email = ? AND status = "active"'
-  const [users] = await query<RowDataPacket[]>(sql, [email], true) // 使用缓存
-  return (users as User) || null
+  const users = await query<RowDataPacket[]>(sql, [email], true) // 使用缓存
+  return users && users.length > 0 ? (users[0] as User) : null
 }
 
 // 验证密码

@@ -73,15 +73,15 @@ export async function verifyCode(
     LIMIT 1
   `
 
-  const [rows] = await query<RowDataPacket[]>(sql, [contact, code, type])
+  const rows = await query<RowDataPacket[]>(sql, [contact, code, type])
 
-  if (!rows) {
+  if (!rows || rows.length === 0) {
     return false
   }
 
   // 标记验证码为已使用
   const updateSql = "UPDATE verification_codes SET used = TRUE WHERE id = ?"
-  await query(updateSql, [(rows as any).id])
+  await query(updateSql, [rows[0].id])
 
   return true
 }
