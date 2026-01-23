@@ -182,30 +182,25 @@ export default function AuthForm() {
     try {
       console.log("🔐 开始登录流程...", { phoneNumber, verificationCode })
 
-      const authSuccess = await login(phoneNumber, verificationCode)
+      await login(phoneNumber, verificationCode)
 
-      console.log("📊 登录结果:", authSuccess)
+      // 登录成功（如果失败会抛出错误）
+      setLoginStatus("success")
 
-      if (authSuccess) {
-        setLoginStatus("success")
+      const isLocal = phoneNumber.startsWith("137") || phoneNumber.startsWith("138") || phoneNumber.startsWith("139")
 
-        const isLocal = phoneNumber.startsWith("137") || phoneNumber.startsWith("138") || phoneNumber.startsWith("139")
+      toast({
+        title: "登录成功！",
+        description: isLocal ? "欢迎洛阳本地用户，您将享受专属权益" : "欢迎使用言语平台",
+      })
 
-        toast({
-          title: "登录成功！",
-          description: isLocal ? "欢迎洛阳本地用户，您将享受专属权益" : "欢迎使用言语平台",
-        })
-
-        // 延迟跳转，让用户看到成功提示
-        console.log("🚀 准备跳转到主页...")
-        setTimeout(() => {
-          router.push("/main")
-          // 强制刷新以确保状态更新
-          router.refresh()
-        }, 1500)
-      } else {
-        throw new Error("登录验证失败")
-      }
+      // 延迟跳转，让用户看到成功提示
+      console.log("🚀 准备跳转到主页...")
+      setTimeout(() => {
+        router.push("/main")
+        // 强制刷新以确保状态更新
+        router.refresh()
+      }, 1500)
     } catch (error) {
       console.error("❌ 登录失败:", error)
       toast({
