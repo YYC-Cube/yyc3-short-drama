@@ -206,11 +206,11 @@ export default function AuthForm() {
       } else {
         throw new Error("登录验证失败")
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error("❌ 登录失败:", error)
       toast({
         title: "登录失败",
-        description: error.message || "请检查验证码是否正确",
+        description: (error as Error).message || "请检查验证码是否正确",
         variant: "destructive",
       })
       setLoginStatus("error")

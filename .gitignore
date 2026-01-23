@@ -25,3 +25,28 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# testing
+/coverage
+
+# babel
+babel.config.js
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

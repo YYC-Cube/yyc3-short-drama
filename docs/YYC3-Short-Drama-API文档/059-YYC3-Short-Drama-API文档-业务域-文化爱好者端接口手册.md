@@ -94,12 +94,37 @@ YYC3-Short-Drama项目是一个基于「五高五标五化」理念的河洛文�
 - **请求体**:
 ```json
 {
-  "username": "文化爱好者",
   "email": "user@example.com",
   "password": "password123",
-  "role": "cultural_lover"
+  "name": "用户名",
+  "verificationCode": "123456"
 }
 ```
+- **响应**:
+  - **成功**:
+  ```json
+  {
+    "success": true,
+    "message": "注册成功",
+    "data": {
+      "user": {
+        "id": "1",
+        "email": "user@example.com",
+        "name": "用户名",
+        "role": "user",
+        "createdAt": "2025-01-30T00:00:00Z"
+      },
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    }
+  }
+  ```
+  - **错误**:
+  ```json
+  {
+    "success": false,
+    "message": "邮箱已被注册"
+  }
+  ```
 
 **用户登录**
 - **路径**: `/api/auth/login`
@@ -107,15 +132,119 @@ YYC3-Short-Drama项目是一个基于「五高五标五化」理念的河洛文�
 - **请求体**:
 ```json
 {
-  "email": "user@example.com",
-  "password": "password123"
+  "phone": "13800138000",
+  "code": "123456"
 }
 ```
+- **响应**:
+  - **成功**:
+  ```json
+  {
+    "message": "登录成功",
+    "user": {
+      "id": 1,
+      "phone": "13800138000",
+      "username": "测试用户",
+      "email": "test@example.com",
+      "avatar": "",
+      "level": "初级导演",
+      "star_coins": 100,
+      "is_local_user": true,
+      "user_type": "normal"
+    }
+  }
+  ```
+  - **错误**:
+  ```json
+  {
+    "success": false,
+    "error": "验证码错误或已过期"
+  }
+  ```
+
+**用户登出**
+- **路径**: `/api/auth/logout`
+- **方法**: `POST`
+- **认证**: 需要
+- **响应**:
+  - **成功**:
+  ```json
+  {
+    "success": true,
+    "message": "登出成功"
+  }
+  ```
+  - **错误**:
+  ```json
+  {
+    "success": false,
+    "message": "未登录"
+  }
+  ```
 
 **获取用户信息**
-- **路径**: `/api/auth/profile`
+- **路径**: `/api/auth/me`
 - **方法**: `GET`
 - **认证**: 需要
+- **响应**:
+  - **成功**:
+  ```json
+  {
+    "success": true,
+    "message": "获取成功",
+    "data": {
+      "user": {
+        "id": "1",
+        "email": "user@example.com",
+        "name": "用户名",
+        "role": "user",
+        "avatar": "https://example.com/avatar.jpg",
+        "bio": "用户简介",
+        "createdAt": "2025-01-30T00:00:00Z",
+        "lastLoginAt": "2025-01-30T00:00:00Z"
+      }
+    }
+  }
+  ```
+  - **错误**:
+  ```json
+  {
+    "success": false,
+    "message": "未登录"
+  }
+  ```
+
+**发送验证码**
+- **路径**: `/api/auth/send-code`
+- **方法**: `POST`
+- **请求体**:
+```json
+{
+  "email": "user@example.com",
+  "type": "register",
+  "channel": "email"
+}
+```
+- **响应**:
+  - **成功**:
+  ```json
+  {
+    "success": true,
+    "message": "验证码发送成功",
+    "data": {
+      "email": "user@example.com",
+      "type": "register",
+      "expiresAt": "2025-01-30T00:10:00Z"
+    }
+  }
+  ```
+  - **错误**:
+  ```json
+  {
+    "success": false,
+    "message": "验证码发送过于频繁，请稍后再试"
+  }
+  ```
 
 #### 3.3 文化资源接口
 
