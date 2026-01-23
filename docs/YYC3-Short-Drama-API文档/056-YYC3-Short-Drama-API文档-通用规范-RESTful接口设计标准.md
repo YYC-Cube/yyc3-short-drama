@@ -58,7 +58,390 @@ YYC3-Short-Drama项目是一个基于「五高五标五化」理念的河洛文�
 - **数字化**：数据驱动的决策，提高决策准确性
 - **生态化**：开放的生态系统，促进项目可持续发展
 
-### 3. 通用规范-RESTful接口设计标准
+### 3. RESTful接口设计标准
+
+#### 3.1 接口设计原则
+
+##### 3.1.1 RESTful架构风格
+
+YYC3-Short-Drama项目严格遵循RESTful架构风格，确保接口设计的统一性和可维护性：
+
+- **资源导向**：一切皆资源，使用URI标识资源
+- **统一接口**：使用标准HTTP方法（GET、POST、PUT、DELETE、PATCH）
+- **无状态**：每个请求包含所有必要信息，服务器不保存客户端状态
+- **可缓存**：响应明确标识是否可缓存
+- **分层系统**：客户端无需知道是否连接到最终服务器
+- **按需代码**：可选功能，通过传输代码扩展客户端功能
+
+##### 3.1.2 URI命名规范
+
+```
+基础路径：/api/v1
+
+资源命名规则：
+- 使用名词复数形式
+- 使用kebab-case（短横线分隔）
+- 避免使用动词
+- 层级不超过3层
+
+示例：
+✅ 正确：
+/api/v1/dramas
+/api/v1/dramas/{id}/episodes
+/api/v1/users/{userId}/favorites
+
+❌ 错误：
+/api/v1/getDramas
+/api/v1/drama
+/api/v1/dramas/{id}/episodes/{episodeId}/comments/{commentId}
+```
+
+#### 3.2 HTTP方法使用规范
+
+##### 3.2.1 方法映射表
+
+| HTTP方法 | 用途 | 幂等性 | 安全性 | 请求体 | 响应体 |
+|---------|------|--------|--------|--------|--------|
+| GET | 获取资源 | 是 | 是 | 无 | 有 |
+| POST | 创建资源 | 否 | 否 | 有 | 有 |
+| PUT | 完整更新资源 | 是 | 否 | 有 | 有/无 |
+| PATCH | 部分更新资源 | 否 | 否 | 有 | 有/无 |
+| DELETE | 删除资源 | 是 | 否 | 无 | 有/无 |
+| OPTIONS | 获取支持的方法 | 是 | 是 | 无 | 有 |
+| HEAD | 获取响应头 | 是 | 是 | 无 | 无 |
+
+##### 3.2.2 方法使用示例
+
+```typescript
+// 获取短剧列表
+GET /api/v1/dramas?page=1&limit=20
+
+// 获取单个短剧详情
+GET /api/v1/dramas/{id}
+
+// 创建短剧
+POST /api/v1/dramas
+Content-Type: application/json
+
+{
+  "title": "河洛传奇",
+  "description": "讲述河洛文化的传奇故事",
+  "categoryId": "category-001"
+}
+
+// 完整更新短剧
+PUT /api/v1/dramas/{id}
+Content-Type: application/json
+
+{
+  "title": "河洛传奇（修订版）",
+  "description": "讲述河洛文化的传奇故事",
+  "categoryId": "category-001",
+  "status": "PUBLISHED"
+}
+
+// 部分更新短剧
+PATCH /api/v1/dramas/{id}
+Content-Type: application/json
+
+{
+  "status": "PUBLISHED"
+}
+
+// 删除短剧
+DELETE /api/v1/dramas/{id}
+```
+
+#### 3.3 请求规范
+
+##### 3.3.1 请求头规范
+
+| 请求头 | 必填 | 说明 | 示例 |
+|--------|------|------|------|
+| Content-Type | 是（有请求体时） | 请求内容类型 | application/json |
+| Accept | 否 | 期望的响应类型 | application/json |
+| Authorization | 是（需认证） | 认证令牌 | Bearer {token} |
+| X-Request-ID | 否 | 请求唯一标识 | uuid-v4 |
+| X-Client-Version | 否 | 客户端版本 | 1.0.0 |
+| X-Device-ID | 否 | 设备唯一标识 | device-uuid |
+| User-Agent | 是 | 用户代理信息 | YYC3-App/1.0.0 (iOS) |
+
+##### 3.3.2 请求体格式
+
+```json
+{
+  "data": {
+    // 业务数据
+  },
+  "meta": {
+    // 元数据（可选）
+    "requestId": "uuid-v4",
+    "timestamp": 1640995200000
+  }
+}
+```
+
+##### 3.3.3 查询参数规范
+
+```
+分页参数：
+- page: 页码（从1开始）
+- limit: 每页数量（默认20，最大100）
+
+排序参数：
+- sort: 排序字段（支持多个字段，逗号分隔）
+- order: 排序方向（asc/desc）
+
+过滤参数：
+- filter[field]: 字段过滤
+- search: 全文搜索
+
+示例：
+/api/v1/dramas?page=1&limit=20&sort=createdAt&order=desc&filter[status]=PUBLISHED&search=河洛
+```
+
+#### 3.4 响应规范
+
+##### 3.4.1 成功响应格式
+
+```json
+{
+  "success": true,
+  "code": "200",
+  "message": "操作成功",
+  "data": {
+    // 业务数据
+  },
+  "meta": {
+    "requestId": "uuid-v4",
+    "timestamp": 1640995200000,
+    "pagination": {
+      "page": 1,
+      "limit": 20,
+      "total": 100,
+      "totalPages": 5
+    }
+  }
+}
+```
+
+##### 3.4.2 错误响应格式
+
+```json
+{
+  "success": false,
+  "code": "400",
+  "message": "请求参数错误",
+  "errors": [
+    {
+      "field": "title",
+      "message": "标题不能为空"
+    }
+  ],
+  "meta": {
+    "requestId": "uuid-v4",
+    "timestamp": 1640995200000
+  }
+}
+```
+
+##### 3.4.3 HTTP状态码规范
+
+| 状态码 | 说明 | 使用场景 |
+|--------|------|---------|
+| 200 | OK | 请求成功 |
+| 201 | Created | 资源创建成功 |
+| 204 | No Content | 请求成功但无返回内容 |
+| 400 | Bad Request | 请求参数错误 |
+| 401 | Unauthorized | 未认证 |
+| 403 | Forbidden | 无权限 |
+| 404 | Not Found | 资源不存在 |
+| 409 | Conflict | 资源冲突 |
+| 422 | Unprocessable Entity | 请求格式正确但语义错误 |
+| 429 | Too Many Requests | 请求过于频繁 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 502 | Bad Gateway | 网关错误 |
+| 503 | Service Unavailable | 服务不可用 |
+
+#### 3.5 数据格式规范
+
+##### 3.5.1 日期时间格式
+
+```json
+{
+  "createdAt": "2024-01-01T00:00:00.000Z",
+  "updatedAt": "2024-01-01T00:00:00.000Z",
+  "publishedAt": "2024-01-01T00:00:00.000Z"
+}
+```
+
+- 使用ISO 8601格式
+- 时区为UTC（Z后缀）
+- 毫秒精度
+
+##### 3.5.2 金额格式
+
+```json
+{
+  "price": 99.99,
+  "currency": "CNY"
+}
+```
+
+- 使用浮点数
+- 保留两位小数
+- 明确货币类型
+
+##### 3.5.3 分页数据格式
+
+```json
+{
+  "data": [
+    // 数据列表
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "limit": 20,
+      "total": 100,
+      "totalPages": 5,
+      "hasNext": true,
+      "hasPrev": false
+    }
+  }
+}
+```
+
+#### 3.6 版本管理
+
+##### 3.6.1 版本号规范
+
+```
+版本号格式：v{major}.{minor}.{patch}
+
+- major: 主版本号（不兼容的API修改）
+- minor: 次版本号（向下兼容的功能性新增）
+- patch: 修订号（向下兼容的问题修正）
+
+示例：
+- v1.0.0: 初始版本
+- v1.1.0: 新增功能
+- v1.1.1: 修复bug
+- v2.0.0: 重大更新，不兼容
+```
+
+##### 3.6.2 版本兼容策略
+
+```
+版本兼容性：
+- 同大版本内保持向后兼容
+- 新增字段不影响旧客户端
+- 废弃字段保留至少两个小版本
+- 重大版本变更提前3个月通知
+
+版本切换：
+- 使用URL路径标识版本：/api/v1/...
+- 支持多版本并行运行
+- 旧版本保留至少6个月
+```
+
+#### 3.7 接口文档规范
+
+##### 3.7.1 接口文档结构
+
+```markdown
+## 接口名称
+
+### 接口描述
+简要描述接口的功能和用途
+
+### 请求信息
+- **接口地址**: `/api/v1/dramas`
+- **请求方法**: `GET`
+- **认证方式**: `Bearer Token`
+- **请求频率**: `100次/分钟`
+
+### 请求参数
+
+#### 路径参数
+| 参数名 | 类型 | 必填 | 说明 |
+|--------|------|------|------|
+| id | string | 是 | 短剧ID |
+
+#### 查询参数
+| 参数名 | 类型 | 必填 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| page | integer | 否 | 1 | 页码 |
+| limit | integer | 否 | 20 | 每页数量 |
+
+#### 请求体
+```json
+{
+  "title": "短剧标题",
+  "description": "短剧描述"
+}
+```
+
+### 响应参数
+
+#### 成功响应
+```json
+{
+  "success": true,
+  "code": "200",
+  "message": "操作成功",
+  "data": {
+    "id": "drama-001",
+    "title": "短剧标题"
+  }
+}
+```
+
+#### 错误响应
+```json
+{
+  "success": false,
+  "code": "400",
+  "message": "请求参数错误"
+}
+```
+
+### 示例代码
+
+#### cURL
+```bash
+curl -X GET "https://api.yyc3.com/api/v1/dramas?page=1&limit=20" \
+  -H "Authorization: Bearer {token}"
+```
+
+#### JavaScript
+```javascript
+const response = await fetch('https://api.yyc3.com/api/v1/dramas?page=1&limit=20', {
+  method: 'GET',
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+});
+
+const data = await response.json();
+```
+```
+
+#### 3.7.2 接口测试规范
+
+```
+测试要求：
+- 所有接口必须有自动化测试用例
+- 测试覆盖正常场景和异常场景
+- 测试数据使用独立环境
+- 测试结果自动记录
+
+测试类型：
+- 单元测试：测试单个接口
+- 集成测试：测试接口间交互
+- 性能测试：测试接口响应时间
+- 安全测试：测试接口安全性
+```
 
 ---
 

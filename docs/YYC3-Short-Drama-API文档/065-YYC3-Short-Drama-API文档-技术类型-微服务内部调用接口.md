@@ -58,7 +58,424 @@ YYC3-Short-Drama项目是一个基于「五高五标五化」理念的河洛文�
 - **数字化**：数据驱动的决策，提高决策准确性
 - **生态化**：开放的生态系统，促进项目可持续发展
 
-### 3. 技术类型-微服务内部调用接口
+### 3. 微服务内部调用接口
+
+#### 3.1 微服务架构
+
+##### 3.1.1 服务注册与发现
+
+```
+┌─────────────────────────────────────────┐
+│           服务注册中心                   │
+│           (Consul/Etcd)               │
+├─────────────────────────────────────────┤
+│  服务列表                              │
+│  ├── user-service (用户服务)            │
+│  ├── drama-service (短剧服务)          │
+│  ├── payment-service (支付服务)         │
+│  ├── ai-service (AI服务)              │
+│  ├── file-service (文件服务)            │
+│  ├── notification-service (通知服务)      │
+│  └── analytics-service (数据分析服务)    │
+└─────────────────────────────────────────┘
+```
+
+##### 3.1.2 服务通信协议
+
+```
+通信方式：
+- HTTP/REST: 同步调用
+- gRPC: 高性能RPC调用
+- Message Queue: 异步消息传递
+- WebSocket: 实时通信
+
+服务调用流程：
+1. 服务A调用服务B
+2. 服务A从注册中心获取服务B的地址
+3. 服务A通过HTTP/gRPC调用服务B
+4. 服务B处理请求并返回响应
+5. 服务A处理响应结果
+```
+
+#### 3.2 服务注册
+
+##### 3.2.1 注册接口
+
+**接口地址**: `/internal/service/register`
+**请求方法**: `POST`
+**认证方式**: `Internal Token`
+
+**请求体**:
+```json
+{
+  "serviceName": "user-service",
+  "serviceId": "user-service-001",
+  "address": "192.168.1.100",
+  "port": 3201,
+  "healthCheckUrl": "http://192.168.1.100:3201/health",
+  "metadata": {
+    "version": "1.0.0",
+    "environment": "production"
+  }
+}
+```
+
+**响应示例**:
+```json
+{
+  "success": true,
+  "code": "200",
+  "message": "注册成功",
+  "data": {
+    "serviceId": "user-service-001",
+    "registeredAt": "2024-01-01T00:00:00.000Z",
+    "ttl": 30
+  }
+}
+```
+
+##### 3.2.2 健康检查接口
+
+**接口地址**: `/internal/service/health`
+**请求方法**: `GET`
+**认证方式**: `Internal Token`
+
+**响应示例**:
+```json
+{
+  "status": "healthy",
+  "timestamp": "2024-01-01T00:00:00.000Z",
+  "checks": {
+    "database": "healthy",
+    "redis": "healthy",
+    "externalServices": "healthy"
+  }
+}
+```
+
+#### 3.3 服务发现
+
+##### 3.3.1 获取服务列表
+
+**接口地址**: `/internal/service/discovery`
+**请求方法**: `GET`
+**认证方式**: `Internal Token`
+
+**查询参数**:
+| 参数名 | 类型 | 必填 | 说明 |
+|--------|------|------|------|
+| serviceName | string | 否 | 服务名称 |
+| healthyOnly | boolean | 否 | 仅返回健康服务 |
+
+**响应示例**:
+```json
+{
+  "success": true,
+  "code": "200",
+  "message": "获取成功",
+  "data": {
+    "services": [
+      {
+        "serviceName": "user-service",
+        "serviceId": "user-service-001",
+        "address": "192.168.1.100",
+        "port": 3201,
+        "status": "healthy",
+        "metadata": {
+          "version": "1.0.0",
+          "environment": "production"
+        }
+      }
+    ]
+  }
+}
+```
+
+#### 3.4 服务调用
+
+##### 3.4.1 HTTP调用
+
+```typescript
+// backend/services/httpClient.service.ts
+import axios from 'axios';
+import { ServiceDiscovery } from './serviceDiscovery.service';
+
+export class HttpClientService {
+  private serviceDiscovery: ServiceDiscovery;
+
+  constructor() {
+    this.serviceDiscovery = new ServiceDiscovery();
+  }
+
+  async callService<T>(
+    serviceName: string,
+    path: string,
+    options: {
+      method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+      data?: any;
+      params?: any;
+      headers?: any;
+    } = {}
+  ): Promise<T> {
+    const service = await this.serviceDiscovery.getService(serviceName);
+    
+    if (!service) {
+      throw new Error(`Service ${serviceName} not found`);
+    }
+
+    const url = `http://${service.address}:${service.port}${path}`;
+
+    const response = await axios({
+      url,
+      method: options.method || 'GET',
+      data: options.data,
+      params: options.params,
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Internal-Token': process.env.INTERNAL_TOKEN,
+        ...options.headers,
+      },
+      timeout: 5000,
+    });
+
+    return response.data;
+  }
+}
+
+export const httpClientService = new HttpClientService();
+```
+
+##### 3.4.2 gRPC调用
+
+```typescript
+// backend/services/grpcClient.service.ts
+import * as grpc from '@grpc/grpc-js';
+import { loadSync } from '@grpc/proto-loader';
+
+export class GrpcClientService {
+  private clients: Map<string, any> = new Map();
+
+  async callService<T>(
+    serviceName: string,
+    methodName: string,
+    request: any
+  ): Promise<T> {
+    let client = this.clients.get(serviceName);
+
+    if (!client) {
+      const service = await this.getService(serviceName);
+      const protoDefinition = loadSync('./protos/service.proto');
+      const proto = grpc.loadPackageDefinition(protoDefinition);
+      
+      client = new proto[serviceName](
+        `${service.address}:${service.port}`,
+        grpc.credentials.createInsecure()
+      );
+      
+      this.clients.set(serviceName, client);
+    }
+
+    return new Promise((resolve, reject) => {
+      client[methodName](request, (error: any, response: any) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(response);
+        }
+      });
+    });
+  }
+
+  private async getService(serviceName: string) {
+    // 从服务发现获取服务地址
+    return {
+      address: '192.168.1.100',
+      port: 3201,
+    };
+  }
+}
+
+export const grpcClientService = new GrpcClientService();
+```
+
+#### 3.5 消息队列
+
+##### 3.5.1 消息发布
+
+```typescript
+// backend/services/messageQueue.service.ts
+import { Queue, QueueScheduler } from 'bullmq';
+import { Redis } from 'ioredis';
+
+const redis = new Redis({
+  host: process.env.REDIS_HOST,
+  port: parseInt(process.env.REDIS_PORT || '6379'),
+});
+
+export class MessageQueueService {
+  private queues: Map<string, Queue> = new Map();
+
+  getQueue(queueName: string): Queue {
+    if (!this.queues.has(queueName)) {
+      const queue = new Queue(queueName, {
+        connection: redis,
+        defaultJobOptions: {
+          attempts: 3,
+          backoff: {
+            type: 'exponential',
+            delay: 5000,
+          },
+        },
+      });
+      this.queues.set(queueName, queue);
+    }
+    return this.queues.get(queueName)!;
+  }
+
+  async publish(queueName: string, data: any, options?: any): Promise<void> {
+    const queue = this.getQueue(queueName);
+    await queue.add(queueName, data, options);
+  }
+
+  async publishBatch(queueName: string, items: any[]): Promise<void> {
+    const queue = this.getQueue(queueName);
+    const jobs = items.map((item) => ({
+      name: queueName,
+      data: item,
+    }));
+    await queue.addBulk(jobs);
+  }
+}
+
+export const messageQueueService = new MessageQueueService();
+```
+
+##### 3.5.2 消息消费
+
+```typescript
+// backend/workers/dramaCreated.worker.ts
+import { Worker } from 'bullmq';
+import { Redis } from 'ioredis';
+import { logger } from '@/utils/logger';
+
+const redis = new Redis({
+  host: process.env.REDIS_HOST,
+  port: parseInt(process.env.REDIS_PORT || '6379'),
+});
+
+const worker = new Worker(
+  'drama-created',
+  async (job) => {
+    logger.info('Processing drama created event', { jobId: job.id });
+    
+    try {
+      const { dramaId, userId } = job.data;
+      
+      // 发送通知
+      await sendNotification(userId, '您的短剧已创建成功');
+      
+      // 更新统计
+      await updateStatistics('drama_created');
+      
+      logger.info('Drama created event processed', { jobId: job.id });
+    } catch (error) {
+      logger.error('Failed to process drama created event', error as Error);
+      throw error;
+    }
+  },
+  {
+    connection: redis,
+    concurrency: 5,
+  }
+);
+
+worker.on('completed', (job) => {
+  logger.info('Job completed', { jobId: job.id });
+});
+
+worker.on('failed', (job, err) => {
+  logger.error('Job failed', { jobId: job?.id, error: err });
+});
+```
+
+#### 3.6 服务熔断与降级
+
+##### 3.6.1 熔断器配置
+
+```typescript
+// backend/services/circuitBreaker.service.ts
+import { CircuitBreaker } from 'opossum';
+
+export class CircuitBreakerService {
+  private breakers: Map<string, CircuitBreaker> = new Map();
+
+  getBreaker(serviceName: string): CircuitBreaker {
+    if (!this.breakers.has(serviceName)) {
+      const breaker = new CircuitBreaker(
+        async () => {
+          return await this.callService(serviceName);
+        },
+        {
+          timeout: 5000,
+          errorThresholdPercentage: 50,
+          resetTimeout: 30000,
+        }
+      );
+
+      breaker.on('open', () => {
+        logger.warn(`Circuit breaker opened for ${serviceName}`);
+      });
+
+      breaker.on('halfOpen', () => {
+        logger.info(`Circuit breaker half-open for ${serviceName}`);
+      });
+
+      breaker.on('close', () => {
+        logger.info(`Circuit breaker closed for ${serviceName}`);
+      });
+
+      this.breakers.set(serviceName, breaker);
+    }
+
+    return this.breakers.get(serviceName)!;
+  }
+
+  async callService(serviceName: string): Promise<any> {
+    // 实际的服务调用逻辑
+    return {};
+  }
+}
+
+export const circuitBreakerService = new CircuitBreakerService();
+```
+
+#### 3.7 服务监控
+
+##### 3.7.1 调用链追踪
+
+```typescript
+// backend/middleware/tracing.middleware.ts
+import { Context, Next } from 'hono';
+import { tracer } from '@/utils/tracer';
+
+export const tracingMiddleware = async (c: Context, next: Next) => {
+  const span = tracer.startSpan('http_request', {
+    kind: 'server',
+    attributes: {
+      'http.method': c.req.method,
+      'http.url': c.req.url,
+      'http.host': c.req.header('host'),
+    },
+  });
+
+  c.set('span', span);
+
+  await next();
+
+  span.setAttribute('http.status_code', c.res.status);
+  span.end();
+};
+```
 
 ---
 
