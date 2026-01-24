@@ -79,6 +79,29 @@
 | MAX_NICKNAME_LENGTH | 30 | number | 昵称最大长度 |
 | MAX_BIO_LENGTH | 200 | number | 个人简介最大长度 |
 | MAX_AVATAR_SIZE | 2097152 | number | 头像最大大小（2MB） |
+| MAX_FOLLOW_COUNT | 1000 | number | 最大关注数量 |
+| MAX_FANS_COUNT | 100000 | number | 最大粉丝数量 |
+| DAILY_CHECKIN_REWARD | 10 | number | 每日签到奖励星币数量 |
+| INVITE_REWARD | 50 | number | 邀请好友奖励星币数量 |
+
+**短剧相关常量**
+
+| 常量名 | 常量值 | 类型 | 说明 |
+|----------|----------|------|------|
+| MIN_DRAMA_TITLE_LENGTH | 5 | number | 短剧标题最小长度 |
+| MAX_DRAMA_TITLE_LENGTH | 50 | number | 短剧标题最大长度 |
+| MIN_DRAMA_DESCRIPTION_LENGTH | 20 | number | 短剧描述最小长度 |
+| MAX_DRAMA_DESCRIPTION_LENGTH | 500 | number | 短剧描述最大长度 |
+| MIN_EPISODE_COUNT | 1 | number | 最小剧集数量 |
+| MAX_EPISODE_COUNT | 100 | number | 最大剧集数量 |
+| MIN_EPISODE_DURATION | 30 | number | 单集最小时长（秒） |
+| MAX_EPISODE_DURATION | 600 | number | 单集最大时长（秒） |
+| MAX_DRAMA_COVER_SIZE | 10485760 | number | 短剧封面最大大小（10MB） |
+| MAX_DRAMA_TAGS_COUNT | 10 | number | 短剧最大标签数量 |
+| DEFAULT_DRAMA_SORT | 'latest' | string | 默认短剧排序方式 |
+| DRAMA_VIEW_REWARD | 1 | number | 观看短剧奖励星币数量 |
+| DRAMA_LIKE_REWARD | 2 | number | 点赞短剧奖励星币数量 |
+| DRAMA_SHARE_REWARD | 5 | number | 分享短剧奖励星币数量 |
 
 **内容相关常量**
 
@@ -92,15 +115,57 @@
 | MAX_COMMENT_LENGTH | 500 | number | 评论最大长度 |
 | MAX_TAGS_COUNT | 10 | number | 最大标签数量 |
 
+**文化相关常量**
+
+| 常量名 | 常量值 | 类型 | 说明 |
+|----------|----------|------|------|
+| MIN_RESOURCE_TITLE_LENGTH | 5 | number | 文化资源标题最小长度 |
+| MAX_RESOURCE_TITLE_LENGTH | 100 | number | 文化资源标题最大长度 |
+| MIN_RESOURCE_DESCRIPTION_LENGTH | 20 | number | 文化资源描述最小长度 |
+| MAX_RESOURCE_DESCRIPTION_LENGTH | 1000 | number | 文化资源描述最大长度 |
+| MAX_RESOURCE_IMAGES_COUNT | 20 | number | 文化资源最大图片数量 |
+| MAX_RESOURCE_VIDEOS_COUNT | 5 | number | 文化资源最大视频数量 |
+| MAX_RESOURCE_DOCUMENTS_COUNT | 10 | number | 文化资源最大文档数量 |
+| RESOURCE_VIEW_REWARD | 3 | number | 浏览文化资源奖励星币数量 |
+| RESOURCE_SHARE_REWARD | 5 | number | 分享文化资源奖励星币数量 |
+
 **星币相关常量**
 
 | 常量名 | 常量值 | 类型 | 说明 |
 |----------|----------|------|------|
 | STAR_COIN_NAME | '星币' | string | 星币名称 |
 | STAR_COIN_SYMBOL | '★' | string | 星币符号 |
-| MIN_RECHARGE_AMOUNT | 1 | number | 最小充值金额 |
-| MAX_RECHARGE_AMOUNT | 10000 | number | 最大充值金额 |
+| MIN_RECHARGE_AMOUNT | 1 | number | 最小充值金额（元） |
+| MAX_RECHARGE_AMOUNT | 10000 | number | 最大充值金额（元） |
 | STAR_COIN_TO_CNY_RATE | 100 | number | 星币与人民币汇率（100星币=1元） |
+| MIN_WITHDRAW_AMOUNT | 10 | number | 最小提现金额（元） |
+| MAX_WITHDRAW_AMOUNT | 50000 | number | 最大提现金额（元） |
+| WITHDRAW_FEE_RATE | 0.01 | number | 提现手续费率（1%） |
+| STAR_COIN_DECIMAL_PLACES | 2 | number | 星币小数位数 |
+
+**AI相关常量**
+
+| 常量名 | 常量值 | 类型 | 说明 |
+|----------|----------|------|------|
+| AI_MODEL_DEFAULT | 'gpt-4' | string | 默认AI模型 |
+| AI_MODEL_MAX_TOKENS | 4096 | number | AI模型最大token数 |
+| AI_MODEL_TEMPERATURE | 0.7 | number | AI模型温度参数 |
+| AI_SCRIPT_GENERATION_COST | 50 | number | AI生成剧本消耗星币数量 |
+| AI_SCRIPT_OPTIMIZATION_COST | 30 | number | AI优化剧本消耗星币数量 |
+| AI_IMAGE_GENERATION_COST | 20 | number | AI生成图片消耗星币数量 |
+| AI_VIDEO_GENERATION_COST | 100 | number | AI生成视频消耗星币数量 |
+| MAX_AI_GENERATION_ATTEMPTS | 3 | number | AI生成最大尝试次数 |
+| AI_GENERATION_TIMEOUT | 120 | number | AI生成超时时间（秒） |
+
+**审核相关常量**
+
+| 常量名 | 常量值 | 类型 | 说明 |
+|----------|----------|------|------|
+| AUTO_AUDIT_ENABLED | true | boolean | 是否启用自动审核 |
+| AUTO_AUDIT_CONFIDENCE_THRESHOLD | 0.85 | number | 自动审核置信度阈值 |
+| MANUAL_AUDIT_TIMEOUT | 86400 | number | 人工审核超时时间（秒） |
+| AUDIT_REJECTION_REASON_LENGTH | 200 | number | 审核拒绝原因最大长度 |
+| MAX_AUDIT_RETRIES | 2 | number | 最大审核重试次数 |
 
 #### 1.3 技术常量
 
@@ -184,7 +249,89 @@ enum MemberLevel {
 }
 ```
 
-#### 2.2 内容相关枚举
+#### 2.2 短剧相关枚举
+
+**短剧状态枚举**
+
+```typescript
+enum DramaStatus {
+  DRAFT = 0,         // 草稿
+  PENDING_REVIEW = 1, // 待审核
+  REVIEWING = 2,     // 审核中
+  APPROVED = 3,      // 已通过
+  REJECTED = 4,      // 已拒绝
+  PUBLISHED = 5,     // 已发布
+  OFFLINE = 6,       // 已下线
+  ARCHIVED = 7       // 已归档
+}
+```
+
+**短剧类型枚举**
+
+```typescript
+enum DramaType {
+  ORIGINAL = 0,       // 原创
+  ADAPTED = 1,       // 改编
+  DERIVATIVE = 2,    // 衍生
+  COLLABORATIVE = 3  // 合作
+}
+```
+
+**短剧分类枚举**
+
+```typescript
+enum DramaCategory {
+  HISTORY = 0,       // 历史剧
+  ROMANCE = 1,       // 言情剧
+  COMEDY = 2,        // 喜剧
+  ACTION = 3,        // 动作剧
+  FANTASY = 4,       // 奇幻剧
+  MYSTERY = 5,       // 悬疑剧
+  HORROR = 6,        // 恐怖剧
+  SCIFI = 7,         // 科幻剧
+  DOCUMENTARY = 8,   // 纪录片
+  EDUCATIONAL = 9    // 教育片
+}
+```
+
+**剧集状态枚举**
+
+```typescript
+enum EpisodeStatus {
+  DRAFT = 0,         // 草稿
+  UPLOADING = 1,     // 上传中
+  PROCESSING = 2,    // 处理中
+  READY = 3,         // 已就绪
+  PUBLISHED = 4,     // 已发布
+  OFFLINE = 5        // 已下线
+}
+```
+
+**短剧排序方式枚举**
+
+```typescript
+enum DramaSortType {
+  LATEST = 'latest',           // 最新
+  HOTTEST = 'hottest',         // 最热
+  MOST_VIEWED = 'most_viewed', // 最多观看
+  MOST_LIKED = 'most_liked',   // 最多点赞
+  MOST_COMMENTED = 'most_commented', // 最多评论
+  HIGHEST_RATED = 'highest_rated'   // 最高评分
+}
+```
+
+**短剧付费类型枚举**
+
+```typescript
+enum DramaPaymentType {
+  FREE = 0,          // 免费
+  PAID = 1,          // 付费
+  VIP_FREE = 2,      // VIP免费
+  PARTIAL_PAID = 3   // 部分付费
+}
+```
+
+#### 2.3 内容相关枚举
 
 **内容状态枚举**
 
@@ -340,7 +487,224 @@ enum OrderStatus {
 }
 ```
 
-#### 2.6 系统相关枚举
+#### 2.7 AI相关枚举
+
+**AI任务状态枚举**
+
+```typescript
+enum AITaskStatus {
+  PENDING = 0,       // 待处理
+  PROCESSING = 1,    // 处理中
+  COMPLETED = 2,     // 已完成
+  FAILED = 3,        // 失败
+  CANCELLED = 4      // 已取消
+}
+```
+
+**AI任务类型枚举**
+
+```typescript
+enum AITaskType {
+  SCRIPT_GENERATION = 0,      // 剧本生成
+  SCRIPT_OPTIMIZATION = 1,    // 剧本优化
+  IMAGE_GENERATION = 2,       // 图片生成
+  VIDEO_GENERATION = 3,       // 视频生成
+  TEXT_SUMMARY = 4,           // 文本摘要
+  CONTENT_RECOMMENDATION = 5,  // 内容推荐
+  SENTIMENT_ANALYSIS = 6,     // 情感分析
+  KEYWORD_EXTRACTION = 7      // 关键词提取
+}
+```
+
+**AI模型类型枚举**
+
+```typescript
+enum AIModelType {
+  GPT_4 = 'gpt-4',                    // GPT-4
+  GPT_3_5_TURBO = 'gpt-3.5-turbo',    // GPT-3.5 Turbo
+  CLAUDE_3 = 'claude-3',              // Claude 3
+  GEMINI_PRO = 'gemini-pro',          // Gemini Pro
+  STABLE_DIFFUSION = 'stable-diffusion', // Stable Diffusion
+  CUSTOM_MODEL = 'custom-model'        // 自定义模型
+}
+```
+
+#### 2.8 交易相关枚举
+
+**交易类型枚举**
+
+```typescript
+enum TransactionType {
+  RECHARGE = 0,       // 充值
+  WITHDRAW = 1,       // 提现
+  CONSUME = 2,        // 消费
+  REWARD = 3,         // 奖励
+  REFUND = 4,         // 退款
+  TRANSFER = 5,       // 转账
+  EXCHANGE = 6        // 兑换
+}
+```
+
+**交易状态枚举**
+
+```typescript
+enum TransactionStatus {
+  PENDING = 0,       // 待处理
+  PROCESSING = 1,    // 处理中
+  SUCCESS = 2,       // 成功
+  FAILED = 3,        // 失败
+  CANCELLED = 4,     // 已取消
+  REFUNDING = 5      // 退款中
+}
+```
+
+**星币记录类型枚举**
+
+```typescript
+enum StarCoinRecordType {
+  RECHARGE = 0,       // 充值获得
+  WITHDRAW = 1,       // 提现消耗
+  VIEW_REWARD = 2,    // 观看奖励
+  LIKE_REWARD = 3,    // 点赞奖励
+  SHARE_REWARD = 4,   // 分享奖励
+  CHECKIN_REWARD = 5,// 签到奖励
+  INVITE_REWARD = 6,  // 邀请奖励
+  DRAMA_PURCHASE = 7,// 购买短剧
+  VIP_PURCHASE = 8,  // 购买VIP
+  AI_GENERATION = 9, // AI生成消耗
+  REFUND = 10        // 退款
+}
+```
+
+#### 2.9 会员相关枚举
+
+**会员类型枚举**
+
+```typescript
+enum MemberType {
+  FREE = 0,          // 免费会员
+  BASIC = 1,         // 基础会员
+  PREMIUM = 2,       // 高级会员
+  ENTERPRISE = 3     // 企业会员
+}
+```
+
+**会员状态枚举**
+
+```typescript
+enum MemberStatus {
+  INACTIVE = 0,      // 未激活
+  ACTIVE = 1,        // 已激活
+  EXPIRED = 2,       // 已过期
+  SUSPENDED = 3      // 已暂停
+}
+```
+
+**会员权益枚举**
+
+```typescript
+enum MemberBenefit {
+  AD_FREE = 0,              // 免广告
+  HD_PLAYBACK = 1,          // 高清播放
+  EXCLUSIVE_CONTENT = 2,     // 独家内容
+  EARLY_ACCESS = 3,         // 提前观看
+  UNLIMITED_DOWNLOAD = 4,   // 无限下载
+  AI_GENERATION_DISCOUNT = 5, // AI生成折扣
+  PRIORITY_SUPPORT = 6      // 优先客服
+}
+```
+
+#### 2.10 推荐相关枚举
+
+**推荐类型枚举**
+
+```typescript
+enum RecommendationType {
+  PERSONALIZED = 0,   // 个性化推荐
+  HOT = 1,            // 热门推荐
+  LATEST = 2,         // 最新推荐
+  SIMILAR = 3,        // 相似推荐
+  COLLABORATIVE = 4,   // 协同过滤
+  CONTENT_BASED = 5   // 基于内容
+}
+```
+
+**推荐理由枚举**
+
+```typescript
+enum RecommendationReason {
+  USER_PREFERENCE = 0,    // 用户偏好
+  TRENDING = 1,           // 流行趋势
+  FRIEND_LIKED = 2,        // 好友喜欢
+  SIMILAR_CONTENT = 3,     // 相似内容
+  NEW_RELEASE = 4,         // 新发布
+  HIGH_RATED = 5,          // 高评分
+  VIEWED_HISTORY = 6       // 观看历史
+}
+```
+
+#### 2.11 通知相关枚举
+
+**通知类型枚举**
+
+```typescript
+enum NotificationType {
+  SYSTEM = 0,         // 系统通知
+  DRAMA = 1,          // 短剧通知
+  SOCIAL = 2,         // 社交通知
+  TRANSACTION = 3,   // 交易通知
+  ACTIVITY = 4,       // 活动通知
+  AI = 5             // AI通知
+}
+```
+
+**通知状态枚举**
+
+```typescript
+enum NotificationStatus {
+  UNREAD = 0,        // 未读
+  READ = 1,          // 已读
+  DELETED = 2        // 已删除
+}
+```
+
+**通知优先级枚举**
+
+```typescript
+enum NotificationPriority {
+  LOW = 0,           // 低优先级
+  NORMAL = 1,        // 普通优先级
+  HIGH = 2,          // 高优先级
+  URGENT = 3         // 紧急优先级
+}
+```
+
+#### 2.12 搜索相关枚举
+
+**搜索类型枚举**
+
+```typescript
+enum SearchType {
+  ALL = 0,           // 全部
+  DRAMA = 1,         // 短剧
+  USER = 2,           // 用户
+  CULTURE = 3,       // 文化
+  TAG = 4            // 标签
+}
+```
+
+**搜索排序枚举**
+
+```typescript
+enum SearchSortType {
+  RELEVANCE = 0,     // 相关度
+  LATEST = 1,        // 最新
+  HOTTEST = 2,       // 最热
+  RATING = 3         // 评分
+}
+```
+
+#### 2.13 系统相关枚举
 
 **日志级别枚举**
 
@@ -375,6 +739,18 @@ enum Environment {
   TESTING = 1,        // 测试环境
   STAGING = 2,        // 预生产环境
   PRODUCTION = 3      // 生产环境
+}
+```
+
+**数据同步状态枚举**
+
+```typescript
+enum SyncStatus {
+  PENDING = 0,       // 待同步
+  SYNCING = 1,       // 同步中
+  SUCCESS = 2,       // 同步成功
+  FAILED = 3,        // 同步失败
+  SKIPPED = 4        // 已跳过
 }
 ```
 

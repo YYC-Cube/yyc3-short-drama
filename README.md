@@ -37,6 +37,7 @@
 ## ✨ 核心功能
 
 ### 🎭 AI智慧编剧
+
 基于八卦原理的智能剧本创作系统，融合河洛文化元素：
 
 - **八卦剧本生成器**：运用河图洛书理论构建剧本结构
@@ -55,6 +56,7 @@ const baguaScript = await generateScript({
 \`\`\`
 
 ### 🧬 文脉基因解析
+
 深度挖掘和分析河洛文化的基因密码：
 
 - **文化基因库**：系统化收录河洛文化元素
@@ -63,6 +65,7 @@ const baguaScript = await generateScript({
 - **传承路径追踪**：文化传承脉络的可视化展示
 
 ### 🌐 虚实共生体系
+
 构建线上线下融合的文化生态：
 
 - **全息投影展示**：洛神女等文化形象的立体呈现
@@ -71,6 +74,7 @@ const baguaScript = await generateScript({
 - **社交互动平台**：文化爱好者的交流社区
 
 ### ⭐ 星值经济体系
+
 创新的文化价值评估和激励机制：
 
 - **明星值积分**：基于贡献度的积分体系
@@ -79,6 +83,7 @@ const baguaScript = await generateScript({
 - **社区治理**：去中心化的平台治理模式
 
 ### 🕰️ 时空穿越体验
+
 跨越时空的文化体验之旅：
 
 - **历史场景还原**：盛唐洛阳城的数字重建
@@ -168,6 +173,7 @@ const baguaScript = await generateScript({
 ### 安装步骤
 
 1. **克隆项目**
+
 ```bash
 git clone https://github.com/YYC-Cube/yyc3-short-drama.git
 cd yyc3-short-drama

@@ -28,9 +28,11 @@
 ### 1. 背景与目标
 
 #### 1.1 项目背景
+
 YYC3-Short-Drama项目是一个基于「五高五标五化」理念的AI驱动短剧创作与分发平台，致力于通过人工智能技术赋能短剧内容创作，打造智能化的短剧生态体系。平台融合AI剧本生成、智能推荐、VR/AR沉浸式体验、星值经济体系等创新功能，为用户提供从创作到消费的全链路服务。
 
 #### 1.2 文档目标
+
 - 详细定义各业务模块的功能边界和交互关系
 - 提供清晰的接口设计和数据结构规范
 - 指导开发团队进行模块化开发和集成
@@ -39,6 +41,7 @@ YYC3-Short-Drama项目是一个基于「五高五标五化」理念的AI驱动�
 ### 2. 设计原则
 
 #### 2.1 五高原则
+
 - **高可用性**：采用微服务架构，实现服务隔离和容错机制，确保系统7x24小时稳定运行
 - **高性能**：使用缓存、CDN、异步处理等技术，优化响应时间和处理能力
 - **高安全性**：实现JWT认证、RBAC权限控制、数据加密等多层次安全防护
@@ -46,6 +49,7 @@ YYC3-Short-Drama项目是一个基于「五高五标五化」理念的AI驱动�
 - **高可维护性**：遵循SOLID原则，实现高内聚低耦合的模块设计
 
 #### 2.2 五标体系
+
 - **标准化**：统一使用RESTful API、TypeScript、React等技术栈
 - **规范化**：遵循YYC³代码规范，使用ESLint、Prettier等工具保证代码质量
 - **自动化**：实现CI/CD自动化流水线，提高开发效率
@@ -53,6 +57,7 @@ YYC3-Short-Drama项目是一个基于「五高五标五化」理念的AI驱动�
 - **可视化**：提供监控仪表盘和数据分析界面
 
 #### 2.3 五化架构
+
 - **流程化**：标准化的开发流程和代码审查机制
 - **文档化**：完善的API文档和技术文档体系
 - **工具化**：使用Docker、Kubernetes等容器化工具
@@ -64,9 +69,11 @@ YYC3-Short-Drama项目是一个基于「五高五标五化」理念的AI驱动�
 #### 3.1 用户管理模块
 
 ##### 3.1.1 模块概述
+
 用户管理模块负责用户的注册、登录、认证、权限管理等核心功能，是整个系统的基础模块。
 
 ##### 3.1.2 功能列表
+
 - 用户注册（手机号、邮箱、第三方登录）
 - 用户登录（密码、验证码、第三方OAuth）
 - 用户信息管理（头像、昵称、简介）
@@ -76,6 +83,7 @@ YYC3-Short-Drama项目是一个基于「五高五标五化」理念的AI驱动�
 - 密码管理（修改、重置、强度验证）
 
 ##### 3.1.3 核心逻辑
+
 ```
 用户注册流程：
 1. 接收注册请求（手机号/邮箱、密码、验证码）
@@ -100,6 +108,7 @@ YYC3-Short-Drama项目是一个基于「五高五标五化」理念的AI驱动�
 ##### 3.1.4 接口设计
 
 **用户注册**
+
 ```
 POST /api/v1/auth/register
 Request:
@@ -124,6 +133,7 @@ Response:
 ```
 
 **用户登录**
+
 ```
 POST /api/v1/auth/login
 Request:
@@ -150,6 +160,7 @@ Response:
 ```
 
 **获取用户信息**
+
 ```
 GET /api/v1/users/:userId
 Headers:
@@ -177,6 +188,7 @@ Response:
 ##### 3.1.5 数据模型
 
 **用户表 (users)**
+
 ```typescript
 interface User {
   userId: string;           // 用户ID，主键
@@ -196,6 +208,7 @@ interface User {
 ```
 
 **用户角色表 (user_roles)**
+
 ```typescript
 interface UserRole {
   roleId: string;           // 角色ID
@@ -210,9 +223,11 @@ interface UserRole {
 #### 3.2 内容管理模块
 
 ##### 3.2.1 模块概述
+
 内容管理模块负责短剧、剧集、场景等内容的管理，包括内容的创建、编辑、审核、发布等功能。
 
 ##### 3.2.2 功能列表
+
 - 短剧管理（创建、编辑、删除、查询）
 - 剧集管理（添加、排序、状态管理）
 - 场景管理（场景描述、角色、台词）
@@ -222,6 +237,7 @@ interface UserRole {
 - 内容搜索（全文搜索、筛选）
 
 ##### 3.2.3 核心逻辑
+
 ```
 内容创建流程：
 1. 接收内容创建请求
@@ -246,6 +262,7 @@ interface UserRole {
 ##### 3.2.4 接口设计
 
 **创建短剧**
+
 ```
 POST /api/v1/dramas
 Headers:
@@ -275,6 +292,7 @@ Response:
 ```
 
 **获取短剧详情**
+
 ```
 GET /api/v1/dramas/:dramaId
 Response:
@@ -314,6 +332,7 @@ Response:
 ```
 
 **获取剧集列表**
+
 ```
 GET /api/v1/dramas/:dramaId/episodes
 Query Parameters:
@@ -349,6 +368,7 @@ Response:
 ##### 3.2.5 数据模型
 
 **短剧表 (dramas)**
+
 ```typescript
 interface Drama {
   dramaId: string;           // 短剧ID，主键
@@ -372,6 +392,7 @@ interface Drama {
 ```
 
 **剧集表 (episodes)**
+
 ```typescript
 interface Episode {
   episodeId: string;        // 剧集ID，主键
@@ -389,6 +410,7 @@ interface Episode {
 ```
 
 **场景表 (scenes)**
+
 ```typescript
 interface Scene {
   sceneId: string;          // 场景ID，主键
@@ -413,9 +435,11 @@ interface SceneLine {
 #### 3.3 AI剧本生成模块
 
 ##### 3.3.1 模块概述
+
 AI剧本生成模块利用大语言模型技术，为创作者提供智能剧本生成、优化、续写等功能，提升创作效率。
 
 ##### 3.3.2 功能列表
+
 - 剧本生成（根据主题、角色、情节生成剧本）
 - 剧本优化（优化台词、情节、节奏）
 - 剧本续写（基于已有内容续写）
@@ -425,6 +449,7 @@ AI剧本生成模块利用大语言模型技术，为创作者提供智能剧本
 - 多语言支持（中英文剧本生成）
 
 ##### 3.3.3 核心逻辑
+
 ```
 剧本生成流程：
 1. 接收生成请求（主题、角色、风格、长度等）
@@ -448,6 +473,7 @@ AI剧本生成模块利用大语言模型技术，为创作者提供智能剧本
 ##### 3.3.4 接口设计
 
 **生成剧本**
+
 ```
 POST /api/v1/ai/scripts/generate
 Headers:
@@ -505,6 +531,7 @@ Response:
 ```
 
 **优化剧本**
+
 ```
 POST /api/v1/ai/scripts/optimize
 Headers:
@@ -553,6 +580,7 @@ Response:
 ```
 
 **续写剧本**
+
 ```
 POST /api/v1/ai/scripts/continue
 Headers:
@@ -593,6 +621,7 @@ Response:
 ##### 3.3.5 数据模型
 
 **剧本表 (scripts)**
+
 ```typescript
 interface Script {
   scriptId: string;         // 剧本ID，主键
@@ -611,6 +640,7 @@ interface Script {
 ```
 
 **剧本内容表 (script_contents)**
+
 ```typescript
 interface ScriptContent {
   contentId: string;        // 内容ID，主键
@@ -636,9 +666,11 @@ interface ScriptLine {
 #### 3.4 智能推荐模块
 
 ##### 3.4.1 模块概述
+
 智能推荐模块基于用户行为、内容特征、知识图谱等多维度数据，为用户提供个性化的短剧推荐服务。
 
 ##### 3.4.2 功能列表
+
 - 个性化推荐（基于用户画像推荐）
 - 热门推荐（基于热门度推荐）
 - 相似推荐（基于内容相似度推荐）
@@ -648,6 +680,7 @@ interface ScriptLine {
 - 推荐理由展示（展示推荐理由）
 
 ##### 3.4.3 核心逻辑
+
 ```
 推荐流程：
 1. 收集用户行为数据（观看、点赞、评论、分享）
@@ -663,6 +696,7 @@ interface ScriptLine {
 ##### 3.4.4 接口设计
 
 **获取推荐列表**
+
 ```
 GET /api/v1/recommendations
 Headers:
@@ -691,6 +725,7 @@ Response:
 ```
 
 **获取相似短剧**
+
 ```
 GET /api/v1/dramas/:dramaId/similar
 Query Parameters:
@@ -717,6 +752,7 @@ Response:
 ##### 3.4.5 数据模型
 
 **用户画像表 (user_profiles)**
+
 ```typescript
 interface UserProfile {
   profileId: string;        // 画像ID，主键
@@ -738,6 +774,7 @@ interface UserProfile {
 ```
 
 **推荐记录表 (recommendation_logs)**
+
 ```typescript
 interface RecommendationLog {
   logId: string;           // 记录ID，主键
@@ -755,9 +792,11 @@ interface RecommendationLog {
 #### 3.5 VR/AR沉浸式体验模块
 
 ##### 3.5.1 模块概述
+
 VR/AR沉浸式体验模块为用户提供虚拟现实和增强现实的短剧观看体验，提升用户的沉浸感和互动性。
 
 ##### 3.5.2 功能列表
+
 - VR模式切换（切换到VR观看模式）
 - AR场景叠加（在现实场景中叠加短剧内容）
 - 360度全景视频（支持360度全景视频播放）
@@ -767,6 +806,7 @@ VR/AR沉浸式体验模块为用户提供虚拟现实和增强现实的短剧观
 - 手势识别（通过手势控制播放）
 
 ##### 3.5.3 核心逻辑
+
 ```
 VR模式切换流程：
 1. 检测设备VR支持
@@ -788,6 +828,7 @@ AR场景叠加流程：
 ##### 3.5.4 接口设计
 
 **获取VR内容**
+
 ```
 GET /api/v1/vr/dramas/:dramaId
 Response:
@@ -813,6 +854,7 @@ Response:
 ```
 
 **获取AR场景**
+
 ```
 GET /api/v1/ar/scenes/:sceneId
 Response:
@@ -840,6 +882,7 @@ Response:
 ##### 3.5.5 数据模型
 
 **VR内容表 (vr_contents)**
+
 ```typescript
 interface VRContent {
   contentId: string;       // 内容ID，主键
@@ -865,6 +908,7 @@ interface VRHotspot {
 ```
 
 **AR场景表 (ar_scenes)**
+
 ```typescript
 interface ARScene {
   sceneId: string;         // 场景ID，主键
@@ -896,9 +940,11 @@ interface ARAnimation {
 #### 3.6 星值经济体系模块
 
 ##### 3.6.1 模块概述
+
 星值经济体系模块为用户提供星值获取、消费、交易等功能，构建完整的虚拟经济体系。
 
 ##### 3.6.2 功能列表
+
 - 星值获取（观看、分享、创作等行为获取星值）
 - 星值消费（解锁剧集、打赏创作者等）
 - 星值交易（用户间星值交易）
@@ -908,6 +954,7 @@ interface ARAnimation {
 - 星值活动（星值活动奖励）
 
 ##### 3.6.3 核心逻辑
+
 ```
 星值获取流程：
 1. 用户完成特定行为（观看、分享、创作）
@@ -930,6 +977,7 @@ interface ARAnimation {
 ##### 3.6.4 接口设计
 
 **获取星值余额**
+
 ```
 GET /api/v1/star-value/balance
 Headers:
@@ -953,6 +1001,7 @@ Response:
 ```
 
 **星值消费**
+
 ```
 POST /api/v1/star-value/consume
 Headers:
@@ -979,6 +1028,7 @@ Response:
 ```
 
 **获取星值记录**
+
 ```
 GET /api/v1/star-value/records
 Headers:
@@ -1012,6 +1062,7 @@ Response:
 ##### 3.6.5 数据模型
 
 **星值账户表 (star_value_accounts)**
+
 ```typescript
 interface StarValueAccount {
   accountId: string;       // 账户ID，主键
@@ -1026,6 +1077,7 @@ interface StarValueAccount {
 ```
 
 **星值记录表 (star_value_records)**
+
 ```typescript
 interface StarValueRecord {
   recordId: string;       // 记录ID，主键
@@ -1040,6 +1092,7 @@ interface StarValueRecord {
 ```
 
 **星值等级表 (star_value_levels)**
+
 ```typescript
 interface StarValueLevel {
   level: number;          // 等级
@@ -1054,9 +1107,11 @@ interface StarValueLevel {
 #### 3.7 社交互动模块
 
 ##### 3.7.1 模块概述
+
 社交互动模块为用户提供评论、点赞、分享、关注等社交功能，构建活跃的用户社区。
 
 ##### 3.7.2 功能列表
+
 - 评论功能（发表评论、回复评论）
 - 点赞功能（点赞短剧、点赞评论）
 - 分享功能（分享到社交平台）
@@ -1066,6 +1121,7 @@ interface StarValueLevel {
 - 举报功能（举报违规内容）
 
 ##### 3.7.3 核心逻辑
+
 ```
 评论功能流程：
 1. 用户发表评论
@@ -1087,6 +1143,7 @@ interface StarValueLevel {
 ##### 3.7.4 接口设计
 
 **发表评论**
+
 ```
 POST /api/v1/comments
 Headers:
@@ -1116,6 +1173,7 @@ Response:
 ```
 
 **点赞内容**
+
 ```
 POST /api/v1/likes
 Headers:
@@ -1142,6 +1200,7 @@ Response:
 ```
 
 **关注用户**
+
 ```
 POST /api/v1/follows
 Headers:
@@ -1167,6 +1226,7 @@ Response:
 ##### 3.7.5 数据模型
 
 **评论表 (comments)**
+
 ```typescript
 interface Comment {
   commentId: string;      // 评论ID，主键
@@ -1184,6 +1244,7 @@ interface Comment {
 ```
 
 **点赞表 (likes)**
+
 ```typescript
 interface Like {
   likeId: string;         // 点赞ID，主键
@@ -1195,6 +1256,7 @@ interface Like {
 ```
 
 **关注表 (follows)**
+
 ```typescript
 interface Follow {
   followId: string;       // 关注ID，主键
@@ -1207,9 +1269,11 @@ interface Follow {
 #### 3.8 支付订阅模块
 
 ##### 3.8.1 模块概述
+
 支付订阅模块为用户提供付费解锁、会员订阅、打赏创作者等支付功能。
 
 ##### 3.8.2 功能列表
+
 - 付费解锁（解锁剧集、解锁短剧）
 - 会员订阅（月度会员、年度会员）
 - 打赏功能（打赏创作者）
@@ -1218,6 +1282,7 @@ interface Follow {
 - 发票管理（申请发票、查看发票）
 
 ##### 3.8.3 核心逻辑
+
 ```
 付费解锁流程：
 1. 用户选择要解锁的内容
@@ -1244,6 +1309,7 @@ interface Follow {
 ##### 3.8.4 接口设计
 
 **创建订单**
+
 ```
 POST /api/v1/orders
 Headers:
@@ -1274,6 +1340,7 @@ Response:
 ```
 
 **支付回调**
+
 ```
 POST /api/v1/payments/callback
 Request:
@@ -1296,6 +1363,7 @@ Response:
 ```
 
 **打赏创作者**
+
 ```
 POST /api/v1/tips
 Headers:
@@ -1327,6 +1395,7 @@ Response:
 ##### 3.8.5 数据模型
 
 **订单表 (orders)**
+
 ```typescript
 interface Order {
   orderId: string;         // 订单ID，主键
@@ -1345,6 +1414,7 @@ interface Order {
 ```
 
 **会员表 (memberships)**
+
 ```typescript
 interface Membership {
   membershipId: string;    // 会员ID，主键
@@ -1360,6 +1430,7 @@ interface Membership {
 ```
 
 **打赏记录表 (tips)**
+
 ```typescript
 interface Tip {
   tipId: string;           // 打赏ID，主键
@@ -1375,9 +1446,11 @@ interface Tip {
 #### 3.9 数据分析模块
 
 ##### 3.9.1 模块概述
+
 数据分析模块为运营团队提供用户行为分析、内容效果分析、业务指标分析等功能，支持数据驱动的决策。
 
 ##### 3.9.2 功能列表
+
 - 用户分析（用户增长、用户活跃、用户留存）
 - 内容分析（内容热度、内容转化、内容反馈）
 - 收入分析（收入趋势、收入构成、收入预测）
@@ -1387,6 +1460,7 @@ interface Tip {
 - 报表导出（数据报表、趋势报表）
 
 ##### 3.9.3 核心逻辑
+
 ```
 数据分析流程：
 1. 收集用户行为数据
@@ -1401,6 +1475,7 @@ interface Tip {
 ##### 3.9.4 接口设计
 
 **获取用户分析数据**
+
 ```
 GET /api/v1/analytics/users
 Query Parameters:
@@ -1433,6 +1508,7 @@ Response:
 ```
 
 **获取内容分析数据**
+
 ```
 GET /api/v1/analytics/content
 Query Parameters:
@@ -1467,6 +1543,7 @@ Response:
 ##### 3.9.5 数据模型
 
 **分析指标表 (analytics_metrics)**
+
 ```typescript
 interface AnalyticsMetric {
   metricId: string;       // 指标ID，主键
@@ -1482,6 +1559,7 @@ interface AnalyticsMetric {
 ```
 
 **用户行为日志表 (user_behavior_logs)**
+
 ```typescript
 interface UserBehaviorLog {
   logId: string;          // 日志ID，主键
@@ -1499,9 +1577,11 @@ interface UserBehaviorLog {
 #### 3.10 系统管理模块
 
 ##### 3.10.1 模块概述
+
 系统管理模块为管理员提供用户管理、内容管理、系统配置、权限管理等功能。
 
 ##### 3.10.2 功能列表
+
 - 用户管理（用户查询、用户禁用、用户删除）
 - 内容管理（内容审核、内容下架、内容推荐）
 - 系统配置（系统参数、功能开关）
@@ -1511,6 +1591,7 @@ interface UserBehaviorLog {
 - 系统监控（系统状态、性能监控）
 
 ##### 3.10.3 核心逻辑
+
 ```
 内容审核流程：
 1. 管理员查看待审核内容
@@ -1531,6 +1612,7 @@ interface UserBehaviorLog {
 ##### 3.10.4 接口设计
 
 **获取待审核内容**
+
 ```
 GET /api/v1/admin/content/pending
 Headers:
@@ -1562,6 +1644,7 @@ Response:
 ```
 
 **审核内容**
+
 ```
 POST /api/v1/admin/content/review
 Headers:
@@ -1587,6 +1670,7 @@ Response:
 ##### 3.10.5 数据模型
 
 **审核记录表 (review_records)**
+
 ```typescript
 interface ReviewRecord {
   recordId: string;       // 记录ID，主键
@@ -1600,6 +1684,7 @@ interface ReviewRecord {
 ```
 
 **操作日志表 (operation_logs)**
+
 ```typescript
 interface OperationLog {
   logId: string;          // 日志ID，主键
@@ -1649,6 +1734,7 @@ VR/AR沉浸式体验模块
 ### 5. 技术实现要点
 
 #### 5.1 性能优化
+
 - 使用Redis缓存热点数据
 - 使用CDN加速静态资源
 - 使用消息队列异步处理
@@ -1656,6 +1742,7 @@ VR/AR沉浸式体验模块
 - 使用Elasticsearch优化搜索
 
 #### 5.2 安全防护
+
 - JWT认证和授权
 - RBAC权限控制
 - 数据加密存储
@@ -1664,6 +1751,7 @@ VR/AR沉浸式体验模块
 - XSS防护
 
 #### 5.3 可扩展性
+
 - 微服务架构
 - 插件化设计
 - 配置化管理
