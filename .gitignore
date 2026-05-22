@@ -8,6 +8,12 @@
 # next.js
 /.next/
 /out/
+/app/api/
+
+# API routes (excluded for static export)
+# Phase 1: Deploy as pure static site on GitHub Pages
+# API routes require server-side runtime, incompatible with output: 'export'
+# To restore APIs: Remove this line and switch to dynamic deployment (Vercel/Railway)
 
 # production
 /build
