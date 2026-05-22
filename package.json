@@ -3,15 +3,21 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "dev": "next dev -p 3200",
     "build": "next build",
-    "db:init": "tsx scripts/init-database.ts",
-    "db:seed": "tsx scripts/seed-test-users.ts",
-    "dev": "next dev",
+    "start": "next start -p 3200",
     "lint": "next lint",
-    "start": "next start",
+    "lint:fix": "next lint --fix",
+    "type-check": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "clean": "rm -rf .next out node_modules/.cache",
+    "build:analyze": "ANALYZE=true next build",
+    "db:init": "tsx scripts/init-database.ts",
+    "db:seed": "tsx scripts/seed-test-users.ts",
+    "deploy:preview": "pnpm run build && npx serve out -l 3000",
+    "deploy:check": "echo '✅ 检查构建产物...' && ls -lh out/ && du -sh out/"
   },
   "dependencies": {
     "@ai-sdk/openai": "latest",
