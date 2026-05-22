@@ -1,24 +1,24 @@
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { motion } from "framer-motion"
+import { BarChart3, BookOpen, LineChartIcon, PieChartIcon, TrendingUp, Users } from "lucide-react"
+import { useState } from "react"
 import {
-  BarChart,
   Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  LineChart,
-  Line,
 } from "recharts"
-import { BarChart3, PieChartIcon, LineChartIcon, TrendingUp, Users, BookOpen } from "lucide-react"
 
 // 模拟数据
 const creationTrendData = [
@@ -172,7 +172,7 @@ export default function AdvancedAnalyticsPanel() {
                     outerRadius={100}
                     fill="#8884d8"
                     dataKey="value"
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
                   >
                     {culturalElementsData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
