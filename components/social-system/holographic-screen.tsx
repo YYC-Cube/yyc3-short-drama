@@ -131,7 +131,7 @@ export default function HolographicScreen() {
         </div>
         <p className="text-white/70 max-w-3xl">
           公屏背景动态呈现《洛神赋图》数字长卷，用户发言化作锦帛飘过画面，
-          连麦点评触发"流觞曲水"特效，语音转化为水墨涟漪，其他用户可点击涟漪接续对诗。
+          连麦点评触发“流觞曲水”特效，语音转化为水墨涟漪，其他用户可点击涟漪接续对诗。
         </p>
       </motion.div>
 
@@ -143,7 +143,7 @@ export default function HolographicScreen() {
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="bg-black/40 backdrop-blur-sm border border-emerald-500/20 rounded-lg p-6">
+          <div className="bg-black/40 backdrop-blur-xs border border-emerald-500/20 rounded-lg p-6">
             <h3 className="text-xl font-bold text-white mb-6">在线创作者</h3>
 
             <div className="space-y-4">
@@ -192,7 +192,7 @@ export default function HolographicScreen() {
                               const user = users.find((u) => u.id === line.userId)
                               return (
                                 <div key={index} className="flex items-start space-x-2">
-                                  <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0 mt-1">
+                                  <div className="w-6 h-6 rounded-full overflow-hidden shrink-0 mt-1">
                                     <Image
                                       src={user?.avatar || "/placeholder.svg"}
                                       alt={user?.name || ""}
@@ -235,7 +235,7 @@ export default function HolographicScreen() {
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <div className="bg-black/40 backdrop-blur-sm border border-emerald-500/20 rounded-lg p-6 h-[600px] flex flex-col">
+          <div className="bg-black/40 backdrop-blur-xs border border-emerald-500/20 rounded-lg p-6 h-[600px] flex flex-col">
             {/* 公屏标题 */}
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-bold text-white">《洛神赋图》全息公屏</h3>
@@ -243,7 +243,7 @@ export default function HolographicScreen() {
             </div>
 
             {/* 公屏内容区 */}
-            <div className="relative flex-grow mb-4 overflow-hidden">
+            <div className="relative grow mb-4 overflow-hidden">
               {/* 背景图 */}
               <div className="absolute inset-0 z-0">
                 <Image
@@ -252,7 +252,7 @@ export default function HolographicScreen() {
                   fill
                   className="object-cover opacity-30"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60" />
+                <div className="absolute inset-0 bg-linear-to-b from-transparent to-black/60" />
               </div>
 
               {/* 消息区 */}
@@ -264,7 +264,7 @@ export default function HolographicScreen() {
                     <motion.div
                       key={message.id}
                       className={`flex items-start space-x-3 ${
-                        message.effect === "scroll" ? "bg-black/30 backdrop-blur-sm rounded-lg p-2" : ""
+                        message.effect === "scroll" ? "bg-black/30 backdrop-blur-xs rounded-lg p-2" : ""
                       }`}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -277,7 +277,7 @@ export default function HolographicScreen() {
                         </AvatarFallback>
                       </Avatar>
 
-                      <div className="flex-grow">
+                      <div className="grow">
                         <div className="flex items-center space-x-2">
                           <span className="text-emerald-300 font-medium">{user?.name}</span>
                           <span className="text-white/50 text-xs">{message.time}</span>
@@ -368,12 +368,12 @@ export default function HolographicScreen() {
                   onChange={(e) => setInputText(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="在《洛神赋图》中留下你的创作灵感..."
-                  className="flex-grow bg-black/60 border-emerald-500/30 focus-visible:ring-emerald-500/50 text-white"
+                  className="grow bg-black/60 border-emerald-500/30 focus-visible:ring-emerald-500/50 text-white"
                 />
                 <Button
                   onClick={sendMessage}
                   disabled={!inputText.trim()}
-                  className="bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800"
+                  className="bg-linear-to-r from-emerald-500 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800"
                 >
                   <Send className="h-4 w-4" />
                 </Button>

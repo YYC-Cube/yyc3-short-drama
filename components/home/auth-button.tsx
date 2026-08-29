@@ -35,7 +35,7 @@ export default function AuthButton() {
     return (
       <Button
         onClick={handleLogin}
-        className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-0 shadow-lg"
+        className="bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-0 shadow-lg"
       >
         <LogIn className="h-4 w-4 mr-2" />
         登录
@@ -49,7 +49,7 @@ export default function AuthButton() {
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10">
             <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.username} />
-            <AvatarFallback className="bg-gradient-to-br from-amber-400 to-orange-500 text-white">
+            <AvatarFallback className="bg-linear-to-br from-amber-400 to-orange-500 text-white">
               {user.username.charAt(0)}
             </AvatarFallback>
           </Avatar>
@@ -61,7 +61,7 @@ export default function AuthButton() {
             <p className="text-sm font-medium leading-none text-white">{user.username}</p>
             <p className="text-xs leading-none text-white/70">{user.phoneNumber}</p>
             {user.isLocalUser && (
-              <span className="text-xs bg-gradient-to-r from-amber-400 to-orange-500 text-white px-2 py-1 rounded-full w-fit">
+              <span className="text-xs bg-linear-to-r from-amber-400 to-orange-500 text-white px-2 py-1 rounded-full w-fit">
                 洛阳本地用户
               </span>
             )}

@@ -162,7 +162,7 @@ export default function FunctionalityAnalysisDashboard() {
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {[...Array(4)].map((_, index) => (
-            <Card key={index} className="bg-black/40 border-white/10 backdrop-blur-sm">
+            <Card key={index} className="bg-black/40 border-white/10 backdrop-blur-xs">
               <CardContent className="p-6">
                 <div className="animate-pulse">
                   <div className="h-4 bg-white/20 rounded w-3/4 mb-4"></div>
@@ -181,7 +181,7 @@ export default function FunctionalityAnalysisDashboard() {
       {/* 总体概览 */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-          <Card className="bg-black/40 border-amber-500/20 backdrop-blur-sm">
+          <Card className="bg-black/40 border-amber-500/20 backdrop-blur-xs">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -195,7 +195,7 @@ export default function FunctionalityAnalysisDashboard() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-          <Card className="bg-black/40 border-green-500/20 backdrop-blur-sm">
+          <Card className="bg-black/40 border-green-500/20 backdrop-blur-xs">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -211,7 +211,7 @@ export default function FunctionalityAnalysisDashboard() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-          <Card className="bg-black/40 border-yellow-500/20 backdrop-blur-sm">
+          <Card className="bg-black/40 border-yellow-500/20 backdrop-blur-xs">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -227,7 +227,7 @@ export default function FunctionalityAnalysisDashboard() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-          <Card className="bg-black/40 border-blue-500/20 backdrop-blur-sm">
+          <Card className="bg-black/40 border-blue-500/20 backdrop-blur-xs">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -266,7 +266,7 @@ export default function FunctionalityAnalysisDashboard() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="bg-black/40 border-white/10 backdrop-blur-sm hover:border-amber-500/30 transition-all duration-300">
+                <Card className="bg-black/40 border-white/10 backdrop-blur-xs hover:border-amber-500/30 transition-all duration-300">
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <CardTitle className="text-white">{report.module}</CardTitle>
@@ -326,7 +326,7 @@ export default function FunctionalityAnalysisDashboard() {
         </TabsContent>
 
         <TabsContent value="trends" className="space-y-4">
-          <Card className="bg-black/40 border-white/10 backdrop-blur-sm">
+          <Card className="bg-black/40 border-white/10 backdrop-blur-xs">
             <CardHeader>
               <CardTitle className="text-white flex items-center">
                 <TrendingUp className="h-5 w-5 mr-2 text-blue-400" />
@@ -348,7 +348,7 @@ export default function FunctionalityAnalysisDashboard() {
 
         <TabsContent value="recommendations" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="bg-black/40 border-green-500/20 backdrop-blur-sm">
+            <Card className="bg-black/40 border-green-500/20 backdrop-blur-xs">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <Zap className="h-5 w-5 mr-2 text-green-400" />
@@ -385,7 +385,7 @@ export default function FunctionalityAnalysisDashboard() {
               </CardContent>
             </Card>
 
-            <Card className="bg-black/40 border-purple-500/20 backdrop-blur-sm">
+            <Card className="bg-black/40 border-purple-500/20 backdrop-blur-xs">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <FileText className="h-5 w-5 mr-2 text-purple-400" />
@@ -417,14 +417,14 @@ export default function FunctionalityAnalysisDashboard() {
             </Card>
           </div>
 
-          <Card className="bg-black/40 border-white/10 backdrop-blur-sm">
+          <Card className="bg-black/40 border-white/10 backdrop-blur-xs">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="text-white">生成详细报告</CardTitle>
                   <CardDescription className="text-white/60">导出完整的功能分析报告</CardDescription>
                 </div>
-                <Button className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700">
+                <Button className="bg-linear-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700">
                   <Download className="h-4 w-4 mr-2" />
                   导出报告
                 </Button>

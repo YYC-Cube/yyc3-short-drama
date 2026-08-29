@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import type { LazyImageProps } from "@/utils/performance-optimizer"
+import Image from "next/image"
+import { useEffect, useState } from "react"
 
 /**
  * 懒加载图片组件
@@ -52,11 +53,13 @@ export default function LazyImage({
       }}
     >
       {isInView && (
-        <img
+        <Image
           src={src || "/placeholder.svg"}
           alt={alt}
           width={width}
           height={height}
+          fill={!width || !height}
+          sizes={!width || !height ? "100vw" : undefined}
           className={`transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"}`}
           onLoad={() => setIsLoaded(true)}
         />

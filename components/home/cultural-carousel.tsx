@@ -103,8 +103,8 @@ export default function CulturalCarousel() {
             />
 
             {/* 渐变遮罩 */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/50" />
-            <div className={`absolute inset-0 bg-gradient-to-br ${currentSlideData.theme} opacity-20`} />
+            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-black/50" />
+            <div className={`absolute inset-0 bg-linear-to-br ${currentSlideData.theme} opacity-20`} />
           </div>
 
           {/* 文字内容 */}
@@ -124,7 +124,7 @@ export default function CulturalCarousel() {
                 >
                   <span className="text-4xl">{currentSlideData.culturalSymbol}</span>
                   <div
-                    className={`px-4 py-2 bg-gradient-to-r ${currentSlideData.theme} bg-opacity-20 backdrop-blur-sm border border-white/30 rounded-full text-white text-sm font-medium`}
+                    className={`px-4 py-2 bg-linear-to-r ${currentSlideData.theme} bg-opacity-20 backdrop-blur-xs border border-white/30 rounded-full text-white text-sm font-medium`}
                   >
                     河洛文化传承
                   </div>
@@ -132,7 +132,7 @@ export default function CulturalCarousel() {
 
                 {/* 主标题 */}
                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                  <span className={`bg-gradient-to-r ${currentSlideData.theme} bg-clip-text text-transparent`}>
+                  <span className={`bg-linear-to-r ${currentSlideData.theme} bg-clip-text text-transparent`}>
                     {currentSlideData.title}
                   </span>
                 </h1>
@@ -147,7 +147,7 @@ export default function CulturalCarousel() {
 
                 {/* 品牌标识 */}
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-2xl">
+                  <div className="w-14 h-14 bg-linear-to-br from-amber-400 via-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-2xl">
                     <span className="text-white font-bold text-xl">言</span>
                   </div>
                   <div>
@@ -167,7 +167,7 @@ export default function CulturalCarousel() {
           variant="ghost"
           size="icon"
           onClick={() => setIsPlaying(!isPlaying)}
-          className="w-12 h-12 bg-black/30 backdrop-blur-sm border border-white/20 hover:bg-black/50 hover:border-amber-500/50 transition-all duration-300"
+          className="w-12 h-12 bg-black/30 backdrop-blur-xs border border-white/20 hover:bg-black/50 hover:border-amber-500/50 transition-all duration-300"
         >
           {isPlaying ? <Pause className="w-6 h-6 text-white" /> : <Play className="w-6 h-6 text-white" />}
         </Button>
@@ -178,7 +178,7 @@ export default function CulturalCarousel() {
         variant="ghost"
         size="icon"
         onClick={prevSlide}
-        className="absolute left-8 top-1/2 -translate-y-1/2 z-30 w-14 h-14 bg-black/30 backdrop-blur-sm border border-white/20 hover:bg-black/50 hover:border-amber-500/50 transition-all duration-300"
+        className="absolute left-8 top-1/2 -translate-y-1/2 z-30 w-14 h-14 bg-black/30 backdrop-blur-xs border border-white/20 hover:bg-black/50 hover:border-amber-500/50 transition-all duration-300"
       >
         <ChevronLeft className="w-8 h-8 text-white" />
       </Button>
@@ -187,7 +187,7 @@ export default function CulturalCarousel() {
         variant="ghost"
         size="icon"
         onClick={nextSlide}
-        className="absolute right-8 top-1/2 -translate-y-1/2 z-30 w-14 h-14 bg-black/30 backdrop-blur-sm border border-white/20 hover:bg-black/50 hover:border-amber-500/50 transition-all duration-300"
+        className="absolute right-8 top-1/2 -translate-y-1/2 z-30 w-14 h-14 bg-black/30 backdrop-blur-xs border border-white/20 hover:bg-black/50 hover:border-amber-500/50 transition-all duration-300"
       >
         <ChevronRight className="w-8 h-8 text-white" />
       </Button>
@@ -204,12 +204,12 @@ export default function CulturalCarousel() {
           >
             <div
               className={`w-full h-full rounded-full transition-all duration-500 ${
-                index === currentSlide ? `bg-gradient-to-r ${currentSlideData.theme} shadow-lg` : "bg-white/30"
+                index === currentSlide ? `bg-linear-to-r ${currentSlideData.theme} shadow-lg` : "bg-white/30"
               }`}
             />
             {index === currentSlide && (
               <motion.div
-                className={`absolute inset-0 rounded-full bg-gradient-to-r ${currentSlideData.theme}`}
+                className={`absolute inset-0 rounded-full bg-linear-to-r ${currentSlideData.theme}`}
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 6, ease: "linear" }}
@@ -228,7 +228,7 @@ export default function CulturalCarousel() {
 
       {/* 当前模块标识 */}
       <div className="absolute top-8 right-8 text-right z-20 mr-20">
-        <div className={`text-sm font-medium bg-gradient-to-r ${currentSlideData.theme} bg-clip-text text-transparent`}>
+        <div className={`text-sm font-medium bg-linear-to-r ${currentSlideData.theme} bg-clip-text text-transparent`}>
           河洛文化传承
         </div>
         <div className="text-white/60 text-xs mt-1">

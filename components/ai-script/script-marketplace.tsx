@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { useState, useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import Image from "next/image"
@@ -172,6 +173,7 @@ const scriptTypeLabels: Record<ScriptType, string> = {
 }
 
 export default function ScriptMarketplace() {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState<ScriptType>("all")
   const [searchQuery, setSearchQuery] = useState("")
   const [purchasing, setPurchasing] = useState<string | null>(null)
@@ -238,15 +240,15 @@ export default function ScriptMarketplace() {
           </p>
         </motion.div>
 
-        <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6 text-center">
+        <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6 text-center">
           <Lock className="h-12 w-12 text-amber-500/50 mx-auto mb-4" />
           <h3 className="text-xl font-bold text-white mb-2">登录后访问交易市场</h3>
           <p className="text-white/70 mb-6 max-w-md mx-auto">
             登录后可浏览和购买其他创作者的优质剧本，也可以出售自己的创作成果获得收益。
           </p>
           <Button
-            className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
-            onClick={() => (window.location.href = "/auth")}
+            className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+            onClick={() => router.push("/auth")}
           >
             立即登录
           </Button>
@@ -272,7 +274,7 @@ export default function ScriptMarketplace() {
         </p>
       </motion.div>
 
-      <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+      <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
           <Tabs defaultValue="all" value={activeTab} onValueChange={(value) => setActiveTab(value as ScriptType)}>
             <TabsList>
@@ -342,7 +344,7 @@ export default function ScriptMarketplace() {
                     <span className="text-xs px-2 py-1 rounded-full bg-green-500 text-white">新上线</span>
                   )}
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60" />
+                <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60" />
               </div>
 
               <div className="p-4">
@@ -422,7 +424,7 @@ export default function ScriptMarketplace() {
                     </Button>
 
                     <Button
-                      className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+                      className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
                       size="sm"
                       disabled={purchasing === script.id}
                       onClick={() => purchaseScript(script.id)}
@@ -450,7 +452,7 @@ export default function ScriptMarketplace() {
         )}
 
         <div className="mt-8 flex justify-center">
-          <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+          <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
             <ShoppingBag className="h-4 w-4 mr-2" />
             发布我的创作成果
           </Button>

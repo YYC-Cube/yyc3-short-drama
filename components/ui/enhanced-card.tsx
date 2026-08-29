@@ -1,38 +1,40 @@
 "use client"
 
 import * as React from "react"
-import { motion } from "framer-motion"
+import { motion, type HTMLMotionProps } from "framer-motion"
 import { cn } from "@/lib/utils"
 
-const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & {
-    hover?: boolean
-    glow?: boolean
-    cultural?: boolean
-  }
->(({ className, hover = true, glow = false, cultural = false, ...props }, ref) => (
-  <motion.div
-    ref={ref}
-    className={cn(
-      "rounded-xl border bg-card text-card-foreground shadow-lg transition-all duration-300",
-      hover && "hover:shadow-2xl hover:-translate-y-1",
-      glow && "shadow-amber-500/20 hover:shadow-amber-500/40",
-      cultural && "bg-gradient-to-br from-black/40 to-purple-900/40 backdrop-blur-xl border-amber-500/30",
-      className,
-    )}
-    whileHover={hover ? { y: -4, scale: 1.02 } : {}}
-    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-    {...props}
-  />
-))
+/** 剔除与 framer-motion 事件处理器冲突的 React DOM 属性 */
+type MotionCardProps = Omit<HTMLMotionProps<"div">, "ref"> & {
+  hover?: boolean
+  glow?: boolean
+  cultural?: boolean
+}
+
+const Card = React.forwardRef<HTMLDivElement, MotionCardProps>(
+  ({ className, hover = true, glow = false, cultural = false, ...props }, ref) => (
+    <motion.div
+      ref={ref}
+      className={cn(
+        "rounded-xl border bg-card text-card-foreground shadow-lg transition-all duration-300",
+        hover && "hover:shadow-2xl hover:-translate-y-1",
+        glow && "shadow-amber-500/20 hover:shadow-amber-500/40",
+        cultural && "bg-linear-to-br from-black/40 to-purple-900/40 backdrop-blur-xl border-amber-500/30",
+        className,
+      )}
+      whileHover={hover ? { y: -4, scale: 1.02 } : {}}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      {...props}
+    />
+  ),
+)
 Card.displayName = "Card"
 
 const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div ref={ref} className={cn("flex flex-col space-y-1.5 p-6 relative", className)} {...props}>
       {/* 装饰性渐变线 */}
-      <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent"></div>
+      <div className="absolute bottom-0 left-6 right-6 h-px bg-linear-to-r from-transparent via-amber-500/50 to-transparent"></div>
     </div>
   ),
 )
@@ -40,7 +42,7 @@ CardHeader.displayName = "CardHeader"
 
 const CardTitle = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & {
+  Omit<HTMLMotionProps<"div">, "ref"> & {
     gradient?: boolean
   }
 >(({ className, gradient = false, ...props }, ref) => (
@@ -48,7 +50,7 @@ const CardTitle = React.forwardRef<
     ref={ref}
     className={cn(
       "text-2xl font-semibold leading-none tracking-tight",
-      gradient && "bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent",
+      gradient && "bg-linear-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent",
       className,
     )}
     initial={{ opacity: 0, y: 20 }}
@@ -59,7 +61,7 @@ const CardTitle = React.forwardRef<
 ))
 CardTitle.displayName = "CardTitle"
 
-const CardDescription = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+const CardDescription = React.forwardRef<HTMLDivElement, Omit<HTMLMotionProps<"div">, "ref">>(
   ({ className, ...props }, ref) => (
     <motion.div
       ref={ref}
@@ -73,7 +75,7 @@ const CardDescription = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HT
 )
 CardDescription.displayName = "CardDescription"
 
-const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+const CardContent = React.forwardRef<HTMLDivElement, Omit<HTMLMotionProps<"div">, "ref">>(
   ({ className, ...props }, ref) => (
     <motion.div
       ref={ref}

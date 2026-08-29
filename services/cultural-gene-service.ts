@@ -315,7 +315,7 @@ export async function searchCulturalGenes(query: string, filters?: SearchFilters
     }
 
     if (filters.location) {
-      results = results.filter((gene) => gene.location.includes(filters.location))
+      results = results.filter((gene) => gene.location.includes(filters.location!))
     }
   }
 

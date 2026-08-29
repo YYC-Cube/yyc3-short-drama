@@ -238,18 +238,17 @@ export default function SinglePageAuth() {
       const response = await loginUser(loginRequest)
 
       if (response.success && response.user && response.token) {
-        const authSuccess = await login(loginForm.phoneNumber, loginForm.verificationCode)
+        // login 内部抛错表示失败；此处成功即写入上下文
+        await login(loginForm.phoneNumber, loginForm.verificationCode)
 
-        if (authSuccess) {
-          toast({
-            title: "登录成功！",
-            description: response.isLocalUser ? "欢迎洛阳本地用户，您将享受专属权益" : "欢迎使用言语平台",
-          })
+        toast({
+          title: "登录成功！",
+          description: response.isLocalUser ? "欢迎洛阳本地用户，您将享受专属权益" : "欢迎使用言语平台",
+        })
 
-          setTimeout(() => {
-            router.push("/profile")
-          }, 1500)
-        }
+        setTimeout(() => {
+          router.push("/profile")
+        }, 1500)
       } else {
         toast({
           title: "登录失败",
@@ -378,8 +377,8 @@ export default function SinglePageAuth() {
             />
 
             {/* 渐变遮罩 */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/60" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/50" />
+            <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/40 to-black/60" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/90 via-transparent to-black/50" />
           </motion.div>
         </AnimatePresence>
 
@@ -424,7 +423,7 @@ export default function SinglePageAuth() {
             {/* 品牌标识 */}
             <div className="mb-12">
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center mr-4">
+                <div className="w-12 h-12 bg-linear-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center mr-4">
                   <Sparkles className="h-6 w-6 text-white" />
                 </div>
                 <div>
@@ -448,10 +447,10 @@ export default function SinglePageAuth() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                  className="flex items-center p-4 bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-black/40 transition-all duration-300"
+                  className="flex items-center p-4 bg-black/30 backdrop-blur-xs border border-white/10 rounded-xl hover:bg-black/40 transition-all duration-300"
                 >
                   <div
-                    className={`w-10 h-10 rounded-lg bg-gradient-to-br ${benefit.color} flex items-center justify-center mr-4`}
+                    className={`w-10 h-10 rounded-lg bg-linear-to-br ${benefit.color} flex items-center justify-center mr-4`}
                   >
                     {benefit.icon}
                   </div>
@@ -549,7 +548,7 @@ export default function SinglePageAuth() {
                             codeStates.login.countdown > 0 ||
                             isLoading
                           }
-                          className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-0"
+                          className="bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-0"
                         >
                           {codeStates.login.countdown > 0 ? `${codeStates.login.countdown}s` : "发送验证码"}
                         </Button>
@@ -559,7 +558,7 @@ export default function SinglePageAuth() {
                     <Button
                       onClick={handleLogin}
                       disabled={!loginForm.phoneNumber || !loginForm.verificationCode || isLoading}
-                      className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white h-12 text-lg font-medium"
+                      className="w-full bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white h-12 text-lg font-medium"
                     >
                       {isLoading ? (
                         <div className="flex items-center">
@@ -702,7 +701,7 @@ export default function SinglePageAuth() {
                             codeStates.register.countdown > 0 ||
                             isLoading
                           }
-                          className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-0"
+                          className="bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-0"
                         >
                           {codeStates.register.countdown > 0 ? `${codeStates.register.countdown}s` : "发送验证码"}
                         </Button>
@@ -736,7 +735,7 @@ export default function SinglePageAuth() {
                         !registerForm.agreeTerms ||
                         isLoading
                       }
-                      className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white h-12 text-lg font-medium"
+                      className="w-full bg-linear-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white h-12 text-lg font-medium"
                     >
                       {isLoading ? (
                         <div className="flex items-center">

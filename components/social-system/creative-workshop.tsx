@@ -156,7 +156,7 @@ export default function CreativeWorkshop() {
           <h2 className="text-2xl md:text-3xl font-bold text-white">龙门创客坊</h2>
         </div>
         <p className="text-white/70 max-w-3xl">
-          虚拟创作空间按洛阳里坊制布局，用户根据导演等级入驻不同坊区，打造沉浸式创作社区体验。每周开启"天津晓月"创作市集，用户可以竞拍稀有道具和场景使用权。
+          虚拟创作空间按洛阳里坊制布局，用户根据导演等级入驻不同坊区，打造沉浸式创作社区体验。每周开启“天津晓月”创作市集，用户可以竞拍稀有道具和场景使用权。
         </p>
       </motion.div>
 
@@ -180,7 +180,7 @@ export default function CreativeWorkshop() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* 左侧：坊区列表 */}
             <div className="lg:col-span-1">
-              <div className="bg-black/40 backdrop-blur-sm border border-emerald-500/20 rounded-lg p-6">
+              <div className="bg-black/40 backdrop-blur-xs border border-emerald-500/20 rounded-lg p-6">
                 <h3 className="text-xl font-bold text-white mb-6">里坊导航</h3>
 
                 <div className="space-y-3">
@@ -219,7 +219,7 @@ export default function CreativeWorkshop() {
               {currentDistrict && (
                 <motion.div
                   key={currentDistrict.id}
-                  className="bg-black/40 backdrop-blur-sm border border-emerald-500/20 rounded-lg overflow-hidden"
+                  className="bg-black/40 backdrop-blur-xs border border-emerald-500/20 rounded-lg overflow-hidden"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5 }}
@@ -231,7 +231,7 @@ export default function CreativeWorkshop() {
                       fill
                       className="object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80" />
+                    <div className="absolute inset-0 bg-linear-to-b from-transparent to-black/80" />
                     <div className="absolute bottom-0 left-0 right-0 p-6">
                       <div className="flex items-center justify-between">
                         <h3 className="text-2xl font-bold text-white">{currentDistrict.name}</h3>
@@ -259,7 +259,7 @@ export default function CreativeWorkshop() {
                           className="flex items-start space-x-2 bg-black/30 border border-emerald-500/10 rounded-lg p-3"
                         >
                           <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-br ${currentDistrict.color}`}
+                            className={`w-8 h-8 rounded-full flex items-center justify-center bg-linear-to-br ${currentDistrict.color}`}
                           >
                             <span className="text-white font-bold">{index + 1}</span>
                           </div>
@@ -269,7 +269,7 @@ export default function CreativeWorkshop() {
                     </div>
 
                     <div className="flex justify-center">
-                      <Button className="bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800">
+                      <Button className="bg-linear-to-r from-emerald-500 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800">
                         <Compass className="h-4 w-4 mr-2" />
                         进入{currentDistrict.name}
                       </Button>
@@ -282,7 +282,7 @@ export default function CreativeWorkshop() {
         </TabsContent>
 
         <TabsContent value="market" className="mt-0">
-          <div className="bg-black/40 backdrop-blur-sm border border-emerald-500/20 rounded-lg p-6">
+          <div className="bg-black/40 backdrop-blur-xs border border-emerald-500/20 rounded-lg p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-white">天津晓月·创作市集</h3>
               <div className="flex items-center space-x-2">
@@ -347,7 +347,7 @@ export default function CreativeWorkshop() {
             </div>
 
             <div className="mt-8 text-center">
-              <Button className="bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800">
+              <Button className="bg-linear-to-r from-emerald-500 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800">
                 <ShoppingBag className="h-4 w-4 mr-2" />
                 查看更多市集商品
               </Button>
@@ -356,7 +356,7 @@ export default function CreativeWorkshop() {
         </TabsContent>
 
         <TabsContent value="events" className="mt-0">
-          <div className="bg-black/40 backdrop-blur-sm border border-emerald-500/20 rounded-lg p-6">
+          <div className="bg-black/40 backdrop-blur-xs border border-emerald-500/20 rounded-lg p-6">
             <h3 className="text-xl font-bold text-white mb-6">活动日历</h3>
 
             <div className="space-y-6">
@@ -408,7 +408,7 @@ export default function CreativeWorkshop() {
             </div>
 
             <div className="mt-8 flex justify-center">
-              <Button className="bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800">
+              <Button className="bg-linear-to-r from-emerald-500 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800">
                 查看完整活动日历
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>

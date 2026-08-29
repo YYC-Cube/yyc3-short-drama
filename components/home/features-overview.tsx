@@ -61,7 +61,7 @@ export default function FeaturesOverview() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-amber-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
               河洛文化
             </span>
             <span className="text-white ml-4">数字传承体系</span>
@@ -84,7 +84,7 @@ export default function FeaturesOverview() {
                 whileHover={{ scale: 1.05, y: -10 }}
                 className="group"
               >
-                <Card className="h-full bg-gradient-to-br from-black/40 to-black/60 border-white/10 hover:border-amber-500/30 transition-all duration-300 backdrop-blur-sm">
+                <Card className="h-full bg-linear-to-br from-black/40 to-black/60 border-white/10 hover:border-amber-500/30 transition-all duration-300 backdrop-blur-xs">
                   <CardContent className="p-8 text-center">
                     {/* 文化符号 */}
                     <motion.div
@@ -104,7 +104,7 @@ export default function FeaturesOverview() {
 
                     {/* 图标 */}
                     <motion.div
-                      className={`w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}
+                      className={`w-16 h-16 mx-auto mb-6 rounded-2xl bg-linear-to-br ${feature.color} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.6 }}
                     >
@@ -123,7 +123,7 @@ export default function FeaturesOverview() {
 
                     {/* 装饰线条 */}
                     <motion.div
-                      className={`w-0 h-1 mx-auto mt-6 bg-gradient-to-r ${feature.color} group-hover:w-full transition-all duration-500`}
+                      className={`w-0 h-1 mx-auto mt-6 bg-linear-to-r ${feature.color} group-hover:w-full transition-all duration-500`}
                     />
                   </CardContent>
                 </Card>

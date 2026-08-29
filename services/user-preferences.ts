@@ -188,7 +188,11 @@ export async function getRecommendedContent(userId: string): Promise<{
     const preferences = await getUserPreferences(userId)
 
     // 基于用户偏好生成推荐
-    const recommendations = {
+    const recommendations: {
+      culturalGenes: string[]
+      timeSpaceScenes: string[]
+      scriptThemes: string[]
+    } = {
       culturalGenes: [],
       timeSpaceScenes: [],
       scriptThemes: [],

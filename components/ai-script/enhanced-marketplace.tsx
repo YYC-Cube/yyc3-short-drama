@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { useState, useRef } from "react"
 import { motion, useInView, AnimatePresence } from "framer-motion"
 import Image from "next/image"
@@ -442,6 +443,7 @@ const mockRecommendations: RecommendedScript[] = [
 ]
 
 export default function EnhancedMarketplace() {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState<ScriptType>("all")
   const [searchQuery, setSearchQuery] = useState("")
   const [purchasing, setPurchasing] = useState<string | null>(null)
@@ -627,15 +629,15 @@ export default function EnhancedMarketplace() {
           </p>
         </motion.div>
 
-        <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6 text-center">
+        <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6 text-center">
           <Lock className="h-12 w-12 text-amber-500/50 mx-auto mb-4" />
           <h3 className="text-xl font-bold text-white mb-2">登录后访问交易市场</h3>
           <p className="text-white/70 mb-6 max-w-md mx-auto">
             登录后可浏览和购买其他创作者的优质剧本，也可以出售自己的创作成果获得收益。
           </p>
           <Button
-            className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
-            onClick={() => (window.location.href = "/auth")}
+            className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+            onClick={() => router.push("/auth")}
           >
             立即登录
           </Button>
@@ -664,7 +666,7 @@ export default function EnhancedMarketplace() {
 
       {/* 个性化推荐 */}
       {showRecommendations && (
-        <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6 mb-8">
+        <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6 mb-8">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center">
               <Sparkles className="h-6 w-6 text-amber-400 mr-2" />
@@ -709,7 +711,7 @@ export default function EnhancedMarketplace() {
                       <Badge className="bg-red-600">{recommendation.script.saleDiscount}% 折扣</Badge>
                     )}
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60" />
                 </div>
 
                 <div className="p-4">
@@ -755,7 +757,7 @@ export default function EnhancedMarketplace() {
 
                     <Button
                       size="sm"
-                      className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+                      className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
                     >
                       <Eye className="h-4 w-4 mr-1" />
                       查看详情
@@ -768,7 +770,7 @@ export default function EnhancedMarketplace() {
         </div>
       )}
 
-      <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+      <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
           <Tabs defaultValue="all" value={activeTab} onValueChange={(value) => setActiveTab(value as ScriptType)}>
             <TabsList>
@@ -967,7 +969,7 @@ export default function EnhancedMarketplace() {
                       </span>
                     )}
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60" />
                 </div>
 
                 <div className="p-4">
@@ -1052,7 +1054,7 @@ export default function EnhancedMarketplace() {
                     </div>
 
                     <Button
-                      className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+                      className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
                       size="sm"
                       disabled={purchasing === script.id}
                       onClick={(e) => {
@@ -1081,7 +1083,7 @@ export default function EnhancedMarketplace() {
         )}
 
         <div className="mt-8 flex justify-center">
-          <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+          <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
             <ShoppingBag className="h-4 w-4 mr-2" />
             发布我的创作成果
           </Button>
@@ -1208,7 +1210,7 @@ export default function EnhancedMarketplace() {
                               <span className="text-white mr-1">{rating}</span>
                               <Star className="h-4 w-4 text-amber-400" />
                             </div>
-                            <div className="flex-grow mx-2">
+                            <div className="grow mx-2">
                               <Progress value={percent} className="h-2" />
                             </div>
                             <div className="w-12 text-right text-white/70 text-sm">{percent}%</div>
@@ -1237,7 +1239,7 @@ export default function EnhancedMarketplace() {
                       <div className="flex items-center space-x-2">
                         <select
                           value={activeReviewTab}
-                          onChange={(e) => setActiveReviewTab(e.target.value as any)}
+                          onChange={(e) => setActiveReviewTab(e.target.value as "all" | "positive" | "negative" | "verified")}
                           className="bg-black/60 border border-amber-500/30 rounded text-white px-2 py-1 text-sm"
                         >
                           <option value="all">全部评价</option>
@@ -1248,7 +1250,7 @@ export default function EnhancedMarketplace() {
 
                         <select
                           value={reviewSortMethod}
-                          onChange={(e) => setReviewSortMethod(e.target.value as any)}
+                          onChange={(e) => setReviewSortMethod(e.target.value as "newest" | "helpful")}
                           className="bg-black/60 border border-amber-500/30 rounded text-white px-2 py-1 text-sm"
                         >
                           <option value="helpful">最有帮助</option>
@@ -1349,7 +1351,7 @@ export default function EnhancedMarketplace() {
                                   className="object-cover"
                                 />
                               </div>
-                              <div className="flex-grow">
+                              <div className="grow">
                                 <div className="text-white font-medium">{relatedScript.title}</div>
                                 <div className="flex items-center text-sm">
                                   <Star className="h-3 w-3 text-amber-400 mr-1" />
@@ -1417,7 +1419,7 @@ export default function EnhancedMarketplace() {
                   </Button>
 
                   <Button
-                    className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+                    className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
                     disabled={purchasing === selectedScript.id}
                     onClick={() => purchaseScript(selectedScript.id)}
                   >
@@ -1452,7 +1454,7 @@ export default function EnhancedMarketplace() {
                 {Array.from({ length: 5 }).map((_, i) => (
                   <button
                     key={i}
-                    className={`p-1 rounded-full hover:bg-amber-900/30 focus:outline-none ${
+                    className={`p-1 rounded-full hover:bg-amber-900/30 focus:outline-hidden ${
                       i < newReview.rating ? "text-amber-400" : "text-white/50"
                     }`}
                     onClick={() => setNewReview({ ...newReview, rating: i + 1 })}
@@ -1477,7 +1479,7 @@ export default function EnhancedMarketplace() {
           <DialogFooter>
             <Button
               type="submit"
-              className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+              className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
               onClick={submitReview}
             >
               提交评价

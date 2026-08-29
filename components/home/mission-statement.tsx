@@ -5,7 +5,7 @@ import { Crown, Sparkles } from "lucide-react"
 
 export default function MissionStatement() {
   return (
-    <section className="py-20 px-8 bg-gradient-to-b from-black/50 to-black/80">
+    <section className="py-20 px-8 bg-linear-to-b from-black/50 to-black/80">
       <div className="max-w-4xl mx-auto text-center">
         {/* 品牌标识 */}
         <motion.div
@@ -14,11 +14,11 @@ export default function MissionStatement() {
           transition={{ duration: 0.8 }}
           className="flex items-center justify-center gap-4 mb-8"
         >
-          <div className="w-16 h-16 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-2xl">
+          <div className="w-16 h-16 bg-linear-to-br from-amber-400 via-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-2xl">
             <Crown className="w-8 h-8 text-white" />
           </div>
           <div className="text-left">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-amber-300 to-orange-300 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-linear-to-r from-amber-300 to-orange-300 bg-clip-text text-transparent">
               言语逸品
             </h1>
             <p className="text-amber-300/80 text-lg">河洛文化数字传承平台</p>
@@ -52,7 +52,7 @@ export default function MissionStatement() {
           >
             <Sparkles className="w-8 h-8 text-amber-400" />
           </motion.div>
-          <div className="w-32 h-px bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
+          <div className="w-32 h-px bg-linear-to-r from-transparent via-amber-500 to-transparent" />
           <motion.div
             animate={{ rotate: -360 }}
             transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}

@@ -21,7 +21,7 @@ export default function SocialSystemPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-linear-to-r from-blue-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
               虚实共生社群
             </h1>
             <p className="text-xl text-white/80 max-w-3xl mx-auto">
@@ -34,7 +34,7 @@ export default function SocialSystemPage() {
             <Card cultural={true} glow={true}>
               <CardHeader>
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-linear-to-r from-blue-500 to-cyan-600 flex items-center justify-center">
                     <Users className="h-6 w-6 text-white" />
                   </div>
                   <div>
@@ -71,7 +71,7 @@ export default function SocialSystemPage() {
             <Card cultural={true} glow={true}>
               <CardHeader>
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-linear-to-r from-purple-500 to-pink-600 flex items-center justify-center">
                     <Globe className="h-6 w-6 text-white" />
                   </div>
                   <div>
@@ -86,19 +86,19 @@ export default function SocialSystemPage() {
                   <div className="flex justify-between items-center">
                     <span className="text-white/70">虚拟工作室</span>
                     <div className="w-32 bg-black/40 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-pink-600 h-2 rounded-full w-full"></div>
+                      <div className="bg-linear-to-r from-purple-500 to-pink-600 h-2 rounded-full w-full"></div>
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-white/70">协作空间</span>
                     <div className="w-32 bg-black/40 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-pink-600 h-2 rounded-full w-4/5"></div>
+                      <div className="bg-linear-to-r from-purple-500 to-pink-600 h-2 rounded-full w-4/5"></div>
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-white/70">展示大厅</span>
                     <div className="w-32 bg-black/40 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-pink-600 h-2 rounded-full w-3/4"></div>
+                      <div className="bg-linear-to-r from-purple-500 to-pink-600 h-2 rounded-full w-3/4"></div>
                     </div>
                   </div>
                 </div>
@@ -174,28 +174,28 @@ export default function SocialSystemPage() {
               <CardContent>
                 <InteractiveGrid columns={4}>
                   <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 flex items-center justify-center">
+                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-linear-to-r from-blue-500 to-cyan-600 flex items-center justify-center">
                       <Users className="h-8 w-8 text-white" />
                     </div>
                     <div className="text-2xl font-bold text-blue-400 mb-1">12,580</div>
                     <div className="text-white/70 text-sm">在线用户</div>
                   </div>
                   <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center">
+                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-linear-to-r from-purple-500 to-pink-600 flex items-center justify-center">
                       <Zap className="h-8 w-8 text-white" />
                     </div>
                     <div className="text-2xl font-bold text-purple-400 mb-1">3,240</div>
                     <div className="text-white/70 text-sm">活跃项目</div>
                   </div>
                   <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center">
+                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-linear-to-r from-green-500 to-emerald-600 flex items-center justify-center">
                       <Heart className="h-8 w-8 text-white" />
                     </div>
                     <div className="text-2xl font-bold text-green-400 mb-1">89,560</div>
                     <div className="text-white/70 text-sm">互动次数</div>
                   </div>
                   <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r from-amber-500 to-yellow-600 flex items-center justify-center">
+                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-linear-to-r from-amber-500 to-yellow-600 flex items-center justify-center">
                       <Globe className="h-8 w-8 text-white" />
                     </div>
                     <div className="text-2xl font-bold text-amber-400 mb-1">156</div>

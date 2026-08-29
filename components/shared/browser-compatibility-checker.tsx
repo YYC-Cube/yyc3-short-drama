@@ -1,20 +1,20 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion"
 import {
   AlertCircle,
   CheckCircle,
+  Globe as Chrome,
+  Compass as Firefox,
+  Globe,
   Info,
+  Monitor,
   Smartphone,
   Tablet,
-  Monitor,
-  Chrome,
-  ChromeIcon as Firefox,
-  Globe,
   X,
 } from "lucide-react"
+import { useEffect, useState } from "react"
 
 // 浏览器类型
 type BrowserType = "chrome" | "firefox" | "safari" | "edge" | "opera" | "ie" | "samsung" | "unknown"
@@ -184,21 +184,23 @@ export default function BrowserCompatibilityChecker() {
   const [isCompatible, setIsCompatible] = useState(true)
 
   useEffect(() => {
-    // 检测浏览器和设备
-    setBrowser(detectBrowser())
-    setDevice(detectDevice())
+    // 检测浏览器和设备（客户端一次性环境检测，异步调度规避 effect 内同步 setState）
+    const detect = () => {
+      const detectedIssues = checkFeatureSupport()
 
-    // 检查特性支持
-    const detectedIssues = checkFeatureSupport()
-    setIssues(detectedIssues)
+      setBrowser(detectBrowser())
+      setDevice(detectDevice())
+      setIssues(detectedIssues)
+      setIsCompatible(!detectedIssues.some((issue) => issue.type === "critical"))
 
-    // 如果有严重问题，则标记为不兼容
-    setIsCompatible(!detectedIssues.some((issue) => issue.type === "critical"))
-
-    // 如果有严重问题，自动显示兼容性检查器
-    if (detectedIssues.some((issue) => issue.type === "critical")) {
-      setIsOpen(true)
+      // 如果有严重问题，自动显示兼容性检查器
+      if (detectedIssues.some((issue) => issue.type === "critical")) {
+        setIsOpen(true)
+      }
     }
+
+    const timer = setTimeout(detect, 0)
+    return () => clearTimeout(timer)
   }, [])
 
   if (!isOpen) return null

@@ -5,9 +5,9 @@
  * 提供代码分割、懒加载和性能监控功能
  */
 
-import type React from "react"
-import { useEffect, useState, useRef, forwardRef } from "react"
-import Image from "next/image"
+import Image from "next/image";
+import type React from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 
 /**
  * 组件懒加载钩子 - 改进版
@@ -26,9 +26,9 @@ export function useInViewLoader<T>(
   useEffect(() => {
     // 检查浏览器支持
     if (typeof IntersectionObserver === "undefined") {
-      // 回退：直接加载
-      setInView(true)
-      return
+      // 回退：直接加载（异步调度规避 effect 内同步 setState）
+      const timer = setTimeout(() => setInView(true), 0)
+      return () => clearTimeout(timer)
     }
 
     // 创建交叉观察器
@@ -47,8 +47,12 @@ export function useInViewLoader<T>(
     if (element) {
       observer.observe(element)
     } else {
-      // 如果找不到元素，也直接加载
-      setInView(true)
+      // 如果找不到元素，也直接加载（异步调度）
+      const timer = setTimeout(() => setInView(true), 0)
+      return () => {
+        clearTimeout(timer)
+        observer.disconnect()
+      }
     }
 
     return () => {
@@ -134,8 +138,9 @@ export const LazyImage = forwardRef<HTMLDivElement, LazyImageProps>(
 
     useEffect(() => {
       if (typeof IntersectionObserver === "undefined") {
-        setIsInView(true)
-        return
+        // 回退：直接加载（异步调度规避 effect 内同步 setState）
+        const timer = setTimeout(() => setIsInView(true), 0)
+        return () => clearTimeout(timer)
       }
 
       const observer = new IntersectionObserver(
@@ -207,13 +212,6 @@ export function collectPerformanceMetrics(): Record<string, number> {
         metrics.firstPaint = navEntry.responseEnd
         metrics.ttfb = navEntry.responseStart - navEntry.requestStart
       }
-    } else if ("timing" in performance) {
-      // 回退到旧版API
-      const timing = performance.timing
-      metrics.loadTime = timing.loadEventEnd - timing.navigationStart
-      metrics.domContentLoaded = timing.domContentLoadedEventEnd - timing.navigationStart
-      metrics.firstPaint = timing.responseEnd - timing.navigationStart
-      metrics.ttfb = timing.responseStart - timing.requestStart
     }
 
     // 收集内存使用情况 (仅Chrome支持)

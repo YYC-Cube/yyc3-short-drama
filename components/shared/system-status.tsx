@@ -1,23 +1,23 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
+import { performanceMonitor } from "@/utils/performance-monitor"
+import { AnimatePresence, motion } from "framer-motion"
 import {
   Activity,
   AlertCircle,
+  BarChart,
   CheckCircle,
-  X,
   ChevronDown,
   ChevronUp,
+  Clock,
   Cpu,
   MemoryStickIcon as Memory,
   Wifi,
-  Clock,
-  BarChart,
+  X,
 } from "lucide-react"
-import { performanceMonitor } from "@/utils/performance-monitor"
+import { useEffect, useState } from "react"
 
 // 系统状态类型
 interface SystemStatus {
@@ -36,6 +36,72 @@ interface SystemStatus {
     screenSize: string
     issues: string[]
   }
+}
+
+// 浏览器/设备检测为纯函数，提升至模块级（避免组件内 TDZ 与每次渲染重建）
+function detectBrowser(userAgent: string) {
+  const ua = userAgent.toLowerCase()
+  let name = "Unknown"
+  let version = "Unknown"
+
+  if (ua.indexOf("chrome") > -1 && ua.indexOf("edg") === -1) {
+    name = "Chrome"
+    version = ua.match(/chrome\/(\d+\.\d+)/)![1]
+  } else if (ua.indexOf("firefox") > -1) {
+    name = "Firefox"
+    version = ua.match(/firefox\/(\d+\.\d+)/)![1]
+  } else if (ua.indexOf("safari") > -1 && ua.indexOf("chrome") === -1) {
+    name = "Safari"
+    version = ua.match(/version\/(\d+\.\d+)/)![1]
+  } else if (ua.indexOf("edg") > -1) {
+    name = "Edge"
+    version = ua.match(/edg\/(\d+\.\d+)/)![1]
+  }
+
+  return { name, version }
+}
+
+function detectDevice(userAgent: string) {
+  const ua = userAgent.toLowerCase()
+
+  if (/(android|webos|iphone|ipod|blackberry|iemobile|opera mini)/i.test(ua)) {
+    return "Mobile"
+  } else if (/(ipad|tablet|playbook|silk)|(android(?!.*mobile))/i.test(ua)) {
+    return "Tablet"
+  } else {
+    return "Desktop"
+  }
+}
+
+function detectIssues(browser: string, version: string) {
+  const issues: string[] = []
+
+  // 检查旧版浏览器
+  if (browser === "Chrome" && Number.parseFloat(version) < 80) {
+    issues.push("Chrome 版本过低，建议升级到最新版本")
+  } else if (browser === "Firefox" && Number.parseFloat(version) < 70) {
+    issues.push("Firefox 版本过低，建议升级到最新版本")
+  } else if (browser === "Safari" && Number.parseFloat(version) < 13) {
+    issues.push("Safari 版本过低，建议升级到最新版本")
+  }
+
+  // 检查 WebP 支持
+  if (typeof window !== "undefined" && !window.hasOwnProperty("createImageBitmap")) {
+    issues.push("浏览器可能不支持 WebP 图像格式")
+  }
+
+  // 检查 WebGL 支持
+  try {
+    const canvas = document.createElement("canvas")
+    const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl")
+    if (!gl) {
+      issues.push("浏览器不支持 WebGL，部分动画效果可能无法正常显示")
+    }
+  } catch {
+    issues.push("无法检测 WebGL 支持")
+  }
+
+  return issues
 }
 
 export default function SystemStatus() {
@@ -63,43 +129,46 @@ export default function SystemStatus() {
   useEffect(() => {
     if (!isOpen) return
 
-    // 获取浏览器和设备信息
-    const userAgent = navigator.userAgent
-    const browserInfo = detectBrowser(userAgent)
-    const deviceInfo = detectDevice(userAgent)
-    const screenSize = `${window.innerWidth}x${window.innerHeight}`
+    // 初始采集放入微任务异步执行（避免 effect 体内同步 setState 触发级联渲染）
+    const collectInitial = () => {
+      const userAgent = navigator.userAgent
+      const browserInfo = detectBrowser(userAgent)
+      const deviceInfo = detectDevice(userAgent)
+      const screenSize = `${window.innerWidth}x${window.innerHeight}`
 
-    // 获取性能信息
-    const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart
-    const memory = (performance as any).memory?.usedJSHeapSize / (1024 * 1024) || 0
+      // 获取性能信息（Chrome 专属的 memory 性能扩展）
+      const perfMemory = (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory
+      const navEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined
+      const loadTime = navEntry ? navEntry.loadEventEnd - navEntry.startTime : 0
+      const memory = perfMemory ? perfMemory.usedJSHeapSize / (1024 * 1024) : 0
 
-    // 获取慢组件
-    const slowComponents = performanceMonitor
-      .getSlowestComponents(5)
-      .map((comp) => ({ name: comp.componentName, time: comp.averageTime }))
+      const slowComponents = performanceMonitor
+        .getSlowestComponents(5)
+        .map((comp) => ({ name: comp.componentName, time: comp.averageTime }))
 
-    // 模拟 FPS 和网络延迟
-    const fps = Math.round(60 - Math.random() * 10)
-    const networkLatency = Math.round(50 + Math.random() * 100)
+      const fps = Math.round(60 - Math.random() * 10)
+      const networkLatency = Math.round(50 + Math.random() * 100)
 
-    // 更新状态
-    setStatus({
-      performance: {
-        fps,
-        memory,
-        loadTime,
-        renderTime: slowComponents[0]?.time || 0,
-        networkLatency,
-        slowComponents,
-      },
-      compatibility: {
-        browser: browserInfo.name,
-        browserVersion: browserInfo.version,
-        device: deviceInfo,
-        screenSize,
-        issues: detectIssues(browserInfo.name, browserInfo.version),
-      },
-    })
+      setStatus({
+        performance: {
+          fps,
+          memory,
+          loadTime,
+          renderTime: slowComponents[0]?.time || 0,
+          networkLatency,
+          slowComponents,
+        },
+        compatibility: {
+          browser: browserInfo.name,
+          browserVersion: browserInfo.version,
+          device: deviceInfo,
+          screenSize,
+          issues: detectIssues(browserInfo.name, browserInfo.version),
+        },
+      })
+    }
+
+    const initialTimer = setTimeout(collectInitial, 0)
 
     // 定期更新状态
     const interval = setInterval(() => {
@@ -108,82 +177,19 @@ export default function SystemStatus() {
         performance: {
           ...prev.performance,
           fps: Math.round(60 - Math.random() * 10),
-          memory: (performance as any).memory?.usedJSHeapSize / (1024 * 1024) || prev.performance.memory,
+          memory: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory
+            ? (performance as Performance & { memory: { usedJSHeapSize: number } }).memory.usedJSHeapSize / (1024 * 1024)
+            : prev.performance.memory,
           networkLatency: Math.round(50 + Math.random() * 100),
         },
       }))
     }, 2000)
 
-    return () => clearInterval(interval)
+    return () => {
+      clearTimeout(initialTimer)
+      clearInterval(interval)
+    }
   }, [isOpen])
-
-  // 检测浏览器
-  const detectBrowser = (userAgent: string) => {
-    const ua = userAgent.toLowerCase()
-    let name = "Unknown"
-    let version = "Unknown"
-
-    if (ua.indexOf("chrome") > -1 && ua.indexOf("edg") === -1) {
-      name = "Chrome"
-      version = ua.match(/chrome\/(\d+\.\d+)/)![1]
-    } else if (ua.indexOf("firefox") > -1) {
-      name = "Firefox"
-      version = ua.match(/firefox\/(\d+\.\d+)/)![1]
-    } else if (ua.indexOf("safari") > -1 && ua.indexOf("chrome") === -1) {
-      name = "Safari"
-      version = ua.match(/version\/(\d+\.\d+)/)![1]
-    } else if (ua.indexOf("edg") > -1) {
-      name = "Edge"
-      version = ua.match(/edg\/(\d+\.\d+)/)![1]
-    }
-
-    return { name, version }
-  }
-
-  // 检测设备
-  const detectDevice = (userAgent: string) => {
-    const ua = userAgent.toLowerCase()
-
-    if (/(android|webos|iphone|ipod|blackberry|iemobile|opera mini)/i.test(ua)) {
-      return "Mobile"
-    } else if (/(ipad|tablet|playbook|silk)|(android(?!.*mobile))/i.test(ua)) {
-      return "Tablet"
-    } else {
-      return "Desktop"
-    }
-  }
-
-  // 检测潜在问题
-  const detectIssues = (browser: string, version: string) => {
-    const issues: string[] = []
-
-    // 检查旧版浏览器
-    if (browser === "Chrome" && Number.parseFloat(version) < 80) {
-      issues.push("Chrome 版本过低，建议升级到最新版本")
-    } else if (browser === "Firefox" && Number.parseFloat(version) < 70) {
-      issues.push("Firefox 版本过低，建议升级到最新版本")
-    } else if (browser === "Safari" && Number.parseFloat(version) < 13) {
-      issues.push("Safari 版本过低，建议升级到最新版本")
-    }
-
-    // 检查 WebP 支持
-    if (!window.hasOwnProperty("createImageBitmap")) {
-      issues.push("浏览器可能不支持 WebP 图像格式")
-    }
-
-    // 检查 WebGL 支持
-    try {
-      const canvas = document.createElement("canvas")
-      const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl")
-      if (!gl) {
-        issues.push("浏览器不支持 WebGL，部分动画效果可能无法正常显示")
-      }
-    } catch (e) {
-      issues.push("无法检测 WebGL 支持")
-    }
-
-    return issues
-  }
 
   // 获取性能评级
   const getPerformanceRating = () => {
@@ -231,7 +237,7 @@ export default function SystemStatus() {
         transition={{ duration: 0.3 }}
       >
         <Button
-          className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+          className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
           onClick={() => setIsOpen(true)}
         >
           <Activity className="h-4 w-4 mr-2" />
@@ -361,7 +367,7 @@ export default function SystemStatus() {
                     <ul className="space-y-1">
                       {status.compatibility.issues.map((issue, index) => (
                         <li key={index} className="flex items-start">
-                          <AlertCircle className="h-4 w-4 text-amber-500 mr-2 flex-shrink-0 mt-0.5" />
+                          <AlertCircle className="h-4 w-4 text-amber-500 mr-2 shrink-0 mt-0.5" />
                           <span className="text-white/90 text-sm">{issue}</span>
                         </li>
                       ))}
@@ -399,9 +405,8 @@ export default function SystemStatus() {
                           <li key={index} className="flex justify-between items-center">
                             <span className="text-white/90 text-sm truncate max-w-[200px]">{comp.name}</span>
                             <span
-                              className={`text-sm ${
-                                comp.time > 16 ? "text-red-400" : comp.time > 8 ? "text-amber-400" : "text-green-400"
-                              }`}
+                              className={`text-sm ${comp.time > 16 ? "text-red-400" : comp.time > 8 ? "text-amber-400" : "text-green-400"
+                                }`}
                             >
                               {comp.time.toFixed(2)} ms
                             </span>
@@ -422,28 +427,28 @@ export default function SystemStatus() {
                 <ul className="space-y-2">
                   {performanceScore < 90 && (
                     <li className="flex items-start">
-                      <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <CheckCircle className="h-4 w-4 text-green-500 mr-2 shrink-0 mt-0.5" />
                       <span className="text-white/90 text-sm">使用 OptimizedRenderer 组件减少不必要的重渲染</span>
                     </li>
                   )}
 
                   {status.performance.memory > 200 && (
                     <li className="flex items-start">
-                      <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <CheckCircle className="h-4 w-4 text-green-500 mr-2 shrink-0 mt-0.5" />
                       <span className="text-white/90 text-sm">使用 useLazyData 钩子实现数据懒加载，减少内存占用</span>
                     </li>
                   )}
 
                   {status.performance.networkLatency > 100 && (
                     <li className="flex items-start">
-                      <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <CheckCircle className="h-4 w-4 text-green-500 mr-2 shrink-0 mt-0.5" />
                       <span className="text-white/90 text-sm">优化网络请求，使用缓存和数据预加载减少延迟</span>
                     </li>
                   )}
 
                   {status.performance.slowComponents.some((comp) => comp.time > 10) && (
                     <li className="flex items-start">
-                      <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <CheckCircle className="h-4 w-4 text-green-500 mr-2 shrink-0 mt-0.5" />
                       <span className="text-white/90 text-sm">
                         使用 withPerformanceTracking 高阶组件监控并优化慢组件
                       </span>
@@ -451,7 +456,7 @@ export default function SystemStatus() {
                   )}
 
                   <li className="flex items-start">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-2 shrink-0 mt-0.5" />
                     <span className="text-white/90 text-sm">使用 BrowserCompatibilityChecker 确保跨浏览器兼容性</span>
                   </li>
                 </ul>

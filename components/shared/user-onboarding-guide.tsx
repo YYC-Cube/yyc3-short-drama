@@ -2,11 +2,12 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { X, ChevronRight, ChevronLeft, Lightbulb, Sparkles, BookOpen, Pen } from "lucide-react"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { AnimatePresence, motion } from "framer-motion"
+import { BookOpen, ChevronLeft, ChevronRight, Lightbulb, Pen, Sparkles, X } from "lucide-react"
+import Image from "next/image"
+import { useEffect, useState } from "react"
 
 type GuideStep = {
   title: string
@@ -56,9 +57,10 @@ export default function UserOnboardingGuide() {
         setIsOpen(true)
       }, 3000)
       return () => clearTimeout(timer)
-    } else {
-      setHasSeenGuide(true)
     }
+    // 异步调度规避 effect 体内同步 setState
+    const timer = setTimeout(() => setHasSeenGuide(true), 0)
+    return () => clearTimeout(timer)
   }, [])
 
   const completeGuide = () => {
@@ -130,11 +132,15 @@ export default function UserOnboardingGuide() {
                 <CardContent className="p-6">
                   <div className="flex flex-col items-center mb-6">
                     {guideSteps[currentStep].image && (
-                      <img
-                        src={guideSteps[currentStep].image || "/placeholder.svg"}
-                        alt={guideSteps[currentStep].title}
-                        className="rounded-lg w-full h-48 object-cover mb-4"
-                      />
+                      <div className="relative w-full h-48 mb-4">
+                        <Image
+                          src={guideSteps[currentStep].image || "/placeholder.svg"}
+                          alt={guideSteps[currentStep].title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 400px"
+                          className="rounded-lg object-cover"
+                        />
+                      </div>
                     )}
                     <p className="text-amber-200/80 text-center">{guideSteps[currentStep].description}</p>
                   </div>
@@ -162,7 +168,7 @@ export default function UserOnboardingGuide() {
                     variant="default"
                     size="sm"
                     onClick={nextStep}
-                    className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white border-none"
+                    className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white border-none"
                   >
                     {currentStep < guideSteps.length - 1 ? "下一步" : "完成"}
                     {currentStep < guideSteps.length - 1 && <ChevronRight className="h-4 w-4 ml-2" />}

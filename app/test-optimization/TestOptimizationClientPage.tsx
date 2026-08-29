@@ -11,7 +11,7 @@ export default function TestOptimizationClientPage() {
         <h1 className="text-3xl md:text-4xl font-bold text-white mb-8">兼容性和性能优化测试</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+          <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
             <h2 className="text-2xl font-bold text-white mb-4">跨浏览器和跨设备测试</h2>
             <p className="text-white/70 mb-6">
               使用设备模拟器测试不同设备和屏幕尺寸下的界面表现，确保系统在各种环境下都能正常运行。
@@ -49,7 +49,7 @@ export default function TestOptimizationClientPage() {
             </DeviceSimulator>
           </div>
 
-          <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+          <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
             <h2 className="text-2xl font-bold text-white mb-4">组件渲染优化</h2>
             <p className="text-white/70 mb-6">
               使用 OptimizedRenderer 组件和 withOptimizedRendering 高阶组件减少不必要的重渲染，提高系统响应速度。
@@ -86,7 +86,7 @@ export default function TestOptimizationClientPage() {
           </div>
         </div>
 
-        <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6 mb-12">
+        <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6 mb-12">
           <h2 className="text-2xl font-bold text-white mb-4">数据懒加载</h2>
           <p className="text-white/70 mb-6">
             使用 useLazyData 钩子实现数据懒加载，提升大数据量下的性能。当用户滚动到页面底部时，自动加载更多数据。
@@ -115,7 +115,7 @@ export default function TestOptimizationClientPage() {
 
           <div className="mt-6 text-center">
             <button
-              className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white px-4 py-2 rounded-lg"
+              className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white px-4 py-2 rounded-lg"
               onClick={() => {
                 const endMeasure = performanceMonitor.startMeasure("LoadMoreButton")
                 setTimeout(endMeasure, 100)
@@ -126,7 +126,7 @@ export default function TestOptimizationClientPage() {
           </div>
         </div>
 
-        <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+        <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
           <h2 className="text-2xl font-bold text-white mb-4">性能监控</h2>
           <p className="text-white/70 mb-6">
             使用 performanceMonitor 工具和 withPerformanceTracking 高阶组件跟踪和优化组件渲染性能。
@@ -135,7 +135,7 @@ export default function TestOptimizationClientPage() {
 
           <div className="flex justify-center">
             <button
-              className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white px-4 py-2 rounded-lg"
+              className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white px-4 py-2 rounded-lg"
               onClick={() => {
                 const report = performanceMonitor.exportReport()
                 console.log("Performance Report:", report)

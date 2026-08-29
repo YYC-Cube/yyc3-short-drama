@@ -9,14 +9,15 @@ import { Clock, Map, Users, Sparkles } from "lucide-react"
 export default function CulturalCrossingHero() {
   const [timelinePosition, setTimelinePosition] = useState(0)
   const timelineEras = ["北魏", "隋朝", "唐朝", "宋朝", "现代", "未来"]
+  const eraCount = timelineEras.length
 
   // 自动切换时代
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimelinePosition((prev) => (prev + 1) % timelineEras.length)
+      setTimelinePosition((prev) => (prev + 1) % eraCount)
     }, 3000)
     return () => clearInterval(interval)
-  }, [])
+  }, [eraCount])
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -48,7 +49,7 @@ export default function CulturalCrossingHero() {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-600 mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-linear-to-r from-amber-300 to-amber-600 mb-6">
             言语逸品云享 · 文化穿越
           </h1>
           <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto mb-8">
@@ -56,7 +57,7 @@ export default function CulturalCrossingHero() {
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-lg py-6 px-8">
+            <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-lg py-6 px-8">
               <Sparkles className="mr-2 h-5 w-5" />
               开启穿越之旅
             </Button>
@@ -71,7 +72,7 @@ export default function CulturalCrossingHero() {
 
           {/* 时间线 */}
           <div className="relative max-w-2xl mx-auto">
-            <div className="h-1 bg-gradient-to-r from-amber-500/20 via-amber-500 to-amber-500/20 rounded-full mb-4"></div>
+            <div className="h-1 bg-linear-to-r from-amber-500/20 via-amber-500 to-amber-500/20 rounded-full mb-4"></div>
             <div className="absolute top-0 left-0 right-0">
               <motion.div
                 className="w-3 h-3 bg-amber-500 rounded-full -mt-1 relative"
@@ -103,7 +104,7 @@ export default function CulturalCrossingHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6 text-center"
+            className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6 text-center"
           >
             <Clock className="h-10 w-10 text-amber-400 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-white mb-2">时空折叠</h3>
@@ -114,7 +115,7 @@ export default function CulturalCrossingHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6 text-center"
+            className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6 text-center"
           >
             <Users className="h-10 w-10 text-amber-400 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-white mb-2">数字演员</h3>
@@ -125,7 +126,7 @@ export default function CulturalCrossingHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6 text-center"
+            className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6 text-center"
           >
             <Map className="h-10 w-10 text-amber-400 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-white mb-2">文化传承</h3>

@@ -4,5 +4,3 @@
 export { default as CulturalGeneHeader } from "./header"
 export { default as ScriptAlgorithm } from "./script-algorithm"
 export { default as TimeSpaceLibrary } from "./time-space-library"
-export { default as CulturalValue } from "./cultural-value"
-export { default as CulturalImageGallery } from "./cultural-image-gallery"

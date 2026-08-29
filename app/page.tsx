@@ -1,21 +1,23 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import {
-  ChevronUp,
-  ChevronDown,
-  Play,
-  Pause,
-  Compass,
-  Scroll,
-  Palette,
-  Sparkles,
-  MousePointer2,
-  Keyboard,
-} from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { AnimatePresence, motion } from "framer-motion"
+import {
+  ChevronDown,
+  ChevronUp,
+  Compass,
+  Keyboard,
+  MousePointer2,
+  Palette,
+  Pause,
+  Play,
+  Scroll,
+  Sparkles,
+} from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useCallback, useEffect, useState } from "react"
 
 const culturalSections = [
   {
@@ -61,6 +63,7 @@ const culturalSections = [
 ]
 
 export default function HomePage() {
+  const router = useRouter()
   const [currentSection, setCurrentSection] = useState(0)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isAutoPlay, setIsAutoPlay] = useState(true)
@@ -107,14 +110,14 @@ export default function HomePage() {
           setIsAutoPlay((prev) => !prev)
           break
         case "Enter":
-          window.location.href = "/main"
+          router.push("/main")
           break
       }
     }
 
     window.addEventListener("keydown", handleKeyPress)
     return () => window.removeEventListener("keydown", handleKeyPress)
-  }, [])
+  }, [router])
 
   // 滚轮导航
   const handleWheel = useCallback((e: WheelEvent) => {
@@ -156,12 +159,15 @@ export default function HomePage() {
             }}
             className="absolute inset-0"
           >
-            <img
+            <Image
               src={currentData.images[currentImageIndex] || "/placeholder.svg"}
               alt={currentData.title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              priority
+              sizes="100vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/30" />
           </motion.div>
         </AnimatePresence>
       </div>
@@ -173,7 +179,7 @@ export default function HomePage() {
         className="absolute top-4 left-4 z-20"
       >
         <div className="flex items-center gap-2 px-3 py-2 bg-black/20 backdrop-blur-md rounded-lg border border-white/10">
-          <div className="w-6 h-6 bg-gradient-to-br from-amber-400 to-orange-500 rounded flex items-center justify-center">
+          <div className="w-6 h-6 bg-linear-to-br from-amber-400 to-orange-500 rounded flex items-center justify-center">
             <span className="text-white font-bold text-xs">言</span>
           </div>
           <span className="text-white text-sm font-medium text-3d">言语逸品</span>
@@ -189,7 +195,7 @@ export default function HomePage() {
       >
         <div className="bg-black/20 backdrop-blur-xl rounded-2xl p-4 border border-white/10">
           <div
-            className={`inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r ${currentData.gradient} bg-opacity-20 rounded-full mb-3`}
+            className={`inline-flex items-center gap-2 px-3 py-1 bg-linear-to-r ${currentData.gradient} bg-opacity-20 rounded-full mb-3`}
           >
             <IconComponent className="w-3 h-3 text-white" />
             <span className="text-white text-xs font-medium">第{currentSection + 1}章</span>
@@ -218,11 +224,10 @@ export default function HomePage() {
                   setCurrentSection(index)
                   setCurrentImageIndex(0)
                 }}
-                className={`w-8 h-1 rounded-full transition-all duration-300 ${
-                  index === currentSection
-                    ? `bg-gradient-to-r ${currentData.gradient}`
-                    : "bg-white/30 hover:bg-white/50"
-                }`}
+                className={`w-8 h-1 rounded-full transition-all duration-300 ${index === currentSection
+                  ? `bg-linear-to-r ${currentData.gradient}`
+                  : "bg-white/30 hover:bg-white/50"
+                  }`}
               />
             ))}
           </div>
@@ -232,9 +237,8 @@ export default function HomePage() {
             {[0, 1].map((index) => (
               <div
                 key={index}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === currentImageIndex ? `bg-gradient-to-r ${currentData.gradient}` : "bg-white/30"
-                }`}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentImageIndex ? `bg-linear-to-r ${currentData.gradient}` : "bg-white/30"
+                  }`}
               />
             ))}
           </div>
@@ -294,7 +298,7 @@ export default function HomePage() {
         {/* 进度条 */}
         <div className="h-1 bg-black/20">
           <motion.div
-            className={`h-full bg-gradient-to-r ${currentData.gradient}`}
+            className={`h-full bg-linear-to-r ${currentData.gradient}`}
             initial={{ width: "0%" }}
             animate={{ width: `${((currentSection + 1) / culturalSections.length) * 100}%` }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -318,7 +322,7 @@ export default function HomePage() {
             {/* 进入按钮 */}
             <Link href="/main">
               <Button
-                className={`bg-gradient-to-r ${currentData.gradient} hover:opacity-90 text-white px-6 py-2 text-sm font-medium`}
+                className={`bg-linear-to-r ${currentData.gradient} hover:opacity-90 text-white px-6 py-2 text-sm font-medium`}
               >
                 进入河洛文化平台
               </Button>

@@ -18,6 +18,9 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // 🔧 v1.1.0: 显式指定工作区根目录，避免 ~/bun.lock 干扰 Next 的根目录推断
+  outputFileTracingRoot: import.meta.dirname,
+
   // ==========================================================================
   // 核心配置 - GitHub Pages 静态导出
   // ==========================================================================
@@ -81,140 +84,98 @@ const nextConfig = {
 
   // ==========================================================================
   // 安全头配置（CORS等）
+  // ⚠️ v1.1.1: output:'export' 模式下 headers/rewrites 均不生效（构建告警）
+  // 保留于 fullstack 模式（移除 output:'export'）时自动启用
   // ==========================================================================
-  async headers() {
-    return [
-      {
-        source: '/api/:path*',
-        headers: [
+  ...(process.env.NEXT_OUTPUT_FULLSTACK === 'true'
+    ? {
+      async headers() {
+        return [
           {
-            key: 'Access-Control-Allow-Origin',
-            value:
-              process.env.NODE_ENV === 'production'
-                ? process.env.NEXT_PUBLIC_APP_URL || 'https://drama.yyc3.top'
-                : 'http://localhost:3000',
+            source: '/api/:path*',
+            headers: [
+              {
+                key: 'Access-Control-Allow-Origin',
+                value:
+                  process.env.NODE_ENV === 'production'
+                    ? process.env.NEXT_PUBLIC_APP_URL || 'https://drama.yyc3.top'
+                    : 'http://localhost:3030',
+              },
+              {
+                key: 'Access-Control-Allow-Methods',
+                value: 'GET, POST, PUT, DELETE, OPTIONS',
+              },
+              {
+                key: 'Access-Control-Allow-Headers',
+                value: 'Content-Type, Authorization, X-Requested-With',
+              },
+              {
+                key: 'Access-Control-Allow-Credentials',
+                value: 'true',
+              },
+              {
+                key: 'Access-Control-Max-Age',
+                value: '86400',
+              },
+            ],
           },
+          // ✅ 安全响应头（符合五高安全标准）
           {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET, POST, PUT, DELETE, OPTIONS',
+            source: '/(.*)',
+            headers: [
+              { key: 'X-Frame-Options', value: 'DENY' },
+              { key: 'X-Content-Type-Options', value: 'nosniff' },
+              { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
+              { key: 'X-XSS-Protection', value: '1; mode=block' },
+            ],
           },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value: 'Content-Type, Authorization, X-Requested-With',
-          },
-          {
-            key: 'Access-Control-Allow-Credentials',
-            value: 'true',
-          },
-          {
-            key: 'Access-Control-Max-Age',
-            value: '86400',
-          },
-        ],
+        ];
       },
-      // ✅ 新增：安全响应头（符合五高安全标准）
-      {
-        source: '/(.*)',
-        headers: [
+    }
+    : {}),
+
+  // ==========================================================================
+  // URL重写规则
+  // ⚠️ v1.1.1: 静态导出模式下 rewrites 不生效，仅 fullstack 模式启用
+  // ==========================================================================
+  ...(process.env.NEXT_OUTPUT_FULLSTACK === 'true'
+    ? {
+      async rewrites() {
+        return [
           {
-            key: 'X-Frame-Options',
-            value: 'DENY',
+            source: '/api/health',
+            destination: '/api/health',
           },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'origin-when-cross-origin',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
-          },
-        ],
+        ];
       },
-    ];
-  },
-
-  // ==========================================================================
-  // URL重写规则（仅用于开发环境或服务器端功能）
-  // ==========================================================================
-  async rewrites() {
-    // ⚠️ 注意：静态导出模式下rewrites不生效
-    // 此处保留用于本地开发和未来可能的BFF层迁移
-    if (process.env.NODE_ENV !== 'production') {
-      return [
-        {
-          source: '/api/health',
-          destination: '/api/health',
-        },
-      ];
     }
-    return [];
-  },
+    : {}),
 
   // ==========================================================================
-  // Webpack配置优化（性能增强）
+  // React 严格模式
   // ==========================================================================
-  webpack: (config, { isServer }) => {
-    // 支持服务端包的外部化（JWT、bcrypt等不需要打包到客户端）
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        net: false,
-        tls: false,
-      };
-    }
-
-    // 性能优化：减少不必要的包体积分析
-    config.performance = {
-      hints: process.env.NODE_ENV === 'production' ? 'warning' : false,
-      maxEntrypointSize: 512000,
-      maxAssetSize: 512000,
-    };
-
-    return config;
-  },
+  reactStrictMode: true,
 
   // ==========================================================================
   // 实验性功能
   // ==========================================================================
   experimental: {
-    // 启用React严格模式（提升开发体验）
-    reactStrictMode: true,
-
     // 优化包导入（减小体积）
     optimizePackageImports: ['lucide-react', '@radix-ui/react-*', 'framer-motion'],
   },
 
   // ==========================================================================
+  // ESLint / TypeScript 配置
+  // ⚠️ v1.2.0: Next 16 已移除 next lint 与构建期 lint（eslint 键失效），
+  // lint 改由独立命令 pnpm lint（eslint.config.mjs flat config）执行
+  // ==========================================================================
+
+  // ==========================================================================
   // TypeScript配置
   // ==========================================================================
   typescript: {
-    // 构建时忽略类型错误（CI/CD中有单独的类型检查步骤）
+    // ✅ v1.1.1: 类型错误已清零，恢复构建时类型检查（原先重复声明+忽略已移除）
     ignoreBuildErrors: false,
-  },
-
-  // ==========================================================================
-  // ESLint配置
-  // ==========================================================================
-  eslint: {
-    // ⚠️ Phase 1策略: 暂时忽略构建时ESLint错误以完成基础设施搭建
-    // ✅ 原因: 存在43个代码规范问题需在Phase 3系统性修复
-    // 📋 后续: 启用此选项并修复所有ESLint错误
-    ignoreDuringBuilds: true,
-  },
-
-  // ==========================================================================
-  // TypeScript配置
-  // ==========================================================================
-  typescript: {
-    // ⚠️ Phase 1策略: 暂时忽略构建时TypeScript错误以完成基础设施搭建
-    // ✅ 原因: 存在69个类型检查问题需在Phase 3系统性修复
-    // 📋 后续: 移除此选项并修复所有TypeScript错误
-    ignoreBuildErrors: true,
   },
 
   // ==========================================================================

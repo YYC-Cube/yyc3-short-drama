@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { useState, useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import Image from "next/image"
@@ -171,6 +172,7 @@ const mockTasks: Record<TaskType, Task[]> = {
 }
 
 export default function CreationTasks() {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState<TaskType>("daily")
   const [claimingReward, setClaimingReward] = useState<string | null>(null)
 
@@ -227,15 +229,15 @@ export default function CreationTasks() {
           <p className="text-white/70 max-w-3xl">完成创作任务获得明星值和通宝奖励，提升创作等级，解锁更多高级功能。</p>
         </motion.div>
 
-        <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6 text-center">
+        <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6 text-center">
           <Lock className="h-12 w-12 text-amber-500/50 mx-auto mb-4" />
           <h3 className="text-xl font-bold text-white mb-2">登录后解锁创作任务</h3>
           <p className="text-white/70 mb-6 max-w-md mx-auto">
             登录后可参与创作任务，完成任务获得明星值和通宝奖励，提升创作等级。
           </p>
           <Button
-            className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
-            onClick={() => (window.location.href = "/auth")}
+            className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+            onClick={() => router.push("/auth")}
           >
             立即登录
           </Button>
@@ -259,7 +261,7 @@ export default function CreationTasks() {
         <p className="text-white/70 max-w-3xl">完成创作任务获得明星值和通宝奖励，提升创作等级，解锁更多高级功能。</p>
       </motion.div>
 
-      <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+      <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <motion.div
             className="bg-black/60 border border-amber-500/10 rounded-lg p-4"
@@ -474,7 +476,7 @@ export default function CreationTasks() {
                               )}
                             </Button>
                           ) : task.status === "in-progress" ? (
-                            <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+                            <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
                               <Zap className="h-4 w-4 mr-2" />
                               继续任务
                             </Button>

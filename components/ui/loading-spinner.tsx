@@ -30,8 +30,8 @@ export function LoadingSpinner({ size = "md", text = "加载中...", className =
         transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
       >
         <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full opacity-20 blur-sm"></div>
-          <div className="relative bg-gradient-to-r from-purple-500 to-pink-500 rounded-full p-2">
+          <div className="absolute inset-0 bg-linear-to-r from-purple-500 to-pink-500 rounded-full opacity-20 blur-xs"></div>
+          <div className="relative bg-linear-to-r from-purple-500 to-pink-500 rounded-full p-2">
             <Sparkles className="w-full h-full text-white" />
           </div>
         </div>
@@ -54,7 +54,7 @@ export function LoadingSpinner({ size = "md", text = "加载中...", className =
         {[0, 1, 2].map((i) => (
           <motion.div
             key={i}
-            className="w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"
+            className="w-2 h-2 bg-linear-to-r from-purple-400 to-pink-400 rounded-full"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.5, 1, 0.5],

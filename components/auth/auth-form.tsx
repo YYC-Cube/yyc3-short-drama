@@ -233,7 +233,7 @@ export default function AuthForm() {
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <div className="bg-black/40 backdrop-blur-sm border border-blue-500/20 rounded-lg p-6">
+          <div className="bg-black/40 backdrop-blur-xs border border-blue-500/20 rounded-lg p-6">
             <h2 className="text-2xl font-bold text-white mb-6">用户登录</h2>
 
             <Tabs defaultValue="phone" value={activeTab} onValueChange={setActiveTab}>
@@ -296,7 +296,7 @@ export default function AuthForm() {
                       placeholder="请输入手机号"
                       maxLength={11}
                       disabled={isLoading}
-                      className="flex-grow bg-black/60 border-blue-500/30 focus-visible:ring-blue-500/50 text-white rounded-l-none"
+                      className="grow bg-black/60 border-blue-500/30 focus-visible:ring-blue-500/50 text-white rounded-l-none"
                     />
                   </div>
                 </div>
@@ -311,12 +311,12 @@ export default function AuthForm() {
                       placeholder="请输入验证码"
                       maxLength={6}
                       disabled={isLoading}
-                      className="flex-grow bg-black/60 border-blue-500/30 focus-visible:ring-blue-500/50 text-white"
+                      className="grow bg-black/60 border-blue-500/30 focus-visible:ring-blue-500/50 text-white"
                     />
                     <Button
                       onClick={sendCode}
                       disabled={!phoneNumber || phoneNumber.length !== 11 || countdown > 0 || isLoading}
-                      className="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 whitespace-nowrap"
+                      className="bg-linear-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 whitespace-nowrap"
                     >
                       {countdown > 0 ? `${countdown}秒后重发` : "发送验证码"}
                     </Button>
@@ -351,7 +351,7 @@ export default function AuthForm() {
                 <Button
                   onClick={handleLogin}
                   disabled={!isCodeSent || !verificationCode || isLoading || loginStatus === "logging"}
-                  className="w-full bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
+                  className="w-full bg-linear-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
                 >
                   {isLoading && loginStatus === "logging" ? (
                     <>
@@ -450,7 +450,7 @@ export default function AuthForm() {
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="bg-black/40 backdrop-blur-sm border border-blue-500/20 rounded-lg p-6">
+          <div className="bg-black/40 backdrop-blur-xs border border-blue-500/20 rounded-lg p-6">
             <h2 className="text-2xl font-bold text-white mb-6">用户权益</h2>
 
             <div className="space-y-6">
@@ -464,7 +464,7 @@ export default function AuthForm() {
                 >
                   <div className="flex items-center mb-3">
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br ${benefit.color} mr-3`}
+                      className={`w-10 h-10 rounded-full flex items-center justify-center bg-linear-to-br ${benefit.color} mr-3`}
                     >
                       {benefit.icon}
                     </div>

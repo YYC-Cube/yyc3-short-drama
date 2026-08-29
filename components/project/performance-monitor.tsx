@@ -127,7 +127,7 @@ export default function PerformanceMonitor() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {[...Array(6)].map((_, index) => (
-          <Card key={index} className="bg-black/40 border-white/10 backdrop-blur-sm">
+          <Card key={index} className="bg-black/40 border-white/10 backdrop-blur-xs">
             <CardHeader>
               <div className="animate-pulse">
                 <div className="h-4 bg-white/20 rounded w-3/4 mb-2"></div>
@@ -149,7 +149,7 @@ export default function PerformanceMonitor() {
   return (
     <div className="space-y-6">
       {/* 性能概览 */}
-      <Card className="bg-black/40 border-white/10 backdrop-blur-sm">
+      <Card className="bg-black/40 border-white/10 backdrop-blur-xs">
         <CardHeader>
           <CardTitle className="text-white flex items-center">
             <Activity className="h-5 w-5 mr-2 text-blue-400" />
@@ -184,7 +184,7 @@ export default function PerformanceMonitor() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
           >
-            <Card className="bg-black/40 border-white/10 backdrop-blur-sm hover:border-amber-500/30 transition-all duration-300">
+            <Card className="bg-black/40 border-white/10 backdrop-blur-xs hover:border-amber-500/30 transition-all duration-300">
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
@@ -234,7 +234,7 @@ export default function PerformanceMonitor() {
       </div>
 
       {/* 性能趋势图 */}
-      <Card className="bg-black/40 border-white/10 backdrop-blur-sm">
+      <Card className="bg-black/40 border-white/10 backdrop-blur-xs">
         <CardHeader>
           <CardTitle className="text-white">性能趋势分析</CardTitle>
           <CardDescription className="text-white/60">过去24小时系统性能变化趋势</CardDescription>

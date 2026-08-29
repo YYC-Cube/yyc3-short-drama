@@ -10,7 +10,7 @@
  * @license MIT
  */
 
-import mysql from "mysql2/promise"
+import mysql from "mysql2/promise";
 
 // 创建数据库连接池
 const pool = mysql.createPool({
@@ -28,21 +28,21 @@ const pool = mysql.createPool({
 })
 
 // 简单的查询缓存实现
-const queryCache = new Map<string, { data: any; timestamp: number }>()
+const queryCache = new Map<string, { data: unknown; timestamp: number }>()
 const CACHE_TTL = 30000 // 缓存有效期 30 秒
 
 // 生成缓存键
-function generateCacheKey(sql: string, params?: any[]): string {
+function generateCacheKey(sql: string, params?: unknown[]): string {
   return `${sql}:${JSON.stringify(params || [])}`
 }
 
 // 查询函数（带缓存）
-export async function query<T = any>(sql: string, params?: any[], useCache: boolean = false): Promise<T> {
+export async function query<T = unknown>(sql: string, params?: unknown[], useCache: boolean = false): Promise<T> {
   // 检查是否使用缓存且查询是只读的（SELECT 语句）
   if (useCache && sql.trim().toLowerCase().startsWith('select')) {
     const cacheKey = generateCacheKey(sql, params)
     const cachedItem = queryCache.get(cacheKey)
-    
+
     // 检查缓存是否有效
     if (cachedItem && (Date.now() - cachedItem.timestamp) < CACHE_TTL) {
       console.log("📦 使用缓存查询:", sql.substring(0, 50) + "...")
@@ -51,8 +51,9 @@ export async function query<T = any>(sql: string, params?: any[], useCache: bool
   }
 
   try {
-    const [results] = await pool.execute(sql, params)
-    
+    // mysql2 ExecuteValues 要求明确的参数类型（unknown[] 在新版类型下不匹配）
+    const [results] = await pool.execute(sql, params as (string | number | boolean | null)[] | undefined)
+
     // 将结果存入缓存
     if (useCache && sql.trim().toLowerCase().startsWith('select')) {
       const cacheKey = generateCacheKey(sql, params)
@@ -60,14 +61,16 @@ export async function query<T = any>(sql: string, params?: any[], useCache: bool
         data: results,
         timestamp: Date.now()
       })
-      
+
       // 限制缓存大小
       if (queryCache.size > 100) {
         const oldestKey = queryCache.keys().next().value
-        queryCache.delete(oldestKey)
+        if (oldestKey !== undefined) {
+          queryCache.delete(oldestKey)
+        }
       }
     }
-    
+
     return results as T
   } catch (error) {
     console.error("数据库查询错误:", error)

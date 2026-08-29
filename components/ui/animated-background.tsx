@@ -1,21 +1,30 @@
 "use client"
 
-import type * as React from "react"
 import { motion } from "framer-motion"
+import type * as React from "react"
 
 interface AnimatedBackgroundProps {
   variant?: "default" | "cultural" | "minimal"
   children: React.ReactNode
 }
 
+// 粒子参数模块级一次性生成（render 内 Math.random 非纯且导致重渲染跳动）
+const culturalParticles = Array.from({ length: 20 }, (_, i) => ({
+  id: i,
+  left: `${(i * 41 + 7) % 100}%`,
+  top: `${(i * 59 + 23) % 100}%`,
+  duration: ((i * 13 + 5) % 30) / 10 + 2,
+  delay: ((i * 19 + 3) % 20) / 10,
+}))
+
 const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ variant = "default", children }) => {
   if (variant === "minimal") {
-    return <div className="relative min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">{children}</div>
+    return <div className="relative min-h-screen bg-linear-to-br from-slate-900 to-slate-800">{children}</div>
   }
 
   if (variant === "cultural") {
     return (
-      <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
+      <div className="relative min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
         {/* 河洛文化背景装饰 */}
         <div className="absolute inset-0 opacity-20">
           {/* 主要装饰圆 */}
@@ -50,13 +59,13 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ variant = "defa
 
         {/* 浮动粒子效果 */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {Array.from({ length: 20 }).map((_, i) => (
+          {culturalParticles.map((p) => (
             <motion.div
-              key={i}
+              key={p.id}
               className="absolute w-2 h-2 bg-amber-400/30 rounded-full"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: p.left,
+                top: p.top,
               }}
               animate={{
                 y: [-20, -100],
@@ -64,9 +73,9 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ variant = "defa
                 scale: [0, 1, 0],
               }}
               transition={{
-                duration: Math.random() * 3 + 2,
+                duration: p.duration,
                 repeat: Number.POSITIVE_INFINITY,
-                delay: Math.random() * 2,
+                delay: p.delay,
               }}
             />
           ))}
@@ -78,11 +87,11 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ variant = "defa
   }
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 overflow-hidden">
+    <div className="relative min-h-screen bg-linear-to-br from-slate-900 via-blue-900 to-purple-900 overflow-hidden">
       {/* 默认背景装饰 */}
       <div className="absolute inset-0 opacity-30">
         <motion.div
-          className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-500/20 to-purple-500/20"
+          className="absolute top-0 left-0 w-full h-full bg-linear-to-r from-blue-500/20 to-purple-500/20"
           animate={{
             background: [
               "linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(168, 85, 247, 0.2))",

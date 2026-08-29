@@ -150,11 +150,11 @@ export default function CreativeEcosystem() {
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-600 mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-linear-to-r from-amber-300 to-amber-600 mb-4">
           创作生态赋能
         </h2>
         <p className="text-xl text-white/70 max-w-3xl mx-auto">
-          跨代际演员经纪与文化基因裂变工坊，构建"创作即保护，演绎即传承"的可持续生态
+          跨代际演员经纪与文化基因裂变工坊，构建“创作即保护，演绎即传承”的可持续生态
         </p>
       </motion.div>
 
@@ -179,10 +179,10 @@ export default function CreativeEcosystem() {
             >
               <h3 className="text-2xl font-bold text-white mb-4">数字替身片酬系统</h3>
               <p className="text-white/70 mb-6">
-                用户可以租用历史名人数字替身参与短剧创作，支付的明星值和通宝将部分注入遗址保护基金，形成"创作即保护"的良性循环。
+                用户可以租用历史名人数字替身参与短剧创作，支付的明星值和通宝将部分注入遗址保护基金，形成“创作即保护”的良性循环。
               </p>
 
-              <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-4 mb-6">
+              <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-4 mb-6">
                 <h4 className="text-lg font-medium text-white mb-3">片酬分配机制</h4>
                 <div className="space-y-4">
                   <div>
@@ -192,7 +192,7 @@ export default function CreativeEcosystem() {
                     </div>
                     <div className="h-2 bg-black/60 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-amber-400 to-amber-600 rounded-full"
+                        className="h-full bg-linear-to-r from-amber-400 to-amber-600 rounded-full"
                         style={{ width: "60%" }}
                       ></div>
                     </div>
@@ -204,7 +204,7 @@ export default function CreativeEcosystem() {
                     </div>
                     <div className="h-2 bg-black/60 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"
+                        className="h-full bg-linear-to-r from-blue-400 to-blue-600 rounded-full"
                         style={{ width: "20%" }}
                       ></div>
                     </div>
@@ -216,7 +216,7 @@ export default function CreativeEcosystem() {
                     </div>
                     <div className="h-2 bg-black/60 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full"
+                        className="h-full bg-linear-to-r from-green-400 to-green-600 rounded-full"
                         style={{ width: "20%" }}
                       ></div>
                     </div>
@@ -224,7 +224,7 @@ export default function CreativeEcosystem() {
                 </div>
               </div>
 
-              <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-4">
+              <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-4">
                 <h4 className="text-lg font-medium text-white mb-3">保护成果展示</h4>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-black/60 border border-green-500/10 rounded-lg p-3 text-center">
@@ -240,7 +240,7 @@ export default function CreativeEcosystem() {
             </motion.div>
 
             <motion.div
-              className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6"
+              className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6"
               initial={{ opacity: 0, x: 20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -259,14 +259,14 @@ export default function CreativeEcosystem() {
                     key={actor.id}
                     className="bg-black/60 border border-amber-500/10 rounded-lg p-3 flex items-center"
                   >
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center mr-3">
+                    <div className="shrink-0 w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center mr-3">
                       <span className="text-amber-400 font-bold">{index + 1}</span>
                     </div>
                     <Avatar className="h-10 w-10 mr-3">
                       <AvatarImage src={actor.avatar} alt={actor.name} />
                       <AvatarFallback>{actor.name.slice(0, 2)}</AvatarFallback>
                     </Avatar>
-                    <div className="flex-grow">
+                    <div className="grow">
                       <div className="flex items-center">
                         <span className="text-white font-medium">{actor.name}</span>
                         <span className="text-white/60 text-xs ml-2">{actor.era}</span>
@@ -348,7 +348,7 @@ export default function CreativeEcosystem() {
             {digitalActors.map((actor, index) => (
               <div
                 key={actor.id}
-                className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg overflow-hidden group"
+                className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg overflow-hidden group"
               >
                 <div className="relative h-48">
                   <Image
@@ -358,9 +358,9 @@ export default function CreativeEcosystem() {
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute top-2 right-2">
-                    <Badge className="bg-amber-600/80 backdrop-blur-sm">{actor.era}</Badge>
+                    <Badge className="bg-amber-600/80 backdrop-blur-xs">{actor.era}</Badge>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60"></div>
                 </div>
 
                 <div className="p-4">
@@ -392,7 +392,7 @@ export default function CreativeEcosystem() {
                     <div className="text-white/60 text-xs mt-1">其中20%将注入遗址保护基金</div>
                   </div>
 
-                  <Button className="w-full bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+                  <Button className="w-full bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
                     <Users className="h-4 w-4 mr-2" />
                     租用{actor.name}
                   </Button>

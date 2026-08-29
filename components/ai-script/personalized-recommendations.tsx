@@ -194,14 +194,13 @@ export default function PersonalizedRecommendations() {
 
   // 加载推荐数据
   useEffect(() => {
-    setIsLoading(true)
-
-    // 模拟API请求延迟
+    // 模拟API请求延迟（异步调度规避 effect 体内同步 setState）
     const timer = setTimeout(() => {
+      setIsLoading(true)
       const personalizedItems = getPersonalizedRecommendations(activeTab, mockUserData)
       setRecommendations(personalizedItems)
       setIsLoading(false)
-    }, 1000)
+    }, activeTab === "themes" ? 1000 : 0)
 
     return () => clearTimeout(timer)
   }, [activeTab])
@@ -223,10 +222,10 @@ export default function PersonalizedRecommendations() {
         </p>
       </motion.div>
 
-      <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+      <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 space-y-4 md:space-y-0">
           <div className="flex items-center">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center mr-4">
+            <div className="w-12 h-12 rounded-full bg-linear-to-br from-amber-400 to-amber-600 flex items-center justify-center mr-4">
               <BookOpen className="h-6 w-6 text-white" />
             </div>
             <div>
@@ -239,7 +238,7 @@ export default function PersonalizedRecommendations() {
             </div>
           </div>
 
-          <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+          <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
             <Lightbulb className="h-4 w-4 mr-2" />
             查看我的创作档案
           </Button>
@@ -305,12 +304,12 @@ export default function PersonalizedRecommendations() {
                           {item.isNew && (
                             <span className="text-xs px-2 py-1 rounded-full bg-amber-500 text-white">新上线</span>
                           )}
-                          <span className="text-xs px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm text-white flex items-center">
+                          <span className="text-xs px-2 py-1 rounded-full bg-black/50 backdrop-blur-xs text-white flex items-center">
                             <Star className="h-3 w-3 text-amber-400 mr-1" />
                             {item.popularity}
                           </span>
                         </div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60" />
+                        <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60" />
                       </div>
 
                       <div className="p-4">
@@ -349,7 +348,7 @@ export default function PersonalizedRecommendations() {
               )}
 
               <div className="mt-8 text-center">
-                <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+                <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
                   查看更多推荐
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
@@ -367,7 +366,7 @@ export default function PersonalizedRecommendations() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {mockUserData.recentActivities.map((activity, index) => (
               <div key={index} className="bg-black/40 border border-amber-500/10 rounded-lg p-3 flex items-center">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400/20 to-amber-600/20 flex items-center justify-center mr-3">
+                <div className="w-10 h-10 rounded-full bg-linear-to-br from-amber-400/20 to-amber-600/20 flex items-center justify-center mr-3">
                   <BookOpen className="h-5 w-5 text-amber-400" />
                 </div>
                 <div>

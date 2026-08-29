@@ -1,31 +1,31 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { useAuth } from "@/contexts/auth-context"
-import CulturalCarousel from "@/components/home/cultural-carousel"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
 import AuthButton from "@/components/home/auth-button"
+import CulturalCarousel from "@/components/home/cultural-carousel"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
+import { useAuth } from "@/contexts/auth-context"
+import { motion } from "framer-motion"
 import {
-  Sparkles,
-  Dna,
-  Users,
-  Star,
-  Clock,
-  TrendingUp,
   ArrowRight,
-  Play,
   BarChart3,
-  Heart,
-  Zap,
-  Target,
   CheckCircle,
+  Clock,
+  Dna,
+  Heart,
+  Play,
+  Sparkles,
+  Star,
+  Target,
+  TrendingUp,
+  Users,
+  Zap,
 } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import { useEffect, useMemo, useSyncExternalStore } from "react"
 
 const heroStats = [
   {
@@ -201,14 +201,29 @@ const quickActions = [
   },
 ]
 
+const emptySubscribe = () => () => { }
+
 export default function ClientPage() {
   const { user } = useAuth()
-  const [mounted, setMounted] = useState(false)
+  // useSyncExternalStore 替代 useEffect+setState 的 mounted 模式（SSR 水合防抖官方范式）
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  )
   const isAuthenticated = user !== null
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  // 粒子参数在模块加载时一次性生成（render 内 Math.random 属非纯函数且导致重渲染跳动）
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 20 }, (_, i) => ({
+        id: i,
+        left: `${(i * 37 + 13) % 100}%`,
+        top: `${(i * 53 + 29) % 100}%`,
+        delay: ((i * 17 + 11) % 30) / 10,
+      })),
+    []
+  )
 
   // 键盘导航
   useEffect(() => {
@@ -254,18 +269,18 @@ export default function ClientPage() {
             className="object-cover brightness-[0.3]"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/80" />
+          <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/50 to-black/80" />
         </div>
 
         {/* 装饰性粒子效果 */}
         <div className="absolute inset-0 z-10">
-          {[...Array(20)].map((_, i) => (
+          {particles.map((p) => (
             <motion.div
-              key={i}
+              key={p.id}
               className="absolute w-1 h-1 bg-amber-400 rounded-full"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: p.left,
+                top: p.top,
               }}
               animate={{
                 opacity: [0, 1, 0],
@@ -274,7 +289,7 @@ export default function ClientPage() {
               transition={{
                 duration: 3,
                 repeat: Number.POSITIVE_INFINITY,
-                delay: Math.random() * 3,
+                delay: p.delay,
               }}
             />
           ))}
@@ -288,12 +303,12 @@ export default function ClientPage() {
             transition={{ duration: 0.8 }}
             className="mb-8"
           >
-            <Badge className="mb-6 bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 border-amber-500/30 text-lg px-6 py-2">
+            <Badge className="mb-6 bg-linear-to-r from-amber-500/20 to-orange-500/20 text-amber-300 border-amber-500/30 text-lg px-6 py-2">
               <Sparkles className="w-5 h-5 mr-2" />
               河洛文化数字传承平台
             </Badge>
 
-            <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-amber-300 via-orange-300 to-amber-300 bg-clip-text text-transparent">
+            <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-linear-to-r from-amber-300 via-orange-300 to-amber-300 bg-clip-text text-transparent">
               言语逸品
             </h1>
 
@@ -305,7 +320,7 @@ export default function ClientPage() {
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-10 py-4 text-xl font-semibold shadow-xl"
+                  className="bg-linear-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-10 py-4 text-xl font-semibold shadow-xl"
                   aria-label="播放文化之旅"
                 >
                   <Play className="w-6 h-6 mr-3" />
@@ -316,7 +331,7 @@ export default function ClientPage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-amber-500/50 text-amber-300 hover:bg-amber-500/10 px-10 py-4 text-xl bg-transparent backdrop-blur-sm"
+                  className="border-amber-500/50 text-amber-300 hover:bg-amber-500/10 px-10 py-4 text-xl bg-transparent backdrop-blur-xs"
                 >
                   探索更多
                   <ArrowRight className="w-6 h-6 ml-3" />
@@ -364,7 +379,7 @@ export default function ClientPage() {
       </section>
 
       {/* 核心功能模块 */}
-      <section className="py-20 px-6 bg-gradient-to-b from-black/50 to-black/30">
+      <section className="py-20 px-6 bg-linear-to-b from-black/50 to-black/30">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -373,7 +388,7 @@ export default function ClientPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-amber-300 via-orange-300 to-amber-300 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-linear-to-r from-amber-300 via-orange-300 to-amber-300 bg-clip-text text-transparent">
               核心功能模块
             </h2>
             <p className="text-xl text-white/80 max-w-3xl mx-auto">
@@ -398,7 +413,7 @@ export default function ClientPage() {
                       <CardHeader className="pb-4">
                         <div className="flex items-center justify-between mb-4">
                           <div
-                            className={`w-14 h-14 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center shadow-lg`}
+                            className={`w-14 h-14 rounded-2xl bg-linear-to-r ${feature.color} flex items-center justify-center shadow-lg`}
                           >
                             <Icon className="w-7 h-7 text-white" />
                           </div>
@@ -442,7 +457,7 @@ export default function ClientPage() {
                           <div className="space-y-1">
                             {feature.features.map((feat, featIndex) => (
                               <div key={featIndex} className="flex items-center text-sm text-white/70">
-                                <CheckCircle className="w-3 h-3 text-green-400 mr-2 flex-shrink-0" />
+                                <CheckCircle className="w-3 h-3 text-green-400 mr-2 shrink-0" />
                                 {feat}
                               </div>
                             ))}
@@ -498,7 +513,7 @@ export default function ClientPage() {
                           viewport={{ once: true }}
                           transition={{ duration: 0.3, delay: index * 0.1 }}
                           whileHover={{ scale: 1.02, x: 4 }}
-                          className="p-4 rounded-xl bg-gradient-to-r from-black/30 to-black/10 backdrop-blur-sm border border-amber-500/10 hover:border-amber-500/30 transition-all duration-300 group"
+                          className="p-4 rounded-xl bg-linear-to-r from-black/30 to-black/10 backdrop-blur-xs border border-amber-500/10 hover:border-amber-500/30 transition-all duration-300 group"
                         >
                           <div className="flex items-start space-x-4">
                             <div className={`p-2 rounded-lg ${activity.bgColor}`}>
@@ -559,7 +574,7 @@ export default function ClientPage() {
                     >
                       <Link href={action.href}>
                         <div
-                          className={`p-4 rounded-xl bg-gradient-to-r ${action.color} bg-opacity-20 border border-white/10 hover:border-white/30 transition-all duration-300 cursor-pointer group`}
+                          className={`p-4 rounded-xl bg-linear-to-r ${action.color} bg-opacity-20 border border-white/10 hover:border-white/30 transition-all duration-300 cursor-pointer group`}
                         >
                           <div className="flex items-center space-x-4">
                             <div className="text-3xl">{action.icon}</div>
@@ -600,7 +615,7 @@ export default function ClientPage() {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-purple-500/20 to-amber-500/20" />
+                <div className="absolute inset-0 bg-linear-to-r from-amber-500/20 via-purple-500/20 to-amber-500/20" />
               </div>
 
               <CardContent className="relative z-10 p-12 text-center">
@@ -610,7 +625,7 @@ export default function ClientPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
                 >
-                  <h3 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-amber-300 via-orange-300 to-amber-300 bg-clip-text text-transparent">
+                  <h3 className="text-4xl md:text-5xl font-bold mb-6 bg-linear-to-r from-amber-300 via-orange-300 to-amber-300 bg-clip-text text-transparent">
                     开启文化传承之旅
                   </h3>
                   <p className="text-xl text-white/90 mb-8 leading-relaxed max-w-3xl mx-auto">
@@ -620,7 +635,7 @@ export default function ClientPage() {
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                       <Button
                         size="lg"
-                        className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-10 py-4 text-xl font-semibold shadow-xl"
+                        className="bg-linear-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-10 py-4 text-xl font-semibold shadow-xl"
                       >
                         立即注册
                       </Button>
@@ -629,7 +644,7 @@ export default function ClientPage() {
                       <Button
                         size="lg"
                         variant="outline"
-                        className="border-amber-500/50 text-amber-300 hover:bg-amber-500/10 px-10 py-4 text-xl bg-transparent backdrop-blur-sm"
+                        className="border-amber-500/50 text-amber-300 hover:bg-amber-500/10 px-10 py-4 text-xl bg-transparent backdrop-blur-xs"
                       >
                         观看演示
                       </Button>
@@ -681,7 +696,7 @@ export default function ClientPage() {
           transition={{ delay: 1.5, duration: 0.8 }}
           className="text-white/60"
         >
-          <div className="text-2xl md:text-3xl font-bold mb-1 bg-gradient-to-r from-amber-400 to-red-400 bg-clip-text text-transparent">
+          <div className="text-2xl md:text-3xl font-bold mb-1 bg-linear-to-r from-amber-400 to-red-400 bg-clip-text text-transparent">
             言语逸品
           </div>
           <div className="text-xs text-white/40">Powered by AI & Culture</div>

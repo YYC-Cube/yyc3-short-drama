@@ -59,7 +59,7 @@ export default function VisualShowcase() {
               whileHover={{ scale: 1.02 }}
               className="group"
             >
-              <Card className="overflow-hidden bg-gradient-to-br from-black/40 to-black/60 border-white/10 hover:border-amber-500/30 transition-all duration-300 backdrop-blur-sm">
+              <Card className="overflow-hidden bg-linear-to-br from-black/40 to-black/60 border-white/10 hover:border-amber-500/30 transition-all duration-300 backdrop-blur-xs">
                 <div className="relative h-64 overflow-hidden">
                   <Image
                     src={item.image || "/placeholder.svg"}
@@ -68,9 +68,9 @@ export default function VisualShowcase() {
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
                   <div
-                    className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-20 group-hover:opacity-30 transition-opacity duration-300`}
+                    className={`absolute inset-0 bg-linear-to-br ${item.color} opacity-20 group-hover:opacity-30 transition-opacity duration-300`}
                   />
                 </div>
                 <CardContent className="p-6">
@@ -81,7 +81,7 @@ export default function VisualShowcase() {
                     {item.description}
                   </p>
                   <motion.div
-                    className={`w-0 h-1 mt-4 bg-gradient-to-r ${item.color} group-hover:w-full transition-all duration-500`}
+                    className={`w-0 h-1 mt-4 bg-linear-to-r ${item.color} group-hover:w-full transition-all duration-500`}
                   />
                 </CardContent>
               </Card>

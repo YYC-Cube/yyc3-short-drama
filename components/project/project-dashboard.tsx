@@ -150,7 +150,7 @@ export default function ProjectDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-7xl mx-auto">
         {/* 页面标题 */}
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
@@ -161,7 +161,7 @@ export default function ProjectDashboard() {
         {/* 关键指标卡片 */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-            <Card className="bg-black/40 border-amber-500/20 backdrop-blur-sm">
+            <Card className="bg-black/40 border-amber-500/20 backdrop-blur-xs">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-white/80">总体进度</CardTitle>
                 <BarChart3 className="h-4 w-4 text-amber-400" />
@@ -174,7 +174,7 @@ export default function ProjectDashboard() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-            <Card className="bg-black/40 border-blue-500/20 backdrop-blur-sm">
+            <Card className="bg-black/40 border-blue-500/20 backdrop-blur-xs">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-white/80">任务完成</CardTitle>
                 <CheckCircle className="h-4 w-4 text-blue-400" />
@@ -191,7 +191,7 @@ export default function ProjectDashboard() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-            <Card className="bg-black/40 border-green-500/20 backdrop-blur-sm">
+            <Card className="bg-black/40 border-green-500/20 backdrop-blur-xs">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-white/80">活跃用户</CardTitle>
                 <Users className="h-4 w-4 text-green-400" />
@@ -207,7 +207,7 @@ export default function ProjectDashboard() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-            <Card className="bg-black/40 border-purple-500/20 backdrop-blur-sm">
+            <Card className="bg-black/40 border-purple-500/20 backdrop-blur-xs">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-white/80">系统性能</CardTitle>
                 <Activity className="h-4 w-4 text-purple-400" />
@@ -244,7 +244,7 @@ export default function ProjectDashboard() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Card className="bg-black/40 border-white/10 backdrop-blur-sm hover:border-amber-500/30 transition-all duration-300">
+                    <Card className="bg-black/40 border-white/10 backdrop-blur-xs hover:border-amber-500/30 transition-all duration-300">
                       <CardHeader>
                         <div className="flex items-center justify-between">
                           <CardTitle className="text-white flex items-center">
@@ -283,7 +283,7 @@ export default function ProjectDashboard() {
             </TabsContent>
 
             <TabsContent value="performance" className="space-y-4">
-              <Card className="bg-black/40 border-white/10 backdrop-blur-sm">
+              <Card className="bg-black/40 border-white/10 backdrop-blur-xs">
                 <CardHeader>
                   <CardTitle className="text-white">性能监控面板</CardTitle>
                   <CardDescription className="text-white/60">实时系统性能指标和资源使用情况</CardDescription>
@@ -317,14 +317,14 @@ export default function ProjectDashboard() {
             </TabsContent>
 
             <TabsContent value="reports" className="space-y-4">
-              <Card className="bg-black/40 border-white/10 backdrop-blur-sm">
+              <Card className="bg-black/40 border-white/10 backdrop-blur-xs">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div>
                       <CardTitle className="text-white">项目报告</CardTitle>
                       <CardDescription className="text-white/60">生成和下载项目分析报告</CardDescription>
                     </div>
-                    <Button className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700">
+                    <Button className="bg-linear-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700">
                       <Download className="h-4 w-4 mr-2" />
                       导出报告
                     </Button>

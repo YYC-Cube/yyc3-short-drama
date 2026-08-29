@@ -82,7 +82,7 @@ export default function ReportPreview() {
                     key={index}
                     className="flex items-start space-x-3 p-3 bg-green-900/20 border border-green-500/20 rounded-lg"
                   >
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />
                     <span className="text-white/90 text-sm">{strength}</span>
                   </div>
                 ))}
@@ -96,7 +96,7 @@ export default function ReportPreview() {
                     key={index}
                     className="flex items-start space-x-3 p-3 bg-orange-900/20 border border-orange-500/20 rounded-lg"
                   >
-                    <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
                     <span className="text-white/90 text-sm">{challenge}</span>
                   </div>
                 ))}
@@ -110,7 +110,7 @@ export default function ReportPreview() {
                     key={index}
                     className="flex items-start space-x-3 p-3 bg-blue-900/20 border border-blue-500/20 rounded-lg"
                   >
-                    <Target className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                    <Target className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
                     <span className="text-white/90 text-sm">{recommendation}</span>
                   </div>
                 ))}

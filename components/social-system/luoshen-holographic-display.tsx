@@ -165,9 +165,9 @@ export default function LuoshenHolographicDisplay() {
 
   return (
     <div className="w-full">
-      <div className="relative overflow-hidden rounded-lg bg-black/50 backdrop-blur-sm border border-white/10">
+      <div className="relative overflow-hidden rounded-lg bg-black/50 backdrop-blur-xs border border-white/10">
         {/* 顶部信息栏 */}
-        <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center p-4 bg-gradient-to-b from-black/70 to-transparent">
+        <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center p-4 bg-linear-to-b from-black/70 to-transparent">
           <div className="flex items-center space-x-2">
             <Badge variant="outline" className="bg-white/10 text-white border-amber-500/50">
               <Users className="h-3 w-3 mr-1" />
@@ -195,7 +195,7 @@ export default function LuoshenHolographicDisplay() {
         </div>
 
         {/* 主要内容区 - 洛神图像 */}
-        <div className="relative aspect-[16/9] w-full overflow-hidden">
+        <div className="relative aspect-video w-full overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.div
               key={luoshenImages[currentIndex].id}
@@ -227,7 +227,7 @@ export default function LuoshenHolographicDisplay() {
           )}
 
           {/* 诗句显示 */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/50 to-transparent">
+          <div className="absolute bottom-0 left-0 right-0 p-6 bg-linear-to-t from-black/80 via-black/50 to-transparent">
             <motion.div
               key={`verse-${currentIndex}`}
               initial={{ opacity: 0, y: 20 }}
@@ -329,11 +329,11 @@ export default function LuoshenHolographicDisplay() {
                     ref={commentInputRef}
                     type="text"
                     placeholder="发表您的评论，与其他创作者交流..."
-                    className="flex-1 bg-white/10 border border-white/20 rounded-md px-3 py-2 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                    className="flex-1 bg-white/10 border border-white/20 rounded-md px-3 py-2 text-white placeholder:text-white/50 focus:outline-hidden focus:ring-2 focus:ring-purple-500/50"
                   />
                   <Button
                     type="submit"
-                    className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                    className="bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
                   >
                     发送
                   </Button>
@@ -347,7 +347,7 @@ export default function LuoshenHolographicDisplay() {
       <div className="mt-6">
         <h3 className="text-xl font-bold text-white mb-4">洛神赋·全息公屏</h3>
         <p className="text-white/70 mb-4">
-          公屏背景动态呈现《洛神赋图》数字长卷，用户发言化作锦帛飘过画面，连麦点评触发"流觞曲水"特效。
+          公屏背景动态呈现《洛神赋图》数字长卷，用户发言化作锦帛飘过画面，连麦点评触发“流觞曲水”特效。
           这一功能将传统文学与现代社交完美融合，让用户在交流互动中感受中华文化的魅力。
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -360,7 +360,7 @@ export default function LuoshenHolographicDisplay() {
           <div className="bg-white/5 rounded-lg p-4 border border-white/10">
             <h4 className="text-lg font-medium text-white mb-2">流觞曲水</h4>
             <p className="text-white/70">
-              用户发言会化作飘带在画面中流动，其他用户可点击互动，形成"曲水流觞"的数字化再现，促进创作灵感的交流与碰撞。
+              用户发言会化作飘带在画面中流动，其他用户可点击互动，形成“曲水流觞”的数字化再现，促进创作灵感的交流与碰撞。
             </p>
           </div>
         </div>

@@ -169,7 +169,7 @@ export default function AIScriptPage() {
 
   return (
     <MainLayout>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+      <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
         {/* 背景装饰 */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500 rounded-full blur-3xl animate-pulse" />
@@ -189,13 +189,13 @@ export default function AIScriptPage() {
                 {/* 左侧标题 */}
                 <div className="flex items-center gap-4">
                   <motion.div
-                    className="w-12 h-12 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-2xl"
+                    className="w-12 h-12 bg-linear-to-br from-amber-400 via-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-2xl"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                   >
                     <Sparkles className="w-6 h-6 text-white" />
                   </motion.div>
                   <div>
-                    <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-300 via-orange-300 to-red-300 bg-clip-text text-transparent">
+                    <h1 className="text-2xl font-bold bg-linear-to-r from-amber-300 via-orange-300 to-red-300 bg-clip-text text-transparent">
                       智慧编剧工坊
                     </h1>
                     <p className="text-sm text-white/70">河洛文化与AI技术的完美融合</p>
@@ -246,7 +246,7 @@ export default function AIScriptPage() {
                           key={module.id}
                           className={`relative overflow-hidden rounded-xl cursor-pointer transition-all duration-300 border-l-4 ${
                             isActive
-                              ? `${module.borderColor} bg-gradient-to-r from-black/60 to-black/40 shadow-2xl`
+                              ? `${module.borderColor} bg-linear-to-r from-black/60 to-black/40 shadow-2xl`
                               : "border-l-transparent hover:border-l-white/30 bg-black/40 hover:bg-black/60"
                           }`}
                           onClick={() => handleModuleChange(module.id)}
@@ -265,19 +265,19 @@ export default function AIScriptPage() {
                               className="object-cover"
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40" />
+                            <div className="absolute inset-0 bg-linear-to-r from-black/80 to-black/40" />
                           </div>
 
                           {/* 内容 */}
                           <div className="relative z-10 p-4">
                             <div className="flex items-start gap-3">
                               {/* 文化符号 */}
-                              <div className="text-2xl flex-shrink-0">{module.culturalSymbol}</div>
+                              <div className="text-2xl shrink-0">{module.culturalSymbol}</div>
 
                               {/* 图标 */}
                               <div
-                                className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
-                                  isActive ? `bg-gradient-to-br ${module.color}` : "bg-white/10"
+                                className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-all duration-300 ${
+                                  isActive ? `bg-linear-to-br ${module.color}` : "bg-white/10"
                                 }`}
                               >
                                 <Icon className={`w-5 h-5 ${isActive ? "text-white" : "text-white/70"}`} />
@@ -320,7 +320,7 @@ export default function AIScriptPage() {
                             {isActive && (
                               <motion.div
                                 layoutId="activeIndicator"
-                                className="absolute right-2 top-1/2 -translate-y-1/2 w-2 h-8 bg-gradient-to-b from-amber-400 to-orange-500 rounded-full"
+                                className="absolute right-2 top-1/2 -translate-y-1/2 w-2 h-8 bg-linear-to-b from-amber-400 to-orange-500 rounded-full"
                                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                               />
                             )}
@@ -353,7 +353,7 @@ export default function AIScriptPage() {
                       >
                         <Card
                           cultural={true}
-                          className={`relative overflow-hidden border-l-4 ${currentModule.borderColor} bg-gradient-to-r from-black/60 to-black/40`}
+                          className={`relative overflow-hidden border-l-4 ${currentModule.borderColor} bg-linear-to-r from-black/60 to-black/40`}
                         >
                           {/* 背景图片 */}
                           <div className="absolute inset-0 opacity-30">
@@ -364,13 +364,13 @@ export default function AIScriptPage() {
                               className="object-cover"
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/60" />
+                            <div className="absolute inset-0 bg-linear-to-r from-black/80 to-black/60" />
                           </div>
 
                           <CardHeader className="relative z-10">
                             <div className="flex items-start gap-4">
                               <motion.div
-                                className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${currentModule.color} flex items-center justify-center shadow-2xl`}
+                                className={`w-16 h-16 rounded-2xl bg-linear-to-br ${currentModule.color} flex items-center justify-center shadow-2xl`}
                                 whileHover={{ scale: 1.1, rotate: 5 }}
                               >
                                 <currentModule.icon className="w-8 h-8 text-white" />

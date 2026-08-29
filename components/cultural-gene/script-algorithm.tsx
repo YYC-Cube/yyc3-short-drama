@@ -137,7 +137,7 @@ export default function ScriptAlgorithm() {
           <h2 className="text-2xl md:text-3xl font-bold text-white">河图洛书剧本算法</h2>
         </div>
         <p className="text-white/70 max-w-3xl">
-          将河洛数字崇拜融入AI编剧系统，用户选择"八卦模式"时，AI自动按卦象生成九宫格剧本结构，
+          将河洛数字崇拜融入AI编剧系统，用户选择“八卦模式”时，AI自动按卦象生成九宫格剧本结构，
           同时提供《诗经》《洛阳伽蓝记》经典词句AI改写功能。
         </p>
       </motion.div>
@@ -159,7 +159,7 @@ export default function ScriptAlgorithm() {
             {baguaScriptStructure.map((gua, index) => (
               <motion.div
                 key={gua.name}
-                className="relative bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6 overflow-hidden"
+                className="relative bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6 overflow-hidden"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -216,7 +216,7 @@ export default function ScriptAlgorithm() {
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 1 }}
           >
-            <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+            <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
               <Sparkles className="h-4 w-4 mr-2" />
               生成八卦剧本结构
             </Button>
@@ -226,7 +226,7 @@ export default function ScriptAlgorithm() {
         <TabsContent value="poetic" className="mt-0">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div
-              className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6"
+              className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6"
               initial={{ opacity: 0, x: -20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6 }}
@@ -236,14 +236,14 @@ export default function ScriptAlgorithm() {
                 value={modernText}
                 onChange={(e) => setModernText(e.target.value)}
                 placeholder="请输入现代台词，如：我爱你"
-                className="w-full h-32 bg-black/60 border border-amber-500/30 rounded-md p-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                className="w-full h-32 bg-black/60 border border-amber-500/30 rounded-md p-3 text-white focus:outline-hidden focus:ring-2 focus:ring-amber-500/50"
               />
 
               <div className="mt-4 flex justify-center">
                 <Button
                   onClick={transformText}
                   disabled={!modernText || isTransforming}
-                  className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+                  className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
                 >
                   {isTransforming ? (
                     <>
@@ -261,7 +261,7 @@ export default function ScriptAlgorithm() {
             </motion.div>
 
             <motion.div
-              className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6"
+              className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6"
               initial={{ opacity: 0, x: 20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}

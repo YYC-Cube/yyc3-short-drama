@@ -138,7 +138,7 @@ export async function generateBaguaScript(request: ScriptGenerationRequest): Pro
       system: systemPrompt,
       prompt: userPrompt,
       temperature: 0.8,
-      maxTokens: 2000,
+      maxOutputTokens: 2000,
     })
 
     // 解析AI返回的内容
@@ -215,7 +215,7 @@ export async function generateScriptTitles(theme: string): Promise<string[]> {
 
 返回格式为JSON数组，只包含标题字符串。`,
       temperature: 0.9,
-      maxTokens: 200,
+      maxOutputTokens: 200,
     })
 
     try {
@@ -252,7 +252,7 @@ export async function optimizeScriptContent(
 
 请优化这段内容，保持字数相近，确保逻辑连贯。`,
       temperature: 0.7,
-      maxTokens: 500,
+      maxOutputTokens: 500,
     })
 
     return text.trim()
@@ -317,7 +317,7 @@ ${scriptText}
   "suggestions": ["建议1", "建议2"]
 }`,
       temperature: 0.3,
-      maxTokens: 500,
+      maxOutputTokens: 500,
     })
 
     try {

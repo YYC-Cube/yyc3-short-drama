@@ -20,7 +20,7 @@ export default function TimeSpaceFoldingSystem() {
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-600 mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-linear-to-r from-amber-300 to-amber-600 mb-4">
           时空折叠创作系统
         </h2>
         <p className="text-xl text-white/70 max-w-3xl mx-auto">
@@ -55,7 +55,7 @@ export default function TimeSpaceFoldingSystem() {
               <p className="text-white/70 mb-6">
                 站立在应天门遗址，通过手机扫描即可触发隋代工匠全息投影，指导您了解古代建筑工艺，或与武则天虚拟形象互动，获取剧本创作任务。
               </p>
-              <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-4 mb-6">
+              <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-4 mb-6">
                 <h4 className="text-lg font-medium text-white mb-2">技术实现</h4>
                 <ul className="text-white/70 space-y-2">
                   <li className="flex items-start">
@@ -78,7 +78,7 @@ export default function TimeSpaceFoldingSystem() {
                   </li>
                 </ul>
               </div>
-              <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+              <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
                 体验历史层叠
               </Button>
             </motion.div>
@@ -95,9 +95,9 @@ export default function TimeSpaceFoldingSystem() {
                 fill
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60"></div>
               <div className="absolute bottom-4 left-4 right-4">
-                <div className="bg-black/60 backdrop-blur-sm rounded-lg p-3">
+                <div className="bg-black/60 backdrop-blur-xs rounded-lg p-3">
                   <h4 className="text-white font-medium mb-1">应天门遗址AR体验</h4>
                   <p className="text-white/70 text-sm">
                     用户可通过AR眼镜或手机查看应天门的历史原貌，并与虚拟历史人物互动
@@ -119,7 +119,7 @@ export default function TimeSpaceFoldingSystem() {
               <p className="text-white/70 mb-6">
                 通过神经辐射场技术重建洛阳不同历史时期的城市面貌，用户可以滑动时间轴，实时切换不同时代的场景，如从北魏永宁寺塔到现代遗址公园，再到未来科幻风格的赛博重构。
               </p>
-              <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-4 mb-6">
+              <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-4 mb-6">
                 <h4 className="text-lg font-medium text-white mb-2">技术亮点</h4>
                 <ul className="text-white/70 space-y-2">
                   <li className="flex items-start">
@@ -142,7 +142,7 @@ export default function TimeSpaceFoldingSystem() {
                   </li>
                 </ul>
               </div>
-              <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+              <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
                 体验虚实共生
               </Button>
             </motion.div>
@@ -159,9 +159,9 @@ export default function TimeSpaceFoldingSystem() {
                 fill
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60"></div>
               <div className="absolute bottom-4 left-4 right-4">
-                <div className="bg-black/60 backdrop-blur-sm rounded-lg p-3">
+                <div className="bg-black/60 backdrop-blur-xs rounded-lg p-3">
                   <h4 className="text-white font-medium mb-1">永宁寺塔时空变迁</h4>
                   <p className="text-white/70 text-sm">滑动时间轴，见证永宁寺塔从北魏到现代的变迁历程</p>
                   <div className="mt-2">
@@ -195,9 +195,9 @@ export default function TimeSpaceFoldingSystem() {
             >
               <h3 className="text-2xl font-bold text-white mb-4">AI平行时空推演引擎</h3>
               <p className="text-white/70 mb-6">
-                探索历史的无限可能性。选择关键历史节点，如"如果安史之乱被阻止"，系统将生成盛唐延续的元宇宙洛阳城场景包，让创作者在平行历史中展开想象。
+                探索历史的无限可能性。选择关键历史节点，如“如果安史之乱被阻止”，系统将生成盛唐延续的元宇宙洛阳城场景包，让创作者在平行历史中展开想象。
               </p>
-              <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-4 mb-6">
+              <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-4 mb-6">
                 <h4 className="text-lg font-medium text-white mb-2">创作可能性</h4>
                 <ul className="text-white/70 space-y-2">
                   <li className="flex items-start">
@@ -220,7 +220,7 @@ export default function TimeSpaceFoldingSystem() {
                   </li>
                 </ul>
               </div>
-              <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+              <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
                 体验文明对话
               </Button>
             </motion.div>
@@ -237,9 +237,9 @@ export default function TimeSpaceFoldingSystem() {
                 fill
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60"></div>
               <div className="absolute bottom-4 left-4 right-4">
-                <div className="bg-black/60 backdrop-blur-sm rounded-lg p-3">
+                <div className="bg-black/60 backdrop-blur-xs rounded-lg p-3">
                   <h4 className="text-white font-medium mb-1">平行时空：盛唐延续</h4>
                   <p className="text-white/70 text-sm">
                     如果安史之乱被阻止，大唐盛世将如何延续？探索这一平行时空中的洛阳城
@@ -282,7 +282,7 @@ export default function TimeSpaceFoldingSystem() {
         transition={{ duration: 0.8, delay: 0.4 }}
       >
         <h3 className="text-2xl font-bold text-white mb-6 text-center">穿越者身份锚定</h3>
-        <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+        <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
             <div className="text-center">
               <div className="w-20 h-20 rounded-full bg-amber-500/20 flex items-center justify-center mx-auto mb-4">
@@ -329,7 +329,7 @@ export default function TimeSpaceFoldingSystem() {
               </div>
               <h4 className="text-lg font-medium text-white mb-2">时空护照</h4>
               <p className="text-white/70 text-sm">
-                获得"司母戊鼎纹"数字印章
+                获得“司母戊鼎纹”数字印章
                 <br />
                 解锁对应朝代服饰/方言/礼仪库
               </p>

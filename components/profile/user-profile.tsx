@@ -121,7 +121,7 @@ export default function UserProfile() {
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <div className="bg-black/40 backdrop-blur-sm border border-blue-500/20 rounded-lg p-6">
+          <div className="bg-black/40 backdrop-blur-xs border border-blue-500/20 rounded-lg p-6">
             <div className="flex flex-col items-center mb-6">
               <Avatar className="h-24 w-24 border-2 border-blue-500/50 mb-4">
                 <AvatarImage src={userData.avatar} alt={userData.name} />
@@ -195,7 +195,7 @@ export default function UserProfile() {
               </div>
             </div>
 
-            <Button className="w-full bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800">
+            <Button className="w-full bg-linear-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800">
               <Edit className="h-4 w-4 mr-2" />
               编辑个人资料
             </Button>
@@ -209,7 +209,7 @@ export default function UserProfile() {
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="bg-black/40 backdrop-blur-sm border border-blue-500/20 rounded-lg p-6">
+          <div className="bg-black/40 backdrop-blur-xs border border-blue-500/20 rounded-lg p-6">
             <Tabs defaultValue="profile" value={activeTab} onValueChange={setActiveTab}>
               <TabsList className="grid w-full grid-cols-3 mb-8">
                 <TabsTrigger value="profile" className="data-[state=active]:bg-blue-600">
@@ -382,7 +382,7 @@ export default function UserProfile() {
                             <Button
                               variant="default"
                               size="sm"
-                              className="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
+                              className="bg-linear-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800"
                             >
                               查看作品
                             </Button>
@@ -425,7 +425,7 @@ export default function UserProfile() {
                     >
                       <div className="flex items-center mb-3">
                         <div
-                          className={`w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br ${badge.color} mr-3`}
+                          className={`w-10 h-10 rounded-full flex items-center justify-center bg-linear-to-br ${badge.color} mr-3`}
                         >
                           {badge.icon}
                         </div>

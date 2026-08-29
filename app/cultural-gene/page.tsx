@@ -20,7 +20,7 @@ export default function CulturalGenePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-emerald-400 via-green-300 to-emerald-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-linear-to-r from-emerald-400 via-green-300 to-emerald-400 bg-clip-text text-transparent">
               文脉基因重构
             </h1>
             <p className="text-xl text-white/80 max-w-3xl mx-auto">
@@ -33,7 +33,7 @@ export default function CulturalGenePage() {
             <Card cultural={true} glow={true}>
               <CardHeader>
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-emerald-500 to-green-600 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-linear-to-r from-emerald-500 to-green-600 flex items-center justify-center">
                     <Dna className="h-6 w-6 text-white" />
                   </div>
                   <div>
@@ -70,7 +70,7 @@ export default function CulturalGenePage() {
             <Card cultural={true} glow={true}>
               <CardHeader>
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-linear-to-r from-purple-500 to-indigo-600 flex items-center justify-center">
                     <Clock className="h-6 w-6 text-white" />
                   </div>
                   <div>
@@ -87,19 +87,19 @@ export default function CulturalGenePage() {
                   <div className="flex justify-between items-center">
                     <span className="text-white/70">唐朝文化数据</span>
                     <div className="w-32 bg-black/40 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-indigo-600 h-2 rounded-full w-4/5"></div>
+                      <div className="bg-linear-to-r from-purple-500 to-indigo-600 h-2 rounded-full w-4/5"></div>
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-white/70">宋朝文化数据</span>
                     <div className="w-32 bg-black/40 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-indigo-600 h-2 rounded-full w-3/5"></div>
+                      <div className="bg-linear-to-r from-purple-500 to-indigo-600 h-2 rounded-full w-3/5"></div>
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-white/70">明清文化数据</span>
                     <div className="w-32 bg-black/40 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-indigo-600 h-2 rounded-full w-2/3"></div>
+                      <div className="bg-linear-to-r from-purple-500 to-indigo-600 h-2 rounded-full w-2/3"></div>
                     </div>
                   </div>
                 </div>

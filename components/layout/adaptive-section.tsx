@@ -25,7 +25,7 @@ export function AdaptiveSection({
 }: AdaptiveSectionProps) {
   const backgroundClasses = {
     none: "",
-    gradient: "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900",
+    gradient: "bg-linear-to-br from-slate-900 via-purple-900 to-slate-900",
     pattern:
       "bg-[radial-gradient(circle_at_25%_25%,rgba(251,191,36,0.1)_0%,transparent_50%),radial-gradient(circle_at_75%_75%,rgba(168,85,247,0.1)_0%,transparent_50%)]",
     image: "bg-cover bg-center bg-no-repeat",

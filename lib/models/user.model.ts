@@ -151,12 +151,13 @@ export async function updateStarCoins(userId: number, amount: number, type: "add
 export async function updateUser(userId: number, data: Partial<User>): Promise<User> {
   const allowedFields = ["username", "email", "avatar", "level"]
   const updates: string[] = []
-  const values: any[] = []
+  // mysql2 参数占位值：用户字段为 string/number/boolean/Date
+  const values: Array<string | number | boolean | Date> = []
 
   Object.keys(data).forEach((key) => {
     if (allowedFields.includes(key) && data[key as keyof User] !== undefined) {
       updates.push(`${key} = ?`)
-      values.push(data[key as keyof User])
+      values.push(data[key as keyof User] as string | number | boolean | Date)
     }
   })
 

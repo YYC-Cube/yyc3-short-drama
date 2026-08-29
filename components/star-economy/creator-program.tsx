@@ -110,8 +110,8 @@ export default function CreatorProgram() {
           <h2 className="text-2xl md:text-3xl font-bold text-white">神都创作者计划</h2>
         </div>
         <p className="text-white/70 max-w-3xl">
-          设立"司马光奖"年度创作基金，用户可使用明星值参与《资治通鉴》经典场景重演众筹。
-          开发"诗圣之路"LBS任务，用户在地图标记的杜甫行踪点拍摄短剧，获得AI辅助创作权限。
+          设立“司马光奖”年度创作基金，用户可使用明星值参与《资治通鉴》经典场景重演众筹。
+          开发“诗圣之路”LBS任务，用户在地图标记的杜甫行踪点拍摄短剧，获得AI辅助创作权限。
         </p>
       </motion.div>
 
@@ -128,7 +128,7 @@ export default function CreatorProgram() {
         </TabsList>
 
         <TabsContent value="fund" className="mt-0">
-          <div className="bg-black/40 backdrop-blur-sm border border-purple-500/20 rounded-lg p-6">
+          <div className="bg-black/40 backdrop-blur-xs border border-purple-500/20 rounded-lg p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-white">《资治通鉴》经典场景重演众筹</h3>
               <Button variant="outline" className="border-purple-500/30 text-purple-300 hover:bg-purple-500/10">
@@ -159,7 +159,7 @@ export default function CreatorProgram() {
                         {project.category}
                       </span>
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60" />
                   </div>
 
                   <div className="p-4">
@@ -173,7 +173,7 @@ export default function CreatorProgram() {
                       </div>
                       <div className="w-full h-2 bg-black/50 rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-purple-500 to-purple-700 rounded-full"
+                          className="h-full bg-linear-to-r from-purple-500 to-purple-700 rounded-full"
                           style={{ width: `${project.progress}%` }}
                         ></div>
                       </div>
@@ -194,7 +194,7 @@ export default function CreatorProgram() {
                       </div>
                     </div>
 
-                    <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800">
+                    <Button className="w-full bg-linear-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800">
                       <Star className="h-4 w-4 mr-2" />
                       支持项目
                     </Button>
@@ -222,7 +222,7 @@ export default function CreatorProgram() {
                   </li>
                   <li className="flex items-start">
                     <span className="text-purple-400 mr-2">•</span>
-                    <span>获赞最多的历史短剧团队将获得"司马光奖"年度大奖，可实地探访二里头遗址考古现场</span>
+                    <span>获赞最多的历史短剧团队将获得“司马光奖”年度大奖，可实地探访二里头遗址考古现场</span>
                   </li>
                 </ul>
               </div>
@@ -231,7 +231,7 @@ export default function CreatorProgram() {
         </TabsContent>
 
         <TabsContent value="poet" className="mt-0">
-          <div className="bg-black/40 backdrop-blur-sm border border-purple-500/20 rounded-lg p-6">
+          <div className="bg-black/40 backdrop-blur-xs border border-purple-500/20 rounded-lg p-6">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-white">诗圣之路LBS任务</h3>
               <div className="flex items-center text-white/70 text-sm">
@@ -290,7 +290,7 @@ export default function CreatorProgram() {
                         className={
                           task.completed
                             ? "border-green-500/30 text-green-300 hover:bg-green-500/10"
-                            : "bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800"
+                            : "bg-linear-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800"
                         }
                       >
                         {task.completed ? "查看作品" : "开始任务"}
@@ -330,7 +330,7 @@ export default function CreatorProgram() {
               </div>
 
               <div className="absolute bottom-4 left-4 right-4">
-                <div className="bg-black/70 backdrop-blur-sm rounded-lg p-3">
+                <div className="bg-black/70 backdrop-blur-xs rounded-lg p-3">
                   <div className="text-white font-medium mb-1">诗圣之路</div>
                   <div className="text-white/70 text-sm">跟随杜甫足迹，探索诗歌与历史的交汇</div>
                 </div>

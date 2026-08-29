@@ -32,6 +32,8 @@ export interface ErrorHandlerOptions {
   showToUser?: boolean
   retry?: boolean
   fallback?: React.ReactNode
+  /** 附加上下文信息（如组件栈、请求ID等） */
+  context?: Record<string, unknown>
 }
 
 // 默认选项

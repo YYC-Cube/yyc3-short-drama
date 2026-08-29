@@ -125,7 +125,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   const contentMargin = isCollapsed ? "ml-20" : "ml-80"
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
       {/* 移动端菜单按钮 */}
       {isMobile && (
         <motion.div
@@ -157,7 +157,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs z-40"
             onClick={() => setIsMobileMenuOpen(false)}
           />
         )}
@@ -173,7 +173,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
         className={cn(
           "fixed left-0 top-0 h-screen z-50 overflow-hidden",
-          "bg-gradient-to-b from-black/40 via-black/50 to-black/60",
+          "bg-linear-to-b from-black/40 via-black/50 to-black/60",
           "backdrop-blur-xl border-r border-amber-500/20",
           "shadow-2xl shadow-black/50",
         )}
@@ -181,9 +181,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
         <div className="flex flex-col h-full relative">
           {/* 装饰性背景 */}
           <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-amber-500 to-transparent rounded-full blur-2xl" />
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-purple-500 to-transparent rounded-full blur-2xl" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-full blur-3xl" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-bl from-amber-500 to-transparent rounded-full blur-2xl" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-linear-to-tr from-purple-500 to-transparent rounded-full blur-2xl" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-linear-to-r from-orange-500/20 to-red-500/20 rounded-full blur-3xl" />
           </div>
 
           {/* 头部 */}
@@ -198,14 +198,14 @@ export default function MainLayout({ children }: MainLayoutProps) {
                   className="flex items-center gap-4"
                 >
                   <motion.div
-                    className="w-12 h-12 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg"
+                    className="w-12 h-12 bg-linear-to-br from-amber-400 via-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
                     <Crown className="w-6 h-6 text-white" />
                   </motion.div>
                   <div>
-                    <h1 className="font-bold text-xl bg-gradient-to-r from-amber-300 via-orange-300 to-amber-300 bg-clip-text text-transparent">
+                    <h1 className="font-bold text-xl bg-linear-to-r from-amber-300 via-orange-300 to-amber-300 bg-clip-text text-transparent">
                       言语逸品
                     </h1>
                     <p className="text-sm text-amber-200/70 font-medium">河洛文化数字传承</p>
@@ -251,9 +251,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
                     whileTap={{ scale: 0.98 }}
                     className={cn(
                       "relative flex items-center gap-4 p-4 rounded-2xl transition-all duration-300",
-                      "hover:bg-gradient-to-r hover:from-amber-500/10 hover:to-orange-500/10",
+                      "hover:bg-linear-to-r hover:from-amber-500/10 hover:to-orange-500/10",
                       "group cursor-pointer overflow-hidden",
-                      isActive && "bg-gradient-to-r from-amber-500/20 to-orange-500/20 shadow-lg shadow-amber-500/20",
+                      isActive && "bg-linear-to-r from-amber-500/20 to-orange-500/20 shadow-lg shadow-amber-500/20",
                       isCollapsed && "justify-center",
                     )}
                     onMouseEnter={() => setHoveredItem(item.href)}
@@ -277,7 +277,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
                         layoutId="activeIndicator"
                         className={cn(
                           "absolute left-0 top-0 bottom-0 w-1 rounded-r-full",
-                          `bg-gradient-to-b ${item.color}`,
+                          `bg-linear-to-b ${item.color}`,
                         )}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                       />
@@ -285,7 +285,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
                     {/* 悬浮光效 */}
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 rounded-2xl"
+                      className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 rounded-2xl"
                       animate={{
                         x: isHovered ? ["0%", "100%"] : "0%",
                       }}
@@ -312,7 +312,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
                     <motion.div
                       className={cn(
                         "flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300 z-10",
-                        isActive ? `bg-gradient-to-br ${item.color} shadow-lg` : "bg-white/5 group-hover:bg-white/10",
+                        isActive ? `bg-linear-to-br ${item.color} shadow-lg` : "bg-white/5 group-hover:bg-white/10",
                       )}
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.6 }}
@@ -359,7 +359,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
                           scale: isHovered ? 1 : 0.8,
                           x: isHovered ? 0 : -10,
                         }}
-                        className="absolute left-full ml-4 px-4 py-3 bg-black/90 backdrop-blur-sm rounded-xl border border-amber-500/30 pointer-events-none whitespace-nowrap z-50 shadow-xl"
+                        className="absolute left-full ml-4 px-4 py-3 bg-black/90 backdrop-blur-xs rounded-xl border border-amber-500/30 pointer-events-none whitespace-nowrap z-50 shadow-xl"
                       >
                         <div className="font-semibold text-amber-200">{item.label}</div>
                         <div className="text-sm text-amber-200/70">{item.description}</div>

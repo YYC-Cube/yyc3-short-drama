@@ -116,7 +116,15 @@ const optimizationSuggestions = [
 ]
 
 // 文件树结构
-const fileTree = {
+interface FileTreeNode {
+  name: string
+  type: "folder" | "file"
+  size?: string
+  issue?: boolean
+  children?: FileTreeNode[]
+}
+
+const fileTree: FileTreeNode = {
   name: "项目根目录",
   type: "folder",
   children: [
@@ -244,7 +252,7 @@ export default function FileStructureOptimizer() {
   }
 
   // 渲染文件树
-  const renderFileTree = (node: any, level = 0) => {
+  const renderFileTree = (node: FileTreeNode, level = 0) => {
     const indent = level * 20
 
     return (
@@ -261,7 +269,7 @@ export default function FileStructureOptimizer() {
           {node.size && <span className="text-xs text-white/50 ml-auto">{node.size}</span>}
           {node.issue && <AlertTriangle className="h-3 w-3 text-red-400 ml-2" />}
         </div>
-        {node.children && node.children.map((child: any) => renderFileTree(child, level + 1))}
+        {node.children && node.children.map((child) => renderFileTree(child, level + 1))}
       </div>
     )
   }
@@ -313,7 +321,7 @@ export default function FileStructureOptimizer() {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <Card className="bg-black/40 backdrop-blur-sm border-green-500/20">
+              <Card className="bg-black/40 backdrop-blur-xs border-green-500/20">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center">
                     <FolderTree className="h-5 w-5 mr-2 text-green-400" />
@@ -333,7 +341,7 @@ export default function FileStructureOptimizer() {
                       <Button
                         onClick={startScan}
                         disabled={isScanning}
-                        className="bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800"
+                        className="bg-linear-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800"
                       >
                         {isScanning ? (
                           <>
@@ -396,7 +404,7 @@ export default function FileStructureOptimizer() {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <Card className="bg-black/40 backdrop-blur-sm border-green-500/20">
+              <Card className="bg-black/40 backdrop-blur-xs border-green-500/20">
                 <CardHeader>
                   <CardTitle className="text-white text-lg">问题摘要</CardTitle>
                 </CardHeader>
@@ -445,7 +453,7 @@ export default function FileStructureOptimizer() {
 
         <TabsContent value="issues" className="mt-0">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-            <Card className="bg-black/40 backdrop-blur-sm border-green-500/20">
+            <Card className="bg-black/40 backdrop-blur-xs border-green-500/20">
               <CardHeader>
                 <CardTitle className="text-white flex items-center justify-between">
                   <div className="flex items-center">
@@ -528,7 +536,7 @@ export default function FileStructureOptimizer() {
 
         <TabsContent value="structure" className="mt-0">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-            <Card className="bg-black/40 backdrop-blur-sm border-green-500/20">
+            <Card className="bg-black/40 backdrop-blur-xs border-green-500/20">
               <CardHeader>
                 <CardTitle className="text-white flex items-center">
                   <FolderTree className="h-5 w-5 mr-2 text-green-400" />
@@ -549,7 +557,7 @@ export default function FileStructureOptimizer() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
             <div className="space-y-6">
               {optimizationSuggestions.map((suggestion, index) => (
-                <Card key={index} className="bg-black/40 backdrop-blur-sm border-green-500/20">
+                <Card key={index} className="bg-black/40 backdrop-blur-xs border-green-500/20">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center justify-between">
                       <div className="flex items-center">
@@ -573,7 +581,7 @@ export default function FileStructureOptimizer() {
                     <div className="space-y-3">
                       {suggestion.items.map((item, itemIndex) => (
                         <div key={itemIndex} className="flex items-start space-x-3">
-                          <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                          <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />
                           <span className="text-white/80">{item}</span>
                         </div>
                       ))}
@@ -592,7 +600,7 @@ export default function FileStructureOptimizer() {
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8, delay: 0.8 }}
       >
-        <Button className="bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800">
+        <Button className="bg-linear-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800">
           <Settings className="h-4 w-4 mr-2" />
           优化设置
         </Button>

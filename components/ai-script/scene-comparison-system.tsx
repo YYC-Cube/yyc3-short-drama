@@ -1,13 +1,14 @@
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
-import { Slider } from "@/components/ui/slider"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Upload, Eye, Wand2, Clock, MapPin, Save, Share2, Download, X } from "lucide-react"
+import { Slider } from "@/components/ui/slider"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { motion } from "framer-motion"
+import { Clock, Download, Eye, MapPin, Save, Share2, Upload, Wand2, X } from "lucide-react"
+import Image from "next/image"
+import { useState } from "react"
 
 // 模拟场景数据
 const demoScenes = [
@@ -142,11 +143,13 @@ export default function SceneComparisonSystem() {
                   selectedScenes.map((sceneId) => {
                     const scene = getSelectedSceneData(sceneId)
                     return (
-                      <div key={sceneId} className="w-full relative">
-                        <img
+                      <div key={sceneId} className="w-full h-64 relative">
+                        <Image
                           src={scene.image || "/placeholder.svg"}
                           alt={scene.name}
-                          className="w-full h-64 object-cover rounded-lg"
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover rounded-lg"
                         />
                         <Button
                           variant="outline"
@@ -171,17 +174,18 @@ export default function SceneComparisonSystem() {
                   <Button
                     key={scene.id}
                     variant={selectedScenes.includes(scene.id) ? "default" : "outline"}
-                    className={`justify-start ${
-                      selectedScenes.includes(scene.id)
-                        ? "bg-amber-600 hover:bg-amber-700 text-white"
-                        : "border-amber-500/30 text-amber-300 hover:bg-amber-500/10"
-                    }`}
+                    className={`justify-start ${selectedScenes.includes(scene.id)
+                      ? "bg-amber-600 hover:bg-amber-700 text-white"
+                      : "border-amber-500/30 text-amber-300 hover:bg-amber-500/10"
+                      }`}
                     onClick={() => toggleScene(scene.id)}
                     disabled={selectedScenes.length >= 2 && !selectedScenes.includes(scene.id)}
                   >
-                    <img
+                    <Image
                       src={scene.image || "/placeholder.svg"}
                       alt={scene.name}
+                      width={32}
+                      height={32}
                       className="w-8 h-8 object-cover rounded mr-2"
                     />
                     {scene.name}
@@ -237,13 +241,14 @@ export default function SceneComparisonSystem() {
                   const scene = getSelectedSceneData(sceneId)
                   return (
                     <div key={sceneId} className="relative">
-                      <div className="relative">
-                        <img
+                      <div className="relative h-64">
+                        <Image
                           src={scene.image || "/placeholder.svg"}
                           alt={scene.name}
-                          className={`w-full h-64 object-cover rounded-lg ${
-                            selectedFilter !== "original" ? "filter " + getFilterClass(selectedFilter) : ""
-                          }`}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className={`object-cover rounded-lg ${selectedFilter !== "original" ? "filter " + getFilterClass(selectedFilter) : ""
+                            }`}
                         />
                         <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
                           {getFilterName(selectedFilter)}
@@ -310,13 +315,15 @@ export default function SceneComparisonSystem() {
                   const scene = getSelectedSceneData(sceneId)
                   return (
                     <div key={sceneId} className="relative">
-                      <div className="relative">
-                        <img
+                      <div className="relative h-64">
+                        <Image
                           src={scene.image || "/placeholder.svg"}
                           alt={scene.name}
-                          className="w-full h-64 object-cover rounded-lg"
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover rounded-lg"
                         />
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                        <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 to-transparent p-4">
                           <div className="flex items-center text-white mb-1">
                             <Clock className="h-4 w-4 mr-1 text-amber-400" />
                             <span className="text-sm">{getEraName(selectedEra)} (公元618-907年)</span>

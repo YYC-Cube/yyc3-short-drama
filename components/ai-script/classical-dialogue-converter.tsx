@@ -237,7 +237,7 @@ export default function ClassicalDialogueConverter() {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+              <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
                 <h3 className="text-xl font-bold text-white mb-6">现代台词</h3>
 
                 <div className="space-y-4">
@@ -255,7 +255,7 @@ export default function ClassicalDialogueConverter() {
                     <Button
                       onClick={transformSingleLine}
                       disabled={!modernText.trim() || isTransforming}
-                      className="flex-1 bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+                      className="flex-1 bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
                     >
                       {isTransforming ? (
                         <>
@@ -304,7 +304,7 @@ export default function ClassicalDialogueConverter() {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+              <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="text-xl font-bold text-white">古风台词</h3>
 
@@ -381,7 +381,7 @@ export default function ClassicalDialogueConverter() {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+              <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
                 <h3 className="text-xl font-bold text-white mb-6">现代对话场景</h3>
 
                 <div className="space-y-4">
@@ -405,7 +405,7 @@ export default function ClassicalDialogueConverter() {
                     <Button
                       onClick={transformDialogue}
                       disabled={!dialogueInput.trim() || isTransforming}
-                      className="flex-1 bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+                      className="flex-1 bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
                     >
                       {isTransforming ? (
                         <>
@@ -459,7 +459,7 @@ export default function ClassicalDialogueConverter() {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+              <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="text-xl font-bold text-white">古风对话场景</h3>
 

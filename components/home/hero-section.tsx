@@ -39,14 +39,14 @@ export default function HeroSection() {
       <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-10 flex gap-4">
         <Button
           size="lg"
-          className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white border-none"
+          className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white border-none"
         >
           开启创作之旅
         </Button>
         <Button
           variant="outline"
           size="lg"
-          className="border-amber-500/50 text-amber-300 hover:bg-amber-500/10 backdrop-blur-sm"
+          className="border-amber-500/50 text-amber-300 hover:bg-amber-500/10 backdrop-blur-xs"
         >
           探索河洛文化
         </Button>

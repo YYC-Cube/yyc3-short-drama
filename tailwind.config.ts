@@ -1,6 +1,6 @@
-import type { Config } from "tailwindcss"
-
-const config: Config = {
+// Tailwind v4 兼容配置（由 app/globals.css 的 @config 指令加载）
+// v4 已移除 tailwindcss 包的 Config 类型导出，此处用宽松类型
+const config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",

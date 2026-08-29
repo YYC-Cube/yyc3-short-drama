@@ -3,12 +3,17 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 
 interface CulturalImageGalleryProps {
-  category: string
+  category: keyof typeof imageData
   layout: "grid" | "carousel"
   limit?: number
 }
 
-const imageData = {
+interface GalleryImage {
+  src: string
+  alt: string
+}
+
+const imageData: Record<string, GalleryImage[]> = {
   "cultural-gene": [
     {
       src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E5%89%AF%E6%A0%87%E9%A2%98.png-AzjqW3gR69o695uc8xrEariVS2XuV0.jpeg",
@@ -48,7 +53,7 @@ const imageData = {
 }
 
 export default function CulturalImageGallery({ category, layout, limit }: CulturalImageGalleryProps) {
-  const images = imageData[category] || []
+  const images: GalleryImage[] = imageData[category] || []
   const limitedImages = limit ? images.slice(0, limit) : images
 
   if (layout === "grid") {
@@ -75,7 +80,7 @@ export default function CulturalImageGallery({ category, layout, limit }: Cultur
         {limitedImages.map((image, index) => (
           <motion.div
             key={index}
-            className="relative w-64 h-48 flex-shrink-0 overflow-hidden rounded-lg"
+            className="relative w-64 h-48 shrink-0 overflow-hidden rounded-lg"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}

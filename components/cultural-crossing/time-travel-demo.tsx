@@ -1,13 +1,13 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Play, Pause, RotateCcw, Clock, MapPin, Users, Sparkles } from "lucide-react"
+import { AnimatePresence, motion } from "framer-motion"
+import { Clock, MapPin, Pause, Play, RotateCcw, Sparkles, Users } from "lucide-react"
 import Image from "next/image"
+import { useMemo, useState } from "react"
 
 interface TimePeriod {
   id: string
@@ -59,6 +59,18 @@ export default function TimeTravelDemo() {
   const [progress, setProgress] = useState(0)
   const [currentScene, setCurrentScene] = useState(0)
 
+  // 粒子参数一次性生成（render 内 Math.random 非纯且导致重渲染跳动）
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 10 }, (_, i) => ({
+        id: i,
+        left: `${(i * 47 + 17) % 100}%`,
+        top: `${(i * 31 + 41) % 100}%`,
+        delay: ((i * 23 + 7) % 20) / 10,
+      })),
+    []
+  )
+
   const handlePlay = () => {
     setIsPlaying(!isPlaying)
     if (!isPlaying) {
@@ -94,14 +106,13 @@ export default function TimeTravelDemo() {
             onClick={() => setSelectedPeriod(period)}
           >
             <Card
-              className={`cursor-pointer transition-all duration-300 ${
-                selectedPeriod.id === period.id ? "ring-2 ring-amber-500 bg-amber-500/10" : "hover:bg-white/5"
-              }`}
+              className={`cursor-pointer transition-all duration-300 ${selectedPeriod.id === period.id ? "ring-2 ring-amber-500 bg-amber-500/10" : "hover:bg-white/5"
+                }`}
             >
               <CardHeader className="pb-3">
                 <div className="relative h-32 rounded-lg overflow-hidden mb-3">
                   <Image src={period.image || "/placeholder.svg"} alt={period.name} fill className="object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
                   <Badge className="absolute top-2 right-2 bg-amber-500/20 text-amber-300 border-amber-500/30">
                     {period.year}
                   </Badge>
@@ -140,7 +151,7 @@ export default function TimeTravelDemo() {
                 filter: isPlaying ? "brightness(1.2) saturate(1.3)" : "brightness(0.8)",
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-black/40" />
 
             {/* 播放控制 */}
             <div className="absolute bottom-4 left-4 right-4">
@@ -172,13 +183,13 @@ export default function TimeTravelDemo() {
                   exit={{ opacity: 0 }}
                   className="absolute inset-0 pointer-events-none"
                 >
-                  {[...Array(10)].map((_, i) => (
+                  {particles.map((p) => (
                     <motion.div
-                      key={i}
+                      key={p.id}
                       className="absolute w-2 h-2 bg-amber-400 rounded-full"
                       style={{
-                        left: `${Math.random() * 100}%`,
-                        top: `${Math.random() * 100}%`,
+                        left: p.left,
+                        top: p.top,
                       }}
                       animate={{
                         opacity: [0, 1, 0],
@@ -188,7 +199,7 @@ export default function TimeTravelDemo() {
                       transition={{
                         duration: 2,
                         repeat: Number.POSITIVE_INFINITY,
-                        delay: Math.random() * 2,
+                        delay: p.delay,
                       }}
                     />
                   ))}
@@ -217,7 +228,7 @@ export default function TimeTravelDemo() {
                       transition={{ delay: index * 0.1 }}
                       className="flex items-center p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
                     >
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center mr-3">
+                      <div className="w-8 h-8 rounded-full bg-linear-to-r from-amber-500 to-orange-500 flex items-center justify-center mr-3">
                         <span className="text-white text-sm font-bold">{character.charAt(0)}</span>
                       </div>
                       <span className="text-white">{character}</span>
@@ -243,11 +254,10 @@ export default function TimeTravelDemo() {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className={`p-2 rounded-lg transition-colors cursor-pointer ${
-                        currentScene === index
-                          ? "bg-amber-500/20 border border-amber-500/30"
-                          : "bg-white/5 hover:bg-white/10"
-                      }`}
+                      className={`p-2 rounded-lg transition-colors cursor-pointer ${currentScene === index
+                        ? "bg-amber-500/20 border border-amber-500/30"
+                        : "bg-white/5 hover:bg-white/10"
+                        }`}
                       onClick={() => setCurrentScene(index)}
                     >
                       <span className="text-white">{scene}</span>

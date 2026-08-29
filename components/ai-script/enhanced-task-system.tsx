@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import type React from "react"
 
 import { useState, useRef } from "react"
@@ -509,6 +510,7 @@ const rewardTiers = [
 ]
 
 export default function EnhancedTaskSystem() {
+  const router = useRouter()
   const [activeCategory, setActiveCategory] = useState<TaskCategory>("daily")
   const [claimingReward, setClaimingReward] = useState<string | null>(null)
   const [userRewardTier, setUserRewardTier] = useState(3) // 默认铂金等级
@@ -638,15 +640,15 @@ export default function EnhancedTaskSystem() {
           </p>
         </motion.div>
 
-        <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6 text-center">
+        <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6 text-center">
           <Lock className="h-12 w-12 text-amber-500/50 mx-auto mb-4" />
           <h3 className="text-xl font-bold text-white mb-2">登录后解锁增强版任务系统</h3>
           <p className="text-white/70 mb-6 max-w-md mx-auto">
             登录后可参与各类任务，完成任务获得明星值、通宝和特殊奖励，提升创作等级。
           </p>
           <Button
-            className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
-            onClick={() => (window.location.href = "/auth")}
+            className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+            onClick={() => router.push("/auth")}
           >
             立即登录
           </Button>
@@ -673,7 +675,7 @@ export default function EnhancedTaskSystem() {
       </motion.div>
 
       {/* 奖励等级系统 */}
-      <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6 mb-8">
+      <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6 mb-8">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center">
             <Coins className="h-6 w-6 text-amber-400 mr-2" />
@@ -689,14 +691,14 @@ export default function EnhancedTaskSystem() {
         </div>
 
         <div className="flex items-center mb-4">
-          <div className="flex-shrink-0 mr-4">
+          <div className="shrink-0 mr-4">
             <div
-              className={`w-16 h-16 rounded-full bg-gradient-to-br ${rewardTiers[userRewardTier].color} flex items-center justify-center`}
+              className={`w-16 h-16 rounded-full bg-linear-to-br ${rewardTiers[userRewardTier].color} flex items-center justify-center`}
             >
               {rewardTiers[userRewardTier].icon}
             </div>
           </div>
-          <div className="flex-grow">
+          <div className="grow">
             <div className="flex justify-between items-center mb-2">
               <div className="text-white font-medium">当前奖励等级: {rewardTiers[userRewardTier].name}</div>
               <div className="text-amber-300">{rewardTiers[userRewardTier].description}</div>
@@ -727,7 +729,7 @@ export default function EnhancedTaskSystem() {
                     className={`bg-black/60 border ${index === userRewardTier ? "border-amber-500" : "border-amber-500/10"} rounded-lg p-4 text-center`}
                   >
                     <div
-                      className={`w-12 h-12 mx-auto rounded-full bg-gradient-to-br ${tier.color} flex items-center justify-center mb-2`}
+                      className={`w-12 h-12 mx-auto rounded-full bg-linear-to-br ${tier.color} flex items-center justify-center mb-2`}
                     >
                       {tier.icon}
                     </div>
@@ -890,10 +892,10 @@ export default function EnhancedTaskSystem() {
       </div>
 
       {/* 任务列表 */}
-      <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+      <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
           <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center mr-3">
+            <div className="w-10 h-10 rounded-full bg-linear-to-br from-amber-400 to-amber-600 flex items-center justify-center mr-3">
               {getCategoryIcon(activeCategory)}
             </div>
             <h3 className="text-xl font-bold text-white">{getCategoryLabel(activeCategory)}</h3>
@@ -1075,7 +1077,7 @@ export default function EnhancedTaskSystem() {
                         </Button>
                       ) : task.status === "in-progress" ? (
                         <Button
-                          className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+                          className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
                           onClick={(e) => {
                             e.stopPropagation()
                             startTask(task.id)

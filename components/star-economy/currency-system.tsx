@@ -118,8 +118,8 @@ export default function CurrencySystem() {
           <h2 className="text-2xl md:text-3xl font-bold text-white">通宝积分双轨制</h2>
         </div>
         <p className="text-white/70 max-w-3xl">
-          引入"开元通宝"虚拟货币（1通宝=100明星值），用于购买限定文化商品。
-          建立"含嘉仓"积分粮仓系统，用户明星值超过1万可自动存粮生息，年化利率按导演等级浮动。
+          引入“开元通宝”虚拟货币（1通宝=100明星值），用于购买限定文化商品。
+          建立“含嘉仓”积分粮仓系统，用户明星值超过1万可自动存粮生息，年化利率按导演等级浮动。
         </p>
       </motion.div>
 
@@ -140,7 +140,7 @@ export default function CurrencySystem() {
             {/* 左侧：用户资产和兑换 */}
             <div className="lg:col-span-1">
               <motion.div
-                className="bg-black/40 backdrop-blur-sm border border-purple-500/20 rounded-lg p-6 mb-6"
+                className="bg-black/40 backdrop-blur-xs border border-purple-500/20 rounded-lg p-6 mb-6"
                 initial={{ opacity: 0, x: -20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -193,7 +193,7 @@ export default function CurrencySystem() {
                           max={Math.floor(starValue / EXCHANGE_RATE)}
                           value={exchangeAmount}
                           onChange={(e) => setExchangeAmount(Number.parseInt(e.target.value) || 0)}
-                          className="w-full bg-black/60 border border-purple-500/30 rounded-md p-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                          className="w-full bg-black/60 border border-purple-500/30 rounded-md p-2 text-white focus:outline-hidden focus:ring-2 focus:ring-purple-500/50"
                         />
                       </div>
 
@@ -219,7 +219,7 @@ export default function CurrencySystem() {
                   <Button
                     onClick={executeExchange}
                     disabled={exchangeAmount <= 0 || exchangeAmount * EXCHANGE_RATE > starValue}
-                    className="w-full bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800"
+                    className="w-full bg-linear-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800"
                   >
                     <Coins className="h-4 w-4 mr-2" />
                     确认兑换
@@ -231,7 +231,7 @@ export default function CurrencySystem() {
             {/* 右侧：通宝商城 */}
             <div className="lg:col-span-2">
               <motion.div
-                className="bg-black/40 backdrop-blur-sm border border-purple-500/20 rounded-lg p-6"
+                className="bg-black/40 backdrop-blur-xs border border-purple-500/20 rounded-lg p-6"
                 initial={{ opacity: 0, x: 20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.4 }}
@@ -350,7 +350,7 @@ export default function CurrencySystem() {
                 </Tabs>
 
                 <div className="mt-8 text-center">
-                  <Button className="bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800">
+                  <Button className="bg-linear-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800">
                     <ShoppingBag className="h-4 w-4 mr-2" />
                     查看更多商品
                   </Button>
@@ -365,7 +365,7 @@ export default function CurrencySystem() {
             {/* 左侧：含嘉仓状态 */}
             <div className="lg:col-span-1">
               <motion.div
-                className="bg-black/40 backdrop-blur-sm border border-purple-500/20 rounded-lg p-6"
+                className="bg-black/40 backdrop-blur-xs border border-purple-500/20 rounded-lg p-6"
                 initial={{ opacity: 0, x: -20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -390,7 +390,7 @@ export default function CurrencySystem() {
                     <div className="flex justify-between text-sm">
                       <span className="text-white/70">当前等级</span>
                       <div className="flex items-center">
-                        <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${userLevel.color} mr-1`}></div>
+                        <div className={`w-2 h-2 rounded-full bg-linear-to-r ${userLevel.color} mr-1`}></div>
                         <span className="text-white">{userLevel.name}</span>
                       </div>
                     </div>
@@ -438,7 +438,7 @@ export default function CurrencySystem() {
                   </div>
                 </div>
 
-                <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800">
+                <Button className="w-full bg-linear-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800">
                   <TrendingUp className="h-4 w-4 mr-2" />
                   提升存粮等级
                 </Button>
@@ -448,7 +448,7 @@ export default function CurrencySystem() {
             {/* 右侧：等级收益表 */}
             <div className="lg:col-span-2">
               <motion.div
-                className="bg-black/40 backdrop-blur-sm border border-purple-500/20 rounded-lg p-6"
+                className="bg-black/40 backdrop-blur-xs border border-purple-500/20 rounded-lg p-6"
                 initial={{ opacity: 0, x: 20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.4 }}
@@ -468,7 +468,7 @@ export default function CurrencySystem() {
                     >
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center">
-                          <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${level.color} mr-2`}></div>
+                          <div className={`w-3 h-3 rounded-full bg-linear-to-r ${level.color} mr-2`}></div>
                           <span className="text-white font-medium">{level.name}</span>
                         </div>
                         {level.name === userLevel.name && (
@@ -479,7 +479,7 @@ export default function CurrencySystem() {
                       </div>
 
                       <div className="flex items-center justify-center my-4">
-                        <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-purple-500">
+                        <div className="text-2xl font-bold text-transparent bg-clip-text bg-linear-to-r from-purple-300 to-purple-500">
                           {level.interestRate}
                         </div>
                       </div>

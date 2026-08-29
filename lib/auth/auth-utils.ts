@@ -10,9 +10,9 @@
  * @license MIT
  */
 
-import { NextResponse } from "next/server"
-import { getJWTSecretCached } from "@/lib/jwt-config"
-import { sign } from "jsonwebtoken"
+import { getJWTSecretCached } from "@/lib/jwt-config";
+import { sign, type SignOptions as jwtSignOptions } from "jsonwebtoken";
+import { NextResponse } from "next/server";
 
 /**
  * 验证请求参数
@@ -21,18 +21,18 @@ import { sign } from "jsonwebtoken"
  * @returns 验证结果，包含isValid和error字段
  */
 export function validateRequestParams(
-  params: Record<string, any>,
+  params: Record<string, unknown>,
   requiredFields: string[]
 ): { isValid: boolean; error?: string } {
   const missingFields = requiredFields.filter(field => !params[field])
-  
+
   if (missingFields.length > 0) {
     return {
       isValid: false,
       error: `缺少必要参数: ${missingFields.join(', ')}`
     }
   }
-  
+
   return { isValid: true }
 }
 
@@ -43,7 +43,7 @@ export function validateRequestParams(
  * @returns JWT令牌
  */
 export function generateAuthToken(userId: number, expiresIn: string = "7d"): string {
-  return sign({ userId }, getJWTSecretCached(), { expiresIn })
+  return sign({ userId }, getJWTSecretCached(), { expiresIn } as jwtSignOptions)
 }
 
 /**
@@ -80,13 +80,13 @@ export function clearAuthCookie(response: NextResponse): void {
  * @returns NextResponse对象
  */
 export function createSuccessResponse(
-  data?: any,
+  data?: unknown,
   message: string = "操作成功"
 ): NextResponse {
   return NextResponse.json({
     success: true,
     message,
-    ...(data && { data })
+    ...(data !== undefined && { data }),
   })
 }
 
@@ -110,7 +110,7 @@ export function createErrorResponse(
  * @returns NextResponse对象
  */
 export function handleAuthError(
-  error: any,
+  error: unknown,
   message: string = "认证失败"
 ): NextResponse {
   console.error(`${message}:`, error)
@@ -126,7 +126,7 @@ export function checkEnvVariables(
   variables: string[]
 ): { isValid: boolean; missingFields: string[] } {
   const missingFields = variables.filter(variable => !process.env[variable])
-  
+
   return {
     isValid: missingFields.length === 0,
     missingFields

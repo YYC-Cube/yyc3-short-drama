@@ -191,7 +191,7 @@ export default function OptimizationStatus() {
     <div className="space-y-6">
       {/* 优化概览 */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="bg-black/40 backdrop-blur-sm border-green-500/20">
+        <Card className="bg-black/40 backdrop-blur-xs border-green-500/20">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
@@ -206,7 +206,7 @@ export default function OptimizationStatus() {
           </CardContent>
         </Card>
 
-        <Card className="bg-black/40 backdrop-blur-sm border-green-500/20">
+        <Card className="bg-black/40 backdrop-blur-xs border-green-500/20">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
@@ -221,7 +221,7 @@ export default function OptimizationStatus() {
           </CardContent>
         </Card>
 
-        <Card className="bg-black/40 backdrop-blur-sm border-green-500/20">
+        <Card className="bg-black/40 backdrop-blur-xs border-green-500/20">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
@@ -236,7 +236,7 @@ export default function OptimizationStatus() {
           </CardContent>
         </Card>
 
-        <Card className="bg-black/40 backdrop-blur-sm border-green-500/20">
+        <Card className="bg-black/40 backdrop-blur-xs border-green-500/20">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
@@ -253,7 +253,7 @@ export default function OptimizationStatus() {
       </div>
 
       {/* 优化任务列表 */}
-      <Card className="bg-black/40 backdrop-blur-sm border-green-500/20">
+      <Card className="bg-black/40 backdrop-blur-xs border-green-500/20">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -275,7 +275,7 @@ export default function OptimizationStatus() {
               </Button>
               <Button
                 size="sm"
-                className="bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800"
+                className="bg-linear-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800"
               >
                 <Play className="h-4 w-4 mr-1" />
                 执行优化

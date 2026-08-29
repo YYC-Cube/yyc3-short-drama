@@ -1,23 +1,29 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { useRouter } from "next/navigation"
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
 
-interface User {
+export interface User {
   id: number
   username: string
+  name: string
   phone: string
+  phoneNumber: string
   email?: string
   avatar?: string
   level: string
   star_coins: number
+  starValue: number
+  tongbao: number
   is_local_user: boolean
+  isLocalUser: boolean
   user_type: "normal" | "creator" | "vip"
 }
 
 interface AuthContextType {
   user: User | null
   loading: boolean
+  isAuthenticated: boolean
   login: (phone: string, code: string) => Promise<void>
   register: (username: string, phone: string, code: string) => Promise<void>
   logout: () => Promise<void>
@@ -41,7 +47,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const response = await fetch("/api/auth/me")
       if (response.ok) {
         const data = await response.json()
-        setUser(data.user)
+        // 归一化后端 snake_case 字段为组件使用的 camelCase 别名
+        const raw = data.user ?? {}
+        setUser(
+          raw
+            ? {
+              ...raw,
+              name: raw.name ?? raw.username ?? "",
+              phoneNumber: raw.phoneNumber ?? raw.phone ?? "",
+              starValue: raw.starValue ?? raw.star_coins ?? 0,
+              tongbao: raw.tongbao ?? 0,
+              isLocalUser: raw.isLocalUser ?? raw.is_local_user ?? false,
+            }
+            : null,
+        )
       }
     } catch (error) {
       console.error("获取用户信息失败:", error)
@@ -102,7 +121,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, refreshUser }}>
+    <AuthContext.Provider
+      value={{ user, loading, isAuthenticated: !!user, login, register, logout, refreshUser }}
+    >
       {children}
     </AuthContext.Provider>
   )

@@ -15,7 +15,7 @@ export default function ImplementationRoadmap() {
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-600 mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-linear-to-r from-amber-300 to-amber-600 mb-4">
           实施路线图
         </h2>
         <p className="text-xl text-white/70 max-w-3xl mx-auto">分阶段实施计划，确保文化穿越项目稳步推进</p>

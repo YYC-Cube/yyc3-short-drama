@@ -72,12 +72,12 @@ export default function CulturalCrossingClientPage() {
         transition={{ duration: 0.8 }}
         className="text-center space-y-4"
       >
-        <Badge className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-indigo-300 border-indigo-500/30 text-lg px-6 py-2">
+        <Badge className="bg-linear-to-r from-indigo-500/20 to-purple-500/20 text-indigo-300 border-indigo-500/30 text-lg px-6 py-2">
           <Clock className="w-5 h-5 mr-2" />
           时空穿越体验
         </Badge>
 
-        <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-indigo-300 via-purple-300 to-indigo-300 bg-clip-text text-transparent">
+        <h1 className="text-4xl md:text-6xl font-bold bg-linear-to-r from-indigo-300 via-purple-300 to-indigo-300 bg-clip-text text-transparent">
           穿越千年时光
         </h1>
 
@@ -106,7 +106,7 @@ export default function CulturalCrossingClientPage() {
               <Card className="cultural-card border-indigo-500/20 hover:border-indigo-500/40 h-full">
                 <CardContent className="p-6 text-center">
                   <div
-                    className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center shadow-lg`}
+                    className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-linear-to-r ${feature.color} flex items-center justify-center shadow-lg`}
                   >
                     <Icon className="w-8 h-8 text-white" />
                   </div>
@@ -198,7 +198,7 @@ export default function CulturalCrossingClientPage() {
                   className="relative h-64 rounded-2xl overflow-hidden shadow-2xl"
                 >
                   <Image src={period.image || "/placeholder.svg"} alt={period.period} fill className="object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/20" />
                   <div className="absolute bottom-4 left-4">
                     <Badge className="bg-black/50 text-white border-white/30">
                       <Star className="w-4 h-4 mr-1" />

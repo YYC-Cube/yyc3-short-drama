@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { useState, useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import { Button } from "@/components/ui/button"
@@ -119,6 +120,7 @@ const mockCreationTypes = [
 ]
 
 export default function CreationAnalytics() {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState<AnalyticsType>("personal")
   const [timeRange, setTimeRange] = useState<TimeRange>("month")
 
@@ -151,15 +153,15 @@ export default function CreationAnalytics() {
           <p className="text-white/70 max-w-3xl">查看您的创作统计数据和平台热门趋势，帮助您优化创作方向和内容。</p>
         </motion.div>
 
-        <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6 text-center">
+        <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6 text-center">
           <Lock className="h-12 w-12 text-amber-500/50 mx-auto mb-4" />
           <h3 className="text-xl font-bold text-white mb-2">登录后查看数据分析</h3>
           <p className="text-white/70 mb-6 max-w-md mx-auto">
             登录后可查看您的创作统计数据和平台热门趋势，帮助您优化创作方向和内容。
           </p>
           <Button
-            className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
-            onClick={() => (window.location.href = "/auth")}
+            className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+            onClick={() => router.push("/auth")}
           >
             立即登录
           </Button>
@@ -183,7 +185,7 @@ export default function CreationAnalytics() {
         <p className="text-white/70 max-w-3xl">查看您的创作统计数据和平台热门趋势，帮助您优化创作方向和内容。</p>
       </motion.div>
 
-      <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+      <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
           <Tabs
             defaultValue="personal"
@@ -373,7 +375,7 @@ export default function CreationAnalytics() {
                   {mockMonthlyCreation.map((item, index) => (
                     <div key={index} className="flex flex-col items-center">
                       <div
-                        className="w-10 bg-gradient-to-t from-amber-600 to-amber-400 rounded-t-sm"
+                        className="w-10 bg-linear-to-t from-amber-600 to-amber-400 rounded-t-sm"
                         style={{ height: `${item.count * 15}%` }}
                       ></div>
                       <div className="text-white/70 text-xs mt-2">{item.month}</div>
@@ -473,7 +475,7 @@ export default function CreationAnalytics() {
           </div>
 
           <div className="text-center">
-            <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+            <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
               <BarChart3 className="h-4 w-4 mr-2" />
               查看详细分析报告
             </Button>
@@ -628,7 +630,7 @@ export default function CreationAnalytics() {
           </div>
 
           <div className="text-center">
-            <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+            <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
               <TrendingUp className="h-4 w-4 mr-2" />
               查看完整趋势报告
             </Button>

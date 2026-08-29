@@ -1,25 +1,27 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useSyncExternalStore } from "react"
 import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useAuth } from "@/contexts/auth-context"
 import { UserCircle, LogIn } from "lucide-react"
 
+const emptySubscribe = () => () => {}
+
 export default function AuthNavLinks() {
   const { user, isAuthenticated } = useAuth()
-  const [mounted, setMounted] = useState(false)
-
-  // 避免水合不匹配
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  // useSyncExternalStore 替代 useEffect+setState 的 mounted 模式（避免水合不匹配的官方范式）
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  )
 
   if (!mounted) {
     return null
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated || !user) {
     return (
       <div className="flex items-center space-x-4">
         <Link href="/profile" className="flex items-center text-white/80 hover:text-amber-300 transition-colors">

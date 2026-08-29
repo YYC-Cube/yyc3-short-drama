@@ -1,7 +1,6 @@
 "use client"
 
-import React from "react"
-import { useEffect, forwardRef, type ComponentType } from "react"
+import React, { forwardRef, useEffect, type ComponentType } from "react"
 
 // 性能指标类型
 type PerformanceMetric = {
@@ -50,7 +49,7 @@ class PerformanceMonitor {
   // 开始测量组件渲染时间
   public startMeasure(componentName: string): () => void {
     if (!this.config.enabled || Math.random() > this.config.sampleRate) {
-      return () => {}
+      return () => { }
     }
 
     const startTime = performance.now()
@@ -158,20 +157,21 @@ export const performanceMonitor = PerformanceMonitor.getInstance()
 export function withPerformanceTracking<P extends object>(
   Component: ComponentType<P>,
   options: { name?: string } = {},
-): React.FC<P> {
+): React.ComponentType<P> {
   const componentName = options.name || Component.displayName || Component.name || "UnknownComponent"
 
-  const WrappedComponent: React.FC<P> = forwardRef<any, P>((props, ref) => {
+  const WrappedComponent = forwardRef<any, P>((props, ref) => {
     const endMeasure = performanceMonitor.startMeasure(componentName)
 
     useEffect(() => {
       endMeasure()
     }, [endMeasure])
 
-    return React.createElement(Component, { ...props, ref: ref })
+    // 泛型 P 上的 ref 转发无法静态证明，HOC 场景按惯例断言
+    return React.createElement(Component as ComponentType<any>, { ...props, ref })
   })
 
   WrappedComponent.displayName = `withPerformanceTracking(${componentName})`
 
-  return WrappedComponent
+  return WrappedComponent as unknown as React.ComponentType<P>
 }

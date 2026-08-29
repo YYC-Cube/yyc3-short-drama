@@ -190,10 +190,10 @@ export const componentDocs: Record<string, ComponentDoc> = {
     description: "路由级别代码分割组件，用于懒加载整个路由组件，减少初始加载时间。",
     props: [
       {
-        name: "component",
-        type: "() => Promise<{ default: ComponentType<any> }>",
+        name: "lazyComponent",
+        type: "ComponentType<Record<string, unknown>>",
         required: true,
-        description: "动态导入的组件",
+        description: "模块级通过 createLazyRoute 工厂创建的惰性组件（避免 render 内创建组件）",
       },
       {
         name: "fallback",
@@ -212,15 +212,19 @@ export const componentDocs: Record<string, ComponentDoc> = {
     examples: [
       {
         title: "基本用法",
-        code: `<RouteBoundary 
-  component={() => import('@/components/heavy-component')} 
-/>`,
+        code: `// 模块顶层创建一次
+const LazyHeavy = createLazyRoute(() => import('@/components/heavy-component'))
+
+// 渲染处使用
+<RouteBoundary lazyComponent={LazyHeavy} />`,
         description: "基本的路由级别代码分割用法",
       },
       {
         title: "自定义加载UI和属性",
-        code: `<RouteBoundary 
-  component={() => import('@/components/dashboard')}
+        code: `const LazyDashboard = createLazyRoute(() => import('@/components/dashboard'))
+
+<RouteBoundary 
+  lazyComponent={LazyDashboard}
   fallback={<CustomLoadingSpinner />}
   props={{ userId: 123 }}
 />`,

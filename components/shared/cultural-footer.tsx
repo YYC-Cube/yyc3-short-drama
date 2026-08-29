@@ -9,14 +9,14 @@ export default function CulturalFooter() {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="bg-gradient-to-t from-black to-gray-900 border-t border-white/10 py-16"
+      className="bg-linear-to-t from-black to-gray-900 border-t border-white/10 py-16"
     >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-linear-to-br from-amber-400 via-orange-500 to-red-500 rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-xl">言</span>
               </div>
               <div>

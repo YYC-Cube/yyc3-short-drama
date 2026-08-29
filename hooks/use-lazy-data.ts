@@ -142,11 +142,13 @@ export function useLazyData<T>(
     }
   }, [loadMore, hasMore, isLoading, threshold])
 
-  // 初始加载
+  // 初始加载（异步调度规避 effect 体内同步 setState）
   useEffect(() => {
-    if (loadMoreOnMount) {
+    if (!loadMoreOnMount) return
+    const timer = setTimeout(() => {
       loadMore()
-    }
+    }, 0)
+    return () => clearTimeout(timer)
   }, [loadMoreOnMount, loadMore])
 
   return {

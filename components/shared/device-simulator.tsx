@@ -108,7 +108,7 @@ export default function DeviceSimulator({ children }: DeviceSimulatorProps) {
         transition={{ duration: 0.3 }}
       >
         <Button
-          className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+          className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
           onClick={() => setIsOpen(true)}
         >
           <Monitor className="h-4 w-4 mr-2" />
@@ -226,7 +226,7 @@ export default function DeviceSimulator({ children }: DeviceSimulatorProps) {
         </div>
 
         {/* 设备预览区域 */}
-        <div className="flex-grow flex items-center justify-center overflow-auto p-4">
+        <div className="grow flex items-center justify-center overflow-auto p-4">
           <motion.div
             className={`relative bg-white rounded-lg shadow-lg overflow-hidden ${isExpanded ? "w-full h-full" : ""}`}
             style={{

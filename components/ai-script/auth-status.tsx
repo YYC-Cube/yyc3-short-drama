@@ -1,29 +1,31 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useSyncExternalStore } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { useAuth } from "@/contexts/auth-context"
 import { LogIn, User, Star, Award, LogOut } from "lucide-react"
 
+const emptySubscribe = () => () => {}
+
 export default function AuthStatus() {
   const { user, isAuthenticated, logout } = useAuth()
   const router = useRouter()
-  const [mounted, setMounted] = useState(false)
-
-  // 避免水合不匹配
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  // useSyncExternalStore 替代 useEffect+setState 的 mounted 模式（避免水合不匹配的官方范式）
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  )
 
   if (!mounted) {
     return null
   }
 
   // 未登录状态
-  if (!isAuthenticated) {
+  if (!isAuthenticated || !user) {
     return (
-      <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-4 mb-8">
+      <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-4 mb-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center">
             <LogIn className="h-6 w-6 text-amber-400 mr-3" />
@@ -34,7 +36,7 @@ export default function AuthStatus() {
           </div>
 
           <Button
-            className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+            className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
             onClick={() => router.push("/auth")}
           >
             <LogIn className="h-4 w-4 mr-2" />
@@ -47,7 +49,7 @@ export default function AuthStatus() {
 
   // 已登录状态
   return (
-    <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-4 mb-8">
+    <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-4 mb-8">
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center">
           <User className="h-6 w-6 text-amber-400 mr-3" />

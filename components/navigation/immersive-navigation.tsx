@@ -184,9 +184,20 @@ const navigationItems = [
 ]
 
 // 水墨粒子效果组件
+interface InkParticle {
+  x: number
+  y: number
+  size: number
+  speedX: number
+  speedY: number
+  alpha: number
+  update: () => void
+  draw: (ctx: CanvasRenderingContext2D) => void
+}
+
 const InkParticles = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const particles: any[] = useRef([]).current
+  const particles: InkParticle[] = useRef([]).current
   const mousePosition = useRef({ x: 0, y: 0 })
 
   useEffect(() => {
@@ -294,7 +305,7 @@ const BaguaSymbol = ({ active, onClick }: { active: boolean; onClick: () => void
     if (active) {
       controls.start({
         rotate: 360,
-        transition: { duration: 20, ease: "linear", repeat: Infinity },
+        transition: { duration: 20, ease: "linear", repeat: Number.POSITIVE_INFINITY },
       })
     } else {
       controls.start({
@@ -394,7 +405,7 @@ export default function ImmersiveNavigation() {
           className="object-cover brightness-[0.4] transition-all duration-1000"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/80 to-transparent" />
       </div>
 
       {/* 水墨粒子效果 */}
@@ -402,7 +413,7 @@ export default function ImmersiveNavigation() {
 
       {/* 标题 */}
       <motion.h1
-        className="absolute top-8 left-1/2 -translate-x-1/2 text-3xl md:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-600 z-10 text-center whitespace-nowrap"
+        className="absolute top-8 left-1/2 -translate-x-1/2 text-3xl md:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-linear-to-r from-amber-300 to-amber-600 z-10 text-center whitespace-nowrap"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -468,13 +479,13 @@ export default function ImmersiveNavigation() {
                   onClick={() => handleItemClick(item.id, item.path)}
                 >
                   <motion.div
-                    className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
+                    className={`absolute inset-0 bg-linear-to-br ${item.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
                   />
 
                   <motion.div
                     className={cn(
                       "flex items-center justify-center w-12 h-12 rounded-full mb-3 bg-black/50 text-white",
-                      `bg-gradient-to-br ${item.color}`,
+                      `bg-linear-to-br ${item.color}`,
                     )}
                   >
                     {item.icon}
@@ -540,7 +551,7 @@ export default function ImmersiveNavigation() {
                       <motion.div
                         className={cn(
                           "flex items-center justify-center w-10 h-10 rounded-full mb-1 text-white",
-                          `bg-gradient-to-br ${item.color}`,
+                          `bg-linear-to-br ${item.color}`,
                         )}
                       >
                         {item.icon}

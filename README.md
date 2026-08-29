@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/YYC-Cube/yyc3-short-drama/main/public/yyc3-article-cover-05.png" alt="言语逸品 - 河洛文化数字传承平台" width="100%" style="border-radius: 8px; margin-bottom: 20px;" />
+  <img src="https://raw.githubusercontent.com/YYC-Cube/yyc3-short-drama/main/public/yyc3-family.png" alt="言语逸品 - 河洛文化数字传承平台" width="100%" style="border-radius: 8px; margin-bottom: 20px;" />
 </div>
 
 # 言语逸品 - 河洛文化数字传承平台
@@ -97,13 +97,15 @@ const baguaScript = await generateScript({
 
 \`\`\`json
 {
-  "framework": "Next.js 15",
-  "language": "TypeScript",
-  "styling": "Tailwind CSS",
-  "animation": "Framer Motion",
-  "ui_components": "shadcn/ui",
+  "framework": "Next.js 16.3 (App Router / Turbopack / 静态导出)",
+  "language": "TypeScript 6.0 (strict + noUncheckedSideEffectImports)",
+  "styling": "Tailwind CSS 4.3 (CSS-first + @config 兼容)",
+  "animation": "Framer Motion 13",
+  "ui_components": "shadcn/ui + Radix UI",
   "state_management": "React Context + Hooks",
-  "build_tool": "Turbopack"
+  "package_manager": "pnpm 11",
+  "build_tool": "Turbopack (dev + build)",
+  "lint": "ESLint 9 flat config (eslint.config.mjs)"
 }
 \`\`\`
 
@@ -112,16 +114,18 @@ const baguaScript = await generateScript({
 \`\`\`json
 {
   "dependencies": {
-    "next": "^15.0.0",
-    "react": "^18.0.0",
-    "typescript": "^5.0.0",
-    "tailwindcss": "^3.4.0",
-    "framer-motion": "^11.0.0",
-    "@radix-ui/react-*": "^1.0.0",
-    "lucide-react": "^0.400.0",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.0.0",
-    "tailwind-merge": "^2.0.0"
+    "next": "^16.3.3",
+    "react": "^19.2.8",
+    "typescript": "^6.0.3",
+    "tailwindcss": "^4.3.3",
+    "framer-motion": "^13.1.1",
+    "@radix-ui/react-*": "^1.1+",
+    "lucide-react": "^1.35.0",
+    "ai": "^7.0.84",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.6.0",
+    "tw-animate-css": "^1.4.0"
   }
 }
 \`\`\`
@@ -130,44 +134,99 @@ const baguaScript = await generateScript({
 
 ```
 言语逸品/
-├── app/                          # Next.js App Router
-│   ├── (auth)/                   # 认证相关页面
+├── app/                          # Next.js App Router（13 个业务路由）
+│   ├── auth/                     # 认证页面（含 single-page）
 │   ├── ai-script/                # AI 编剧模块
-│   ├── cultural-gene/            # 文化基因模块
-│   ├── social-system/            # 社交体系模块
-│   ├── star-economy/             # 星值经济模块
+│   ├── cultural-gene/            # 文脉基因模块
 │   ├── cultural-crossing/        # 时空穿越模块
-│   ├── layout.tsx                # 根布局
-│   ├── page.tsx                  # 主页
+│   ├── social-system/            # 虚实共生模块
+│   ├── star-economy/             # 星值经济模块
+│   ├── main/ profile/            # 主控台 / 个人中心
+│   ├── project-management/       # 项目统筹
+│   ├── favicon-*.png apple-icon.png  # 全端图标（App Router 约定注入）
+│   ├── layout.tsx                # 根布局（viewport/metadata 导出）
 │   └── globals.css               # 全局样式
-├── components/                   # 组件库
-│   ├── ui/                       # 基础 UI 组件
-│   ├── shared/                   # 共享组件
-│   ├── ai-script/                # AI 编剧组件
-│   ├── cultural-gene/            # 文化基因组件
-│   ├── social-system/            # 社交体系组件
-│   ├── star-economy/             # 星值经济组件
-│   ├── cultural-crossing/        # 时空穿越组件
-│   └── layout/                   # 布局组件
-├── hooks/                        # 自定义 Hooks
-├── lib/                          # 工具库
-├── services/                     # 服务层（API / 后端集成）
-├── utils/                        # 工具函数
-├── contexts/                     # React Context（状态/依赖注入）
-├── types/                        # TypeScript 类型定义
+├── components/                   # 组件库（按业务域分组）
+│   ├── ui/                       # shadcn/ui 基础组件
+│   ├── shared/                   # 跨域共享组件
+│   └── {ai-script,cultural-gene,...}/  # 业务域组件
+├── contexts/                     # React Context（auth 认证上下文）
+├── lib/                          # 基础库（db/jwt/fonts/utils）
+├── services/                     # 服务层（AI编剧/文化基因/用户偏好）
+├── utils/                        # 工具函数（性能/错误处理）
 ├── public/                       # 静态资源
+│   ├── yyc3/                     # 全端 logo 矩阵（Android/iOS/Web/macOS/watchOS）
+│   ├── manifest.json             # PWA 清单
 │   └── images/                   # 图片资源
-├── styles/                       # 样式文件（全局/模块化）
-├── scripts/                      # 构建/部署脚本
-└── docs/                         # 项目文档
+├── disabled/                     # 已停用模块（middleware 全栈版备份）
+├── __tests__/                    # Jest 单元测试
+└── docs/                         # 项目文档体系
 ```
+
+### 部署形态（重要）
+
+项目当前为 **GitHub Pages 纯静态导出模式**（`output: 'export'`）：
+
+| 能力 | 静态模式（默认） | 全栈模式 |
+| ------ | ---------------- | --------- |
+| 页面渲染 | ✅ SSG 16 页 | ✅ SSR/SSG |
+| 登录/API | ❌ 404（`app/api` 已排除） | ✅ 完整可用 |
+| 路由保护 | 客户端 AuthProvider 兜底 | middleware 服务端守卫 |
+| 启用方式 | 默认 | `NEXT_OUTPUT_FULLSTACK=true` + 恢复 `app/api` 与 `disabled/middleware.ts` |
+
+### 系统架构图
+
+\`\`\`
+┌─────────────────────────────────────────────────────────────────┐
+│                       YYC³ 言语逸品平台                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ┌── 表现层 (app/ · 13 路由) ──────────────────────────────┐   │
+│  │  首页 → 主控台 → ┌ AI编剧 ┐ ┌ 文脉基因 ┐ ┌ 时空穿越 ┐   │   │
+│  │  认证(双页)       └ 虚实共生 ┘ └ 星值经济 ┘ └ 项目统筹 ┘  │   │
+│  │                   · 个人中心 · 功能报告 · 测试优化        │   │
+│  └────────────────────────┬────────────────────────────────┘   │
+│                           ↓                                      │
+│  ┌── 组件层 (components/) ──────────────────────────────────┐  │
+│  │  ui/(shadcn+Radix) ← shared/(通用头/错误边界/懒加载)      │  │
+│  │  {ai-script|cultural-gene|...}/ 业务域组件               │  │
+│  └────────────────────────┬────────────────────────────────┘  │
+│                           ↓                                      │
+│  ┌── 状态层 ───────────────────────────────────────────────┐   │
+│  │  contexts/auth-context (isAuthenticated + User 归一化)   │   │
+│  └────────────────────────┬────────────────────────────────┘   │
+│                           ↓                                      │
+│  ┌── 服务层 (services/) ────┐  ┌── 基础库 (lib/) ────────────┐ │
+│  │ ai-script (AI SDK v6)    │  │ db (MySQL池+查询缓存)       │ │
+│  │ cultural-gene            │  │ jwt-config / auth-utils     │ │
+│  │ user-preferences         │  │ fonts / font-fallback       │ │
+│  └──────────────────────────┘  └─────────────────────────────┘ │
+│                                                                  │
+│  ┌── 部署双轨 ─────────────────────────────────────────────┐   │
+│  │ 静态轨(默认): out/ → GitHub Pages (16页 SSG)             │   │
+│  │ 全栈轨(可选): NEXT_OUTPUT_FULLSTACK → SSR + API + MySQL │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                  │
+│  全端图标: public/yyc3/ (Android/iOS/Web/macOS/watchOS)          │
+│           app/{favicon,apple-icon}.png + manifest.json (PWA)     │
+└─────────────────────────────────────────────────────────────────┘
+\`\`\`
+
+### 数据流（AI 编剧示例）
+
+\`\`\`
+用户输入主题/风格 → BaguaScriptGenerator
+  → services/ai-script-service (八卦九宫格结构化提示词)
+  → AI SDK v6 generateText (maxOutputTokens)
+  → JSON 解析/降级处理 → GeneratedScriptElement[] → UI 渲染
+\`\`\`
 
 ## 🚀 快速开始
 
 ### 环境要求
 
-- Node.js >= 18.0.0
-- npm >= 9.0.0 或 yarn >= 1.22.0
+- Node.js >= 22.0.0
+- pnpm >= 11.0.0（`corepack enable` 自动启用）
 - Git
 
 ### 安装步骤
@@ -181,78 +240,79 @@ cd yyc3-short-drama
 
 2. **安装依赖**
 \`\`\`bash
-npm install
-# 或
-yarn install
+pnpm install
 \`\`\`
 
-3. **环境配置**
+3. **启动开发服务器（端口 3030）**
+\`\`\`bash
+pnpm dev
+# → http://localhost:3030
+\`\`\`
+
+**环境配置（仅全栈模式需要）**
+
 \`\`\`bash
 cp .env.example .env.local
 \`\`\`
 
-编辑 \`.env.local\` 文件，配置必要的环境变量：
+静态模式（GitHub Pages 部署）无需任何环境变量；仅当启用 `NEXT_OUTPUT_FULLSTACK=true` 全栈模式时，需配置以下变量：
 
 \`\`\`env
 # 应用配置
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-NEXT_PUBLIC_APP_NAME=言语逸品
+NEXT_PUBLIC_APP_URL=http://localhost:3030
 
-# JWT密钥配置（必需，至少32字符）
-# 使用以下命令生成安全的密钥：
-# openssl rand -base64 48
+# JWT密钥（全栈模式必需，至少32字符，openssl rand -base64 48 生成）
 JWT_SECRET=your_secure_random_jwt_secret_at_least_32_characters_long
 
-# AI服务配置
+# AI服务配置（AI编剧功能）
 OPENAI_API_KEY=your_openai_api_key
 OPENAI_API_BASE=https://api.openai.com/v1
 
-# 数据库配置
-DATABASE_URL=your_database_url
-
-# 认证配置
-NEXTAUTH_SECRET=your_nextauth_secret
-NEXTAUTH_URL=http://localhost:3000
-
-# 文件存储配置
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+# 数据库配置（MySQL）
+DB_MASTER_HOST=localhost
+DB_MASTER_PORT=3306
+DB_MASTER_USER=yyc3_dj
+DB_MASTER_PASS=your_password
+DB_MASTER_NAME=yyc3_my
 \`\`\`
 
-**重要安全提示**: 
-- \`JWT_SECRET\` 是必需的，应用启动前必须设置
-- 使用至少32个字符的强随机字符串
+**重要安全提示**:
+- \`JWT_SECRET\` 使用至少32个字符的强随机字符串
 - 切勿将密钥提交到版本控制系统
 - 生产环境务必使用高强度的随机密钥
 
-4. **启动开发服务器**
-\`\`\`bash
-npm run dev
-# 或
-yarn dev
-\`\`\`
-
 5. **访问应用**
-打开浏览器访问 [http://localhost:3000](http://localhost:3000)
+打开浏览器访问 [http://localhost:3030](http://localhost:3030)
 
-### 构建部署
+### 常用命令
 
 \`\`\`bash
-# 构建生产版本
-npm run build
+# 开发服务器（端口 3030）
+pnpm dev
 
-# 启动生产服务器
-npm run start
+# 生产构建（静态导出至 out/）
+pnpm build
 
-# 类型检查
-npm run type-check
+# 生产服务器（全栈模式）
+pnpm start
 
-# 代码检查
-npm run lint
+# 类型检查（0 错误基线）
+pnpm type-check
 
-# 代码格式化
-npm run format
+# 代码检查（0 错误基线）
+pnpm lint
+
+# 单元测试
+pnpm test
 \`\`\`
+
+### 质量门禁基线（v1.2.0）
+
+| 门禁 | 状态 | 基线 |
+|------|------|------|
+| TypeScript 6 严格模式 | ✅ 构建强制 | 0 错误（71→0，含 noUncheckedSideEffectImports） |
+| ESLint 9 flat config | ✅ 独立命令（`pnpm lint`） | 0 错误（Next 16 移除构建期 lint） |
+| 静态导出 | ✅ CI 通过 | 17 页面全量生成（Turbopack） |
 
 ## 🎨 设计系统
 
@@ -398,28 +458,20 @@ export const revalidate = 3600 // 1小时重新验证
 
 ### 测试框架
 
-- **单元测试**：Jest + React Testing Library
-- **集成测试**：Playwright
-- **E2E测试**：Cypress
-- **性能测试**：Lighthouse CI
+- **单元测试**：Jest 30 + React Testing Library
+- **覆盖率门禁**：80%（branches/functions/lines/statements）
 
 ### 运行测试
 
 \`\`\`bash
 # 单元测试
-npm run test
+pnpm test
 
 # 监听模式
-npm run test:watch
+pnpm test:watch
 
 # 覆盖率报告
-npm run test:coverage
-
-# E2E测试
-npm run test:e2e
-
-# 性能测试
-npm run test:performance
+pnpm test:coverage
 \`\`\`
 
 ## 📊 性能监控
@@ -464,11 +516,12 @@ export default withPerformanceTracking(CulturalGeneAnalyzer, {
 ### 环境变量安全
 
 \`\`\`typescript
-// 环境变量验证
+// 环境变量验证（lib/env.ts，全栈模式生效）
+// 静态模式下无需环境变量，密钥仅存在 .env.local（已 gitignore）
 const envSchema = z.object({
+  JWT_SECRET: z.string().min(32),
   OPENAI_API_KEY: z.string().min(1),
-  DATABASE_URL: z.string().url(),
-  NEXTAUTH_SECRET: z.string().min(32)
+  DB_MASTER_HOST: z.string().min(1),
 })
 
 export const env = envSchema.parse(process.env)
@@ -488,7 +541,7 @@ import { useTranslation } from 'next-i18next'
 
 export default function CulturalIntro() {
   const { t } = useTranslation('cultural')
-  
+
   return (
     <h1>{t('title.luoshen')}</h1>
   )

@@ -20,7 +20,7 @@ export default function StarEconomyPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-linear-to-r from-yellow-400 via-amber-300 to-yellow-400 bg-clip-text text-transparent">
               星值经济赋能
             </h1>
             <p className="text-xl text-white/80 max-w-3xl mx-auto">
@@ -33,7 +33,7 @@ export default function StarEconomyPage() {
             <Card cultural={true} glow={true}>
               <CardHeader>
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-yellow-500 to-amber-600 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-linear-to-r from-yellow-500 to-amber-600 flex items-center justify-center">
                     <Star className="h-6 w-6 text-white" />
                   </div>
                   <div>
@@ -70,7 +70,7 @@ export default function StarEconomyPage() {
             <Card cultural={true} glow={true}>
               <CardHeader>
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-linear-to-r from-purple-500 to-indigo-600 flex items-center justify-center">
                     <Coins className="h-6 w-6 text-white" />
                   </div>
                   <div>
@@ -87,19 +87,19 @@ export default function StarEconomyPage() {
                   <div className="flex justify-between items-center">
                     <span className="text-white/70">通宝总量</span>
                     <div className="w-32 bg-black/40 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-indigo-600 h-2 rounded-full w-3/4"></div>
+                      <div className="bg-linear-to-r from-purple-500 to-indigo-600 h-2 rounded-full w-3/4"></div>
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-white/70">流通量</span>
                     <div className="w-32 bg-black/40 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-indigo-600 h-2 rounded-full w-2/3"></div>
+                      <div className="bg-linear-to-r from-purple-500 to-indigo-600 h-2 rounded-full w-2/3"></div>
                     </div>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-white/70">持有者</span>
                     <div className="w-32 bg-black/40 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-purple-500 to-indigo-600 h-2 rounded-full w-1/2"></div>
+                      <div className="bg-linear-to-r from-purple-500 to-indigo-600 h-2 rounded-full w-1/2"></div>
                     </div>
                   </div>
                 </div>
@@ -157,28 +157,28 @@ export default function StarEconomyPage() {
               <CardContent>
                 <InteractiveGrid columns={4}>
                   <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r from-yellow-500 to-amber-600 flex items-center justify-center">
+                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-linear-to-r from-yellow-500 to-amber-600 flex items-center justify-center">
                       <Star className="h-8 w-8 text-white" />
                     </div>
                     <div className="text-2xl font-bold text-yellow-400 mb-1">8.5M</div>
                     <div className="text-white/70 text-sm">星值流通</div>
                   </div>
                   <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 flex items-center justify-center">
+                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-linear-to-r from-purple-500 to-indigo-600 flex items-center justify-center">
                       <Coins className="h-8 w-8 text-white" />
                     </div>
                     <div className="text-2xl font-bold text-purple-400 mb-1">125K</div>
                     <div className="text-white/70 text-sm">通宝总量</div>
                   </div>
                   <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center">
+                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-linear-to-r from-green-500 to-emerald-600 flex items-center justify-center">
                       <TrendingUp className="h-8 w-8 text-white" />
                     </div>
                     <div className="text-2xl font-bold text-green-400 mb-1">+15.8%</div>
                     <div className="text-white/70 text-sm">月增长率</div>
                   </div>
                   <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gradient-to-r from-red-500 to-pink-600 flex items-center justify-center">
+                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-linear-to-r from-red-500 to-pink-600 flex items-center justify-center">
                       <Award className="h-8 w-8 text-white" />
                     </div>
                     <div className="text-2xl font-bold text-red-400 mb-1">2,580</div>

@@ -1,24 +1,24 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
-import { motion, useInView } from "framer-motion"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Map, Building, Layers, Eye, Camera, History, Search, RefreshCw, BookOpen, Zap } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useToast } from "@/hooks/use-toast"
 import {
-  getAllCulturalGenes,
-  searchCulturalGenes,
   analyzeCulturalGeneConnections,
-  getTimeSpaceScenes,
   generateCulturalGeneReport,
+  getAllCulturalGenes,
+  getTimeSpaceScenes,
+  searchCulturalGenes,
+  type CulturalAnalysisResult,
   type CulturalGene,
   type TimeSpaceScene,
-  type CulturalAnalysisResult,
 } from "@/services/cultural-gene-service"
-import { useToast } from "@/hooks/use-toast"
+import { motion, useInView } from "framer-motion"
+import { BookOpen, Building, Camera, Eye, History, Layers, Map, RefreshCw, Search, Zap } from "lucide-react"
+import Image from "next/image"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 // 永宁寺塔变迁数据
 const pagodaEvolution = [
@@ -50,12 +50,7 @@ export default function TimeSpaceLibrary() {
   const isInView = useInView(ref, { once: true, amount: 0.2 })
   const { toast } = useToast()
 
-  // 初始化数据
-  useEffect(() => {
-    loadInitialData()
-  }, [])
-
-  const loadInitialData = async () => {
+  const loadInitialData = useCallback(async () => {
     setIsLoading(true)
     try {
       const [genes, scenes] = await Promise.all([getAllCulturalGenes(), getTimeSpaceScenes()])
@@ -72,7 +67,15 @@ export default function TimeSpaceLibrary() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [toast])
+
+  // 初始化数据（异步调度规避 effect 体内同步 setState）
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      loadInitialData()
+    }, 0)
+    return () => clearTimeout(timer)
+  }, [loadInitialData])
 
   // 搜索文化基因
   const handleSearch = async () => {
@@ -187,7 +190,7 @@ export default function TimeSpaceLibrary() {
           <h2 className="text-2xl md:text-3xl font-bold text-white">十三朝古都时空库</h2>
         </div>
         <p className="text-white/70 max-w-3xl">
-          3D场景库新增"神都时空"专区，包含隋唐洛阳城AR复现与永宁寺塔数字孪生，让用户穿越千年，体验不同时代的洛阳风貌。
+          3D场景库新增“神都时空”专区，包含隋唐洛阳城AR复现与永宁寺塔数字孪生，让用户穿越千年，体验不同时代的洛阳风貌。
         </p>
       </motion.div>
 
@@ -217,7 +220,7 @@ export default function TimeSpaceLibrary() {
             {timeSpaceScenes.map((scene, index) => (
               <motion.div
                 key={scene.id}
-                className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6"
+                className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: index * 0.2 }}
@@ -241,7 +244,7 @@ export default function TimeSpaceLibrary() {
                     fill
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4">
                     <div className="text-white font-medium">{scene.name}</div>
                     <div className="text-white/70 text-sm">
@@ -262,7 +265,7 @@ export default function TimeSpaceLibrary() {
                 </div>
 
                 <div className="flex justify-center">
-                  <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+                  <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
                     <Camera className="h-4 w-4 mr-2" />
                     进入AR场景
                   </Button>
@@ -276,7 +279,7 @@ export default function TimeSpaceLibrary() {
         <TabsContent value="genes" className="mt-0">
           <div className="space-y-6">
             {/* 搜索和过滤 */}
-            <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+            <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
               <div className="flex items-center mb-4">
                 <Search className="h-5 w-5 text-amber-400 mr-2" />
                 <h3 className="text-lg font-medium text-white">文化基因搜索</h3>
@@ -325,7 +328,7 @@ export default function TimeSpaceLibrary() {
                 <Button
                   onClick={handleSearch}
                   disabled={isLoading}
-                  className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+                  className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
                 >
                   {isLoading ? (
                     <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
@@ -356,7 +359,7 @@ export default function TimeSpaceLibrary() {
               {culturalGenes.map((gene, index) => (
                 <motion.div
                   key={gene.id}
-                  className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6 cursor-pointer hover:bg-amber-900/10 transition-colors"
+                  className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6 cursor-pointer hover:bg-amber-900/10 transition-colors"
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -365,17 +368,16 @@ export default function TimeSpaceLibrary() {
                   <div className="flex items-start justify-between mb-3">
                     <h4 className="text-lg font-medium text-white">{gene.name}</h4>
                     <span
-                      className={`text-xs px-2 py-1 rounded-full ${
-                        gene.category === "architecture"
-                          ? "bg-blue-900/30 text-blue-300"
-                          : gene.category === "literature"
-                            ? "bg-green-900/30 text-green-300"
-                            : gene.category === "art"
-                              ? "bg-purple-900/30 text-purple-300"
-                              : gene.category === "philosophy"
-                                ? "bg-red-900/30 text-red-300"
-                                : "bg-amber-900/30 text-amber-300"
-                      }`}
+                      className={`text-xs px-2 py-1 rounded-full ${gene.category === "architecture"
+                        ? "bg-blue-900/30 text-blue-300"
+                        : gene.category === "literature"
+                          ? "bg-green-900/30 text-green-300"
+                          : gene.category === "art"
+                            ? "bg-purple-900/30 text-purple-300"
+                            : gene.category === "philosophy"
+                              ? "bg-red-900/30 text-red-300"
+                              : "bg-amber-900/30 text-amber-300"
+                        }`}
                     >
                       {gene.category === "architecture" && "建筑"}
                       {gene.category === "literature" && "文学"}
@@ -411,7 +413,7 @@ export default function TimeSpaceLibrary() {
         {/* 永宁寺塔标签页 */}
         <TabsContent value="pagoda" className="mt-0">
           <motion.div
-            className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6"
+            className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
@@ -534,11 +536,10 @@ export default function TimeSpaceLibrary() {
                     {pagodaEvolution.map((period, index) => (
                       <div
                         key={index}
-                        className={`p-3 rounded border ${
-                          index === Math.floor(timeSlider / 10)
-                            ? "border-amber-500 bg-amber-900/20"
-                            : "border-amber-500/10 bg-black/40"
-                        } transition-colors`}
+                        className={`p-3 rounded border ${index === Math.floor(timeSlider / 10)
+                          ? "border-amber-500 bg-amber-900/20"
+                          : "border-amber-500/10 bg-black/40"
+                          } transition-colors`}
                       >
                         <div className="flex justify-between items-start mb-1">
                           <span className="text-amber-300 font-medium">{period.era}</span>
@@ -551,7 +552,7 @@ export default function TimeSpaceLibrary() {
                 </div>
 
                 <div className="flex justify-center">
-                  <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+                  <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
                     <History className="h-4 w-4 mr-2" />
                     探索完整时空变迁
                   </Button>
@@ -566,7 +567,7 @@ export default function TimeSpaceLibrary() {
           <div className="space-y-6">
             {analysisResult ? (
               <motion.div
-                className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6"
+                className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
@@ -635,13 +636,13 @@ export default function TimeSpaceLibrary() {
                 </div>
               </motion.div>
             ) : (
-              <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6 text-center">
+              <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6 text-center">
                 <Zap className="h-12 w-12 text-amber-400 mx-auto mb-4" />
                 <h3 className="text-xl font-bold text-white mb-2">文化基因关联分析</h3>
                 <p className="text-white/70 mb-6">点击任意文化基因卡片开始分析其与其他基因的关联性</p>
                 <Button
                   onClick={() => setActiveTab("genes")}
-                  className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
+                  className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800"
                 >
                   <Search className="h-4 w-4 mr-2" />
                   浏览文化基因
@@ -664,11 +665,11 @@ export default function TimeSpaceLibrary() {
           <h3 className="text-xl font-bold text-white">拍摄模式：时空折叠</h3>
         </div>
 
-        <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6">
+        <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <p className="text-white/80 mb-4">
-                开启"时空折叠"特效，支持现代角色与古装NPC跨时空同框，创造独特的视觉体验。
+                开启“时空折叠”特效，支持现代角色与古装NPC跨时空同框，创造独特的视觉体验。
                 通过先进的AI图像处理技术，自动调整光影和色彩，使不同时空的元素自然融合。
               </p>
 
@@ -700,7 +701,7 @@ export default function TimeSpaceLibrary() {
                 fill
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
                 <div className="text-amber-300 font-medium">时空折叠效果预览</div>
                 <div className="text-white/70 text-sm">现代游客与唐代宫女同框</div>

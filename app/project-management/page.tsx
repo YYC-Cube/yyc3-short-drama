@@ -11,11 +11,11 @@ export default function ProjectManagementPage() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-black/40 backdrop-blur-sm border-b border-white/10 p-6"
+        className="bg-black/40 backdrop-blur-xs border-b border-white/10 p-6"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-linear-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center">
               <Settings className="h-6 w-6 text-white" />
             </div>
             <div>

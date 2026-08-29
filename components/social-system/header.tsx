@@ -17,7 +17,7 @@ export default function SocialSystemHeader() {
           className="object-cover brightness-[0.4]"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/60 to-black" />
       </div>
 
       {/* 返回首页按钮 */}
@@ -46,7 +46,7 @@ export default function SocialSystemHeader() {
         </motion.div>
 
         <motion.div
-          className="w-24 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600 mb-6"
+          className="w-24 h-1 bg-linear-to-r from-emerald-400 to-emerald-600 mb-6"
           initial={{ width: 0 }}
           animate={{ width: 96 }}
           transition={{ delay: 0.4, duration: 0.8 }}

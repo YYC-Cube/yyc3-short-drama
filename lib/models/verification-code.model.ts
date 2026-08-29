@@ -105,7 +105,7 @@ export async function checkRateLimit(
   `
 
   const [rows] = await query<RowDataPacket[]>(sql, [contact, type])
-  const count = (rows as any).count || 0
+  const count = Number(rows[0]?.count) || 0
 
   // 1分钟内最多发送1次
   return count === 0

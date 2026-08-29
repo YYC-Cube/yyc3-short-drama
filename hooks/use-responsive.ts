@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 
 interface BreakpointConfig {
   sm: number
@@ -19,7 +19,8 @@ const defaultBreakpoints: BreakpointConfig = {
 }
 
 export function useResponsive(breakpoints: Partial<BreakpointConfig> = {}) {
-  const bp = { ...defaultBreakpoints, ...breakpoints }
+  // 断点配置惰性初始化固化（响应式断点属构建期常量，不应随渲染变化，避免 effect 依赖抖动）
+  const [bp] = useState(() => ({ ...defaultBreakpoints, ...breakpoints }))
 
   const [windowSize, setWindowSize] = useState({
     width: 0,
@@ -54,7 +55,7 @@ export function useResponsive(breakpoints: Partial<BreakpointConfig> = {}) {
     window.addEventListener("resize", handleResize)
 
     return () => window.removeEventListener("resize", handleResize)
-  }, []) // Removed bp from the dependency array
+  }, [bp])
 
   return {
     windowSize,

@@ -1,31 +1,31 @@
 "use client"
 
-import { useState, useRef } from "react"
-import { motion, useInView } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/enhanced-card"
-import {
-  Sparkles,
-  RefreshCw,
-  Download,
-  Copy,
-  Check,
-  Wand2,
-  Star,
-  Clock,
-  Eye,
-  Target,
-  Settings,
-  Lightbulb,
-  BookOpen,
-} from "lucide-react"
+import { Progress } from "@/components/ui/progress"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/hooks/use-toast"
+import { motion, useInView } from "framer-motion"
+import {
+  BookOpen,
+  Check,
+  Clock,
+  Copy,
+  Download,
+  Eye,
+  Lightbulb,
+  RefreshCw,
+  Settings,
+  Sparkles,
+  Star,
+  Target,
+  Wand2,
+} from "lucide-react"
 import Image from "next/image"
+import { useRef, useState } from "react"
 
 // 预设主题数据
 const scriptThemes = [
@@ -142,6 +142,13 @@ const culturalElementsOptions = [
   { name: "书法艺术", category: "艺术" },
 ]
 
+/** 生成的八卦剧本单元（元素信息 + 生成内容） */
+type GeneratedScriptElement = (typeof baguaElements)[number] & {
+  content: string
+  wordCount: number
+  estimatedDuration: number
+}
+
 export default function BaguaScriptGenerator() {
   const [scriptTheme, setScriptTheme] = useState("")
   const [scriptStyle, setScriptStyle] = useState<"classical" | "modern" | "fantasy">("modern")
@@ -149,7 +156,7 @@ export default function BaguaScriptGenerator() {
   const [targetAudience, setTargetAudience] = useState("年轻观众")
   const [selectedCulturalElements, setSelectedCulturalElements] = useState<string[]>([])
   const [isGenerating, setIsGenerating] = useState(false)
-  const [generatedScript, setGeneratedScript] = useState<any[]>([])
+  const [generatedScript, setGeneratedScript] = useState<GeneratedScriptElement[]>([])
   const [selectedTheme, setSelectedTheme] = useState<number | null>(null)
   const [generationProgress, setGenerationProgress] = useState(0)
   const [showPreview, setShowPreview] = useState(false)
@@ -282,7 +289,7 @@ export default function BaguaScriptGenerator() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-white/70 text-sm block mb-2">创作风格</label>
-                  <Select value={scriptStyle} onValueChange={(value: any) => setScriptStyle(value)}>
+                  <Select value={scriptStyle} onValueChange={(value: "classical" | "modern" | "fantasy") => setScriptStyle(value)}>
                     <SelectTrigger className="bg-black/60 border-amber-500/30 text-white">
                       <SelectValue />
                     </SelectTrigger>
@@ -296,7 +303,7 @@ export default function BaguaScriptGenerator() {
 
                 <div>
                   <label className="text-white/70 text-sm block mb-2">剧本长度</label>
-                  <Select value={scriptLength} onValueChange={(value: any) => setScriptLength(value)}>
+                  <Select value={scriptLength} onValueChange={(value: "short" | "medium" | "long") => setScriptLength(value)}>
                     <SelectTrigger className="bg-black/60 border-amber-500/30 text-white">
                       <SelectValue />
                     </SelectTrigger>
@@ -313,7 +320,7 @@ export default function BaguaScriptGenerator() {
               <Button
                 onClick={generateScript}
                 disabled={(!scriptTheme.trim() && selectedTheme === null) || isGenerating}
-                className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700"
+                className="w-full bg-linear-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700"
                 size="lg"
               >
                 {isGenerating ? (
@@ -362,11 +369,10 @@ export default function BaguaScriptGenerator() {
                 {scriptThemes.map((theme, index) => (
                   <motion.div
                     key={theme.id}
-                    className={`relative overflow-hidden rounded-lg cursor-pointer transition-all duration-300 border ${
-                      selectedTheme === index
+                    className={`relative overflow-hidden rounded-lg cursor-pointer transition-all duration-300 border ${selectedTheme === index
                         ? "border-purple-500 bg-purple-500/20"
                         : "border-white/10 hover:border-purple-500/50"
-                    }`}
+                      }`}
                     onClick={() => selectTheme(index)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -380,7 +386,7 @@ export default function BaguaScriptGenerator() {
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, 50vw"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/60" />
+                      <div className="absolute inset-0 bg-linear-to-r from-black/80 to-black/60" />
                     </div>
 
                     <div className="relative z-10 p-4">
@@ -500,7 +506,7 @@ export default function BaguaScriptGenerator() {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     whileHover={{ y: -5 }}
                   >
-                    <div className={`w-full h-1 bg-gradient-to-r ${element.color} mb-3 rounded`}></div>
+                    <div className={`w-full h-1 bg-linear-to-r ${element.color} mb-3 rounded`}></div>
 
                     <div className="text-center mb-3">
                       <div className="text-2xl font-bold text-white mb-1">{element.name}</div>
@@ -541,15 +547,15 @@ export default function BaguaScriptGenerator() {
                 <h4 className="font-medium text-white mb-3">创作原理</h4>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 shrink-0"></div>
                     <span>基于河图洛书和八卦理论的剧本结构设计</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 shrink-0"></div>
                     <span>九宫格布局对应不同的剧情发展阶段</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 shrink-0"></div>
                     <span>中宫代表核心主题，贯穿全剧始终</span>
                   </li>
                 </ul>
@@ -559,15 +565,15 @@ export default function BaguaScriptGenerator() {
                 <h4 className="font-medium text-white mb-3">使用建议</h4>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full mt-2 shrink-0"></div>
                     <span>选择合适的文化元素增强剧本底蕴</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full mt-2 shrink-0"></div>
                     <span>根据目标观众调整创作风格</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full mt-2 shrink-0"></div>
                     <span>利用预设主题快速开始创作</span>
                   </li>
                 </ul>

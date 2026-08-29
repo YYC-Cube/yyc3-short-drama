@@ -20,7 +20,7 @@ export default function CulturalVerificationSystem() {
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-600 mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-linear-to-r from-amber-300 to-amber-600 mb-4">
           文化传承校验体系
         </h2>
         <p className="text-xl text-white/70 max-w-3xl mx-auto">
@@ -44,7 +44,7 @@ export default function CulturalVerificationSystem() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* 服饰纹样 */}
             <motion.div
-              className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg overflow-hidden"
+              className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.1 }}
@@ -56,9 +56,9 @@ export default function CulturalVerificationSystem() {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60"></div>
                 <div className="absolute top-2 right-2">
-                  <Badge className="bg-amber-600/80 backdrop-blur-sm">服饰纹样</Badge>
+                  <Badge className="bg-amber-600/80 backdrop-blur-xs">服饰纹样</Badge>
                 </div>
               </div>
 
@@ -99,7 +99,7 @@ export default function CulturalVerificationSystem() {
 
             {/* 建筑规制 */}
             <motion.div
-              className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg overflow-hidden"
+              className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -111,9 +111,9 @@ export default function CulturalVerificationSystem() {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60"></div>
                 <div className="absolute top-2 right-2">
-                  <Badge className="bg-amber-600/80 backdrop-blur-sm">建筑规制</Badge>
+                  <Badge className="bg-amber-600/80 backdrop-blur-xs">建筑规制</Badge>
                 </div>
               </div>
 
@@ -154,7 +154,7 @@ export default function CulturalVerificationSystem() {
 
             {/* 礼仪动作 */}
             <motion.div
-              className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg overflow-hidden"
+              className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.3 }}
@@ -166,9 +166,9 @@ export default function CulturalVerificationSystem() {
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60"></div>
                 <div className="absolute top-2 right-2">
-                  <Badge className="bg-amber-600/80 backdrop-blur-sm">礼仪动作</Badge>
+                  <Badge className="bg-amber-600/80 backdrop-blur-xs">礼仪动作</Badge>
                 </div>
               </div>
 
@@ -209,7 +209,7 @@ export default function CulturalVerificationSystem() {
           </div>
 
           <motion.div
-            className="mt-8 bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6"
+            className="mt-8 bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -253,11 +253,11 @@ export default function CulturalVerificationSystem() {
                 建立文化创作的伦理边界，确保在创新的同时尊重历史文化的本质，防止文化符号的过度商业化和娱乐化。
               </p>
 
-              <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-4 mb-6">
+              <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-4 mb-6">
                 <h4 className="text-lg font-medium text-white mb-3">伦理协议核心原则</h4>
                 <ul className="space-y-3">
                   <li className="flex items-start">
-                    <div className="flex-shrink-0 h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mr-3 mt-0.5">
+                    <div className="shrink-0 h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mr-3 mt-0.5">
                       <Check className="h-4 w-4 text-amber-400" />
                     </div>
                     <div>
@@ -266,7 +266,7 @@ export default function CulturalVerificationSystem() {
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <div className="flex-shrink-0 h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mr-3 mt-0.5">
+                    <div className="shrink-0 h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mr-3 mt-0.5">
                       <Check className="h-4 w-4 text-amber-400" />
                     </div>
                     <div>
@@ -275,7 +275,7 @@ export default function CulturalVerificationSystem() {
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <div className="flex-shrink-0 h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mr-3 mt-0.5">
+                    <div className="shrink-0 h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mr-3 mt-0.5">
                       <Check className="h-4 w-4 text-amber-400" />
                     </div>
                     <div>
@@ -286,14 +286,14 @@ export default function CulturalVerificationSystem() {
                 </ul>
               </div>
 
-              <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+              <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
                 <FileText className="h-4 w-4 mr-2" />
                 查看完整伦理协议
               </Button>
             </motion.div>
 
             <motion.div
-              className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6"
+              className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6"
               initial={{ opacity: 0, x: 20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -303,10 +303,10 @@ export default function CulturalVerificationSystem() {
               <div className="relative">
                 {/* 第一步 */}
                 <div className="flex items-start mb-8">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center mr-4 z-10">
+                  <div className="shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center mr-4 z-10">
                     <span className="text-amber-400 font-bold">1</span>
                   </div>
-                  <div className="bg-black/60 border border-amber-500/10 rounded-lg p-4 flex-grow">
+                  <div className="bg-black/60 border border-amber-500/10 rounded-lg p-4 grow">
                     <h5 className="text-white font-medium mb-2">用户创作提交</h5>
                     <p className="text-white/70 text-sm">
                       创作者提交作品进入文化基因检测流程，系统自动分析作品中的文化元素
@@ -319,10 +319,10 @@ export default function CulturalVerificationSystem() {
 
                 {/* 第二步 */}
                 <div className="flex items-start mb-8">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center mr-4 z-10">
+                  <div className="shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center mr-4 z-10">
                     <span className="text-amber-400 font-bold">2</span>
                   </div>
-                  <div className="bg-black/60 border border-amber-500/10 rounded-lg p-4 flex-grow">
+                  <div className="bg-black/60 border border-amber-500/10 rounded-lg p-4 grow">
                     <h5 className="text-white font-medium mb-2">文化基因检测</h5>
                     <p className="text-white/70 text-sm">AI分析作品中的文化元素是否符合历史规范，评估文化准确性得分</p>
                   </div>
@@ -333,24 +333,24 @@ export default function CulturalVerificationSystem() {
 
                 {/* 第三步 - 分支 */}
                 <div className="flex items-start">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center mr-4 z-10">
+                  <div className="shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center mr-4 z-10">
                     <span className="text-amber-400 font-bold">3</span>
                   </div>
-                  <div className="flex-grow">
+                  <div className="grow">
                     <div className="grid grid-cols-2 gap-4">
                       <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
                         <div className="flex items-center mb-2">
                           <Check className="h-4 w-4 text-green-400 mr-2" />
                           <h5 className="text-white font-medium">通过检测</h5>
                         </div>
-                        <p className="text-white/70 text-sm">获得"河图创作者"认证，作品可正常发布</p>
+                        <p className="text-white/70 text-sm">获得“河图创作者”认证，作品可正常发布</p>
                       </div>
                       <div className="bg-amber-900/20 border border-amber-500/30 rounded-lg p-4">
                         <div className="flex items-center mb-2">
                           <AlertTriangle className="h-4 w-4 text-amber-400 mr-2" />
                           <h5 className="text-white font-medium">未通过检测</h5>
                         </div>
-                        <p className="text-white/70 text-sm">触发"青铜神树"修复程序，AI推荐参考资料</p>
+                        <p className="text-white/70 text-sm">触发“青铜神树”修复程序，AI推荐参考资料</p>
                       </div>
                     </div>
                   </div>
@@ -360,7 +360,7 @@ export default function CulturalVerificationSystem() {
           </div>
 
           <motion.div
-            className="mt-8 bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6"
+            className="mt-8 bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}

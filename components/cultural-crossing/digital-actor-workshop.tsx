@@ -113,7 +113,7 @@ export default function DigitalActorWorkshop() {
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8 }}
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-600 mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-linear-to-r from-amber-300 to-amber-600 mb-4">
           数字演员工坊
         </h2>
         <p className="text-xl text-white/70 max-w-3xl mx-auto">
@@ -142,7 +142,7 @@ export default function DigitalActorWorkshop() {
             {historicalFigures.map((figure, index) => (
               <motion.div
                 key={figure.id}
-                className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg overflow-hidden group"
+                className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg overflow-hidden group"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.1 * index }}
@@ -156,9 +156,9 @@ export default function DigitalActorWorkshop() {
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute top-2 right-2">
-                    <Badge className="bg-amber-600/80 backdrop-blur-sm">{figure.era}</Badge>
+                    <Badge className="bg-amber-600/80 backdrop-blur-xs">{figure.era}</Badge>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60"></div>
                 </div>
 
                 <div className="p-4">
@@ -194,7 +194,7 @@ export default function DigitalActorWorkshop() {
                       </div>
                       <div className="h-1.5 bg-black/60 rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-amber-400 to-amber-600 rounded-full"
+                          className="h-full bg-linear-to-r from-amber-400 to-amber-600 rounded-full"
                           style={{ width: `${figure.accuracy}%` }}
                         ></div>
                       </div>
@@ -206,14 +206,14 @@ export default function DigitalActorWorkshop() {
                       </div>
                       <div className="h-1.5 bg-black/60 rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-amber-400 to-amber-600 rounded-full"
+                          className="h-full bg-linear-to-r from-amber-400 to-amber-600 rounded-full"
                           style={{ width: `${figure.popularity}%` }}
                         ></div>
                       </div>
                     </div>
                   </div>
 
-                  <Button className="w-full bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+                  <Button className="w-full bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
                     <MessageSquare className="h-4 w-4 mr-2" />与{figure.name}对话
                   </Button>
                 </div>
@@ -222,7 +222,7 @@ export default function DigitalActorWorkshop() {
           </div>
 
           <motion.div
-            className="mt-8 bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6"
+            className="mt-8 bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.5 }}
@@ -265,7 +265,7 @@ export default function DigitalActorWorkshop() {
             {culturalInheritors.map((inheritor, index) => (
               <motion.div
                 key={inheritor.id}
-                className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg overflow-hidden group"
+                className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg overflow-hidden group"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.1 * index }}
@@ -279,9 +279,9 @@ export default function DigitalActorWorkshop() {
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute top-2 right-2">
-                    <Badge className="bg-green-600/80 backdrop-blur-sm">非遗传承人</Badge>
+                    <Badge className="bg-green-600/80 backdrop-blur-xs">非遗传承人</Badge>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60"></div>
                 </div>
 
                 <div className="p-4">
@@ -320,7 +320,7 @@ export default function DigitalActorWorkshop() {
                     </div>
                   </div>
 
-                  <Button className="w-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800">
+                  <Button className="w-full bg-linear-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800">
                     <Palette className="h-4 w-4 mr-2" />
                     学习{inheritor.craft}
                   </Button>
@@ -330,7 +330,7 @@ export default function DigitalActorWorkshop() {
           </div>
 
           <motion.div
-            className="mt-8 bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6"
+            className="mt-8 bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.5 }}
@@ -380,11 +380,11 @@ export default function DigitalActorWorkshop() {
                 通过先进的Metahuman技术和实时面部捕捉，创建您的高精度数字分身，自动适配古装发髻与步态仪态，让您在虚拟世界中穿越历史。
               </p>
 
-              <div className="bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-4 mb-6">
+              <div className="bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-4 mb-6">
                 <h4 className="text-lg font-medium text-white mb-3">数字孪生功能</h4>
                 <ul className="space-y-3">
                   <li className="flex items-start">
-                    <div className="flex-shrink-0 h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mr-3 mt-0.5">
+                    <div className="shrink-0 h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mr-3 mt-0.5">
                       <Check className="h-4 w-4 text-amber-400" />
                     </div>
                     <div>
@@ -393,7 +393,7 @@ export default function DigitalActorWorkshop() {
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <div className="flex-shrink-0 h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mr-3 mt-0.5">
+                    <div className="shrink-0 h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mr-3 mt-0.5">
                       <Check className="h-4 w-4 text-amber-400" />
                     </div>
                     <div>
@@ -404,7 +404,7 @@ export default function DigitalActorWorkshop() {
                     </div>
                   </li>
                   <li className="flex items-start">
-                    <div className="flex-shrink-0 h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mr-3 mt-0.5">
+                    <div className="shrink-0 h-6 w-6 rounded-full bg-amber-500/20 flex items-center justify-center mr-3 mt-0.5">
                       <Check className="h-4 w-4 text-amber-400" />
                     </div>
                     <div>
@@ -415,7 +415,7 @@ export default function DigitalActorWorkshop() {
                 </ul>
               </div>
 
-              <Button className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
+              <Button className="bg-linear-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800">
                 <User className="h-4 w-4 mr-2" />
                 创建我的数字分身
               </Button>
@@ -433,9 +433,9 @@ export default function DigitalActorWorkshop() {
                 fill
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-black to-transparent opacity-60"></div>
               <div className="absolute bottom-4 left-4 right-4">
-                <div className="bg-black/60 backdrop-blur-sm rounded-lg p-4">
+                <div className="bg-black/60 backdrop-blur-xs rounded-lg p-4">
                   <div className="flex items-center mb-3">
                     <Avatar className="h-10 w-10 mr-3">
                       <AvatarImage src="/placeholder.svg?height=100&width=100" />
@@ -456,7 +456,7 @@ export default function DigitalActorWorkshop() {
                   </div>
                   <div className="h-1.5 bg-black/60 rounded-full overflow-hidden mb-3">
                     <div
-                      className="h-full bg-gradient-to-r from-amber-400 to-amber-600 rounded-full"
+                      className="h-full bg-linear-to-r from-amber-400 to-amber-600 rounded-full"
                       style={{ width: "98%" }}
                     ></div>
                   </div>
@@ -484,7 +484,7 @@ export default function DigitalActorWorkshop() {
           </div>
 
           <motion.div
-            className="mt-12 bg-black/40 backdrop-blur-sm border border-amber-500/20 rounded-lg p-6"
+            className="mt-12 bg-black/40 backdrop-blur-xs border border-amber-500/20 rounded-lg p-6"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.5 }}

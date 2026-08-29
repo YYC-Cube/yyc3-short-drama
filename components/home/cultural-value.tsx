@@ -62,7 +62,7 @@ export default function CulturalValue() {
               >
                 {/* 图标容器 */}
                 <motion.div
-                  className={`w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br ${value.color} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}
+                  className={`w-20 h-20 mx-auto mb-6 rounded-full bg-linear-to-br ${value.color} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.8 }}
                 >
