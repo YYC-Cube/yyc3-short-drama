@@ -7,16 +7,19 @@
 > 🏛️ 运用现代科技手段传承和弘扬河洛文化，让千年文明在数字时代重新绽放光彩
 
 <div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0;">
-  <a href="https://nextjs.org/" target="_blank"><img src="https://img.shields.io/badge/Next.js-15.0-black?style=flat-square&logo=next.js" alt="Next.js" /></a>
-  <a href="https://www.typescriptlang.org/" target="_blank"><img src="https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript" alt="TypeScript" /></a>
-  <a href="https://tailwindcss.com/" target="_blank"><img src="https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=flat-square&logo=tailwind-css" alt="Tailwind CSS" /></a>
-  <a href="https://www.framer.com/motion/" target="_blank"><img src="https://img.shields.io/badge/Framer_Motion-11.0-0055FF?style=flat-square&logo=framer" alt="Framer Motion" /></a>
+  <a href="https://nextjs.org/" target="_blank"><img src="https://img.shields.io/badge/Next.js-16.3-black?style=flat-square&logo=next.js" alt="Next.js" /></a>
+  <a href="https://www.typescriptlang.org/" target="_blank"><img src="https://img.shields.io/badge/TypeScript-6.0-3178C6?style=flat-square&logo=typescript" alt="TypeScript" /></a>
+  <a href="https://tailwindcss.com/" target="_blank"><img src="https://img.shields.io/badge/Tailwind_CSS-4.3-06B6D4?style=flat-square&logo=tailwindcss" alt="Tailwind CSS" /></a>
+  <a href="https://react.dev/" target="_blank"><img src="https://img.shields.io/badge/React-19.2-61DAFB?style=flat-square&logo=react" alt="React" /></a>
+  <a href="https://www.framer.com/motion/" target="_blank"><img src="https://img.shields.io/badge/Framer_Motion-13.1-0055FF?style=flat-square&logo=framer" alt="Framer Motion" /></a>
+  <a href="https://eslint.org/" target="_blank"><img src="https://img.shields.io/badge/ESLint-9.39-4B32C3?style=flat-square&logo=eslint" alt="ESLint" /></a>
+  <a href="https://pnpm.io/" target="_blank"><img src="https://img.shields.io/badge/pnpm-F69220?style=flat-square&logo=pnpm" alt="pnpm" /></a>
   <a href="LICENSE" target="_blank"><img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License" /></a>
-  <a href="https://github.com/YYC-Cube/yyc3-short-drama" target="_blank"><img src="https://img.shields.io/github/stars/YYC-Cube/yyc3-short-drama?style=flat-square&color=yellow" alt="GitHub Stars" /></a>
-  <a href="https://github.com/YYC-Cube/yyc3-short-drama" target="_blank"><img src="https://img.shields.io/github/forks/YYC-Cube/yyc3-short-drama?style=flat-square&color=blue" alt="GitHub Forks" /></a>
-  <a href="https://github.com/YYC-Cube/yyc3-short-drama/actions" target="_blank"><img src="https://img.shields.io/github/actions/workflow/status/YYC-Cube/yyc3-short-drama/ci.yml?style=flat-square" alt="CI Status" /></a>
-  <a href="https://github.com/YYC-Cube/yyc3-short-drama" target="_blank"><img src="https://img.shields.io/github/commit-activity/m/YYC-Cube/yyc3-short-drama?style=flat-square" alt="Commit Activity" /></a>
-  <a href="https://github.com/YYC-Cube/yyc3-short-drama" target="_blank"><img src="https://img.shields.io/github/last-commit/YYC-Cube/yyc3-short-drama?style=flat-square" alt="Last Commit" /></a>
+  <a href="https://github.com/YYC-Cube/YYC3-Short-Drama" target="_blank"><img src="https://img.shields.io/github/stars/YYC-Cube/YYC3-Short-Drama?style=flat-square&color=yellow" alt="GitHub Stars" /></a>
+  <a href="https://github.com/YYC-Cube/YYC3-Short-Drama/forks" target="_blank"><img src="https://img.shields.io/github/forks/YYC-Cube/YYC3-Short-Drama?style=flat-square&color=blue" alt="GitHub Forks" /></a>
+  <a href="https://github.com/YYC-Cube/YYC3-Short-Drama/actions" target="_blank"><img src="https://img.shields.io/github/actions/workflow/status/YYC-Cube/YYC3-Short-Drama/ci.yml?style=flat-square&label=CI" alt="CI Status" /></a>
+  <a href="https://github.com/YYC-Cube/YYC3-Short-Drama/security/dependabot" target="_blank"><img src="https://img.shields.io/github/vulnerabilities/YYC-Cube/YYC3-Short-Drama?style=flat-square&label=Vulnerabilities" alt="Vulnerabilities" /></a>
+  <a href="https://github.com/YYC-Cube/YYC3-Short-Drama" target="_blank"><img src="https://img.shields.io/github/last-commit/YYC-Cube/YYC3-Short-Drama?style=flat-square" alt="Last Commit" /></a>
 </div>
 
 ## 📖 项目简介
